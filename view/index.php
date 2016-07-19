@@ -176,13 +176,9 @@
           </header>
         </section>
 
-          
       </article>
 
-
       <?php echo $_last_footer;?>
-
-
     </div>
 
 
