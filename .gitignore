@@ -7,3 +7,4 @@ cmd/node_modules/*
 cmd/npm-debug.log
 
 /asset/*
+/*.html
