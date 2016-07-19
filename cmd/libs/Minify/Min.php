@@ -29,10 +29,20 @@ class Min {
     $class = $format == 'js' ? 'JSMin' : 'CSSMin';
     $content = $class::minify ($content);
 
-    if (!write_file ($asset_path . ($name = md5 ($content) . '.' . $format), $content))
+    if (!Min::writeFile ($asset_path . ($name = md5 ($content) . '.' . $format), $content))
       return self::$list[$key] = $list;
 
     return self::$list[$key] = array ('/asset/' . $name);
+  }
+  public static function writeFile ($path, $data, $mode = 'wb') {
+    if (!$fp = @fopen ($path, $mode)) return false;
+
+    flock($fp, LOCK_EX);
+    fwrite($fp, $data);
+    flock($fp, LOCK_UN);
+    fclose($fp);
+
+    return true;
   }
   public static function css () {
     $list = array_filter (func_get_args ());

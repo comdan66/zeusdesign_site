@@ -27,3 +27,6 @@ define ('OA_FB_URL', 'https://www.facebook.com/comdan66/');
 define ('OA_FB_UID', '100000100541088');
 define ('FB_APP_ID', '199589883770118');
 define ('FB_ADMIN_ID', OA_FB_UID);
+
+define ('PATH_VIEW', PATH . 'view' . DIRECTORY_SEPARATOR);
+define ('PATH_ASSET', PATH . 'asset' . DIRECTORY_SEPARATOR);

@@ -74,8 +74,16 @@ class Step {
     if ($str) Step::progress ($str, $c);
   }
   public static function init () {
-    $paths = array (PATH);
+    $paths = array (PATH, PATH_ASSET);
+    
     Step::newLine ('-', '初始化環境與變數', count ($paths));
+
+    if ($errors = array_filter (array_map (function ($path) {
+        if (!file_exists ($path)) Step::mkdir777 ($path);
+        Step::progress ('初始化環境與變數');
+        return !(is_dir ($path) && is_writable ($path)) ? ' 目錄：' . $path : '';
+      }, $paths))) Step::error ($errors);
+
     Step::progress ('初始化環境與變數', '完成！');
   }
   public static function initS3 ($access, $secret) {
@@ -283,5 +291,49 @@ class Step {
     fclose($fp);
 
     return true;
+  }
+  public static function loadView ($__o__p__ = '', $__o__d__ = array ()) {
+    if (!$__o__p__) return '';
+
+    extract ($__o__d__);
+    ob_start ();
+    if (((bool)@ini_get ('short_open_tag') === FALSE) && (false == TRUE)) echo eval ('?>' . preg_replace ("/;*\s*\?>/u", "; ?>", str_replace ('<?=', '<?php echo ', file_get_contents ($__o__p__))));
+    else include $__o__p__;
+    $buffer = ob_get_contents ();
+    @ob_end_clean ();
+
+    return $buffer;
+  }
+  
+  public static function mkdir777 ($path) {
+    $oldmask = umask (0);
+    @mkdir ($path, 0777, true);
+    umask ($oldmask);
+    return true;
+  }
+  public static function writeIndexHtml () {
+    Step::newLine ('-', '更新 Index HTML');
+
+    if (!Step::writeFile (PATH . 'index' . HTML, HTMLMin::minify (Step::loadView (PATH_VIEW . 'index' . PHP, array (
+          '_first_header' => Step::loadView (PATH_VIEW . '_first_header' . PHP, array ('active' => PAGE_URL_INDEX)),
+          '_last_footer' => Step::loadView (PATH_VIEW . '_last_footer' . PHP),
+          // '_nav_header' => Step::loadView (PATH_VIEW . '_block_header' . PHP, array (
+          //     'left' => 'Home',
+          //     'right' => array (
+          //         array ('text' => '更多關於宙思 »', 'href' => URL_WORKS)
+          //       )
+          //   )),
+          // '_service_header' => Step::loadView (PATH_VIEW . '_block_header' . PHP, array (
+          //     'left' => "服務項目"
+          //   )),
+          // '_works_header' => Step::loadView (PATH_VIEW . '_block_header' . PHP, array (
+          //     'left' => "設計作品",
+          //     'right' => array (
+          //         array ('text' => '設計作品欣賞更多作品 »', 'href' => URL_WORKS)
+          //       )
+          //   )),
+        ))))) Step::error ();
+
+    Step::progress ('更新 Index HTML', '完成！');
   }
 }

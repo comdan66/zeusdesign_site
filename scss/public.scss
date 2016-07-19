@@ -33,28 +33,306 @@ html {
 
   body {
     position: relative;
+
+    background-color: #fff;
+    background-image: none;
+
+    font-family: "微軟正黑體","Open sans", "Helvetica Neue", "HelveticaNeue", Helvetica, Arial, sans-serif;
+    padding-top: 65px;
+    height: auto;
+    color: rgba(85, 85, 85, 1);
+
     display: inline-block;
     text-align: center;
     margin: 0;
     width: 100%;
     height: 100%;
     font-size: medium;
-    font-family: Monaco, "微軟正黑體", "Microsoft JhengHei";
-    background: $mainBackgroundColor $mainBackgroundImage;
-    color: rgba(50, 50, 50, 0.8);
+    font-weight: normal;
 
     @include font-smoothing(antialiased);
     
-    #container {
+    &:before, &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 28%;
+      width: 260px;
+      height: 2px;
+      background-color: rgba(149, 226, 213, .5);
+      z-index: -1;
+      @include transform(rotate(60deg) scale(1));
+    }
+    &:after {
+      left: calc(28% - 10px);
+      top: -10px;
+      width: 260px - 5px;
+    }
+
+    @media screen and (min-width: 0px) and (max-width: #{$mediaMiniMobileWidth - 1px}) {
+      padding: 10px;
+    }
+    @media screen and (min-width: $mediaMiniMobileWidth) and (max-width: #{$changeWidth - 1px}) {
+      padding: 15px;
+      padding-top: 20px;
+
+      &:before {
+        left: 5%;
+      }
+      &:after {
+        left: calc(5% - 10px);
+      }
+    }
+    @media screen and (min-width: $changeWidth) and (max-width: #{$mainWidth + 100px - 1px}) {
+      padding: 20px;
+      padding-top: 65px;
+    }
+  }
+}
+
+#container {
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+  max-width: $mainWidth;
+  text-align: left;
+}
+
+#container > header:first-child {
+  @include clearfix();
+  padding-bottom: 40px;
+  @media screen and (min-width: 0px) and (max-width: #{$changeWidth - 1px}) {
+    padding-bottom: 10px;
+  }
+  a {
+    float: left;
+    @include a;
+    padding: 0;
+    margin: 0;
+    @media screen and (min-width: 0px) and (max-width: #{$changeWidth - 1px}) {
+      margin-top: 10px;
+    }
+  }
+  div {
+    @media screen and (min-width: $changeWidth) {
+      padding-top: 20px;
+    }
+    float: right;
+    @include clearfix();
+
+    a {
       position: relative;
-      display: block;
-      margin: 0 auto;
-      max-width: $mainWidth;
+      margin: 0 30px;
+      color: rgba(85, 85, 85, 1);
+      font-size: 13px;
+      &.a {
+        color: rgba(201, 164, 112, 1);
+      }
+      &:before {
+        content: '';
+        position: absolute;
+        left: -30px;
+        top: -5px;
+        display: inline-block;
+        width: 1px;
+        height: calc(100% + 10px);
+        background-color: rgba(221, 221, 221, 1);
+        cursor: default;
+      }
+      @media screen and (min-width: $changeWidth) and (max-width: #{850px - 1px}) {
+        margin: 0 20px;
+        &:before {
+          left: -20px;
+        }
+      }
+    }
+    @media screen and (min-width: 0) and (max-width: #{$changeWidth - 1px}) {
+      float: left;
+      width: 100%;
+      margin-top: 30px;
+      a {
+        width: calc(100% / 5 - 5px * 2);
+        margin: 0 5px;
+        text-align: center;
 
-      padding: 0 10px;
+        &:before {
+          left: -5px;
+          top: 0;
+          height: 100%;
 
-      @media screen and (min-width: #{$mainWidth}) {
-        padding: 0;
+          top: -1px;
+          height: calc(100% + 1px * 2);
+        }
+        &:first-child {
+          &:before {
+            display: none;
+          }
+        }
+      }
+    }
+    @media screen and (min-width: 0px) and (max-width: #{350px - 1px}) {
+      a {
+        width: calc(100% / 3 - 8px * 2);
+        margin: 0 8px;
+
+        &:before {
+          left: -8px;
+        }
+        &:nth-child(n + 4) {
+          margin-top: 15px;
+        }
+        &:nth-child(3n + 1) {
+          &:before {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+#container > footer:last-child {
+  @media screen and (min-width: 0px) and (max-width: #{$changeWidth - 1px}) {
+    $n: 2;
+    $h: 25px;
+    $s: 10px;
+    border-top: 1px solid rgba(204, 204, 204, 1);
+    margin-top: 35px;
+    margin-bottom: 25px;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: $h * $n + ($n - 1) * $s + 10px;
+    
+    > * {
+      position: absolute;
+      left: 0;
+      top: 0;
+      display: inline-block;
+      width: 100%;
+      height: $h;
+      line-height: $h;
+      text-align: center;
+
+      &:first-child {
+        top: 10px + 0 * ($h + $s) + 14px;
+        color: rgba(85, 85, 85, 1);
+        font-size: 12px;
+      }
+      &:not(:first-child):not(:last-child) {
+        top: 10px;
+        @include a;
+        color: rgba(153, 153, 153, 1);
+        font-size: 13px;
+        cursor: pointer;
+        border: 1px solid rgba(204, 204, 204, 1);
+        width: 26px;
+        height: 26px;
+        line-height: 21px;
+        left: calc(50% - 14px);
+        top: -14px;
+        background-color: rgba(255, 255, 255, 1);
+        @include border-radius(2px);
+        
+      }
+      &:last-child {
+        top: 10px + 1 * ($h + $s) + 8px;
+        font-size: 12px;
+
+        > div {
+          display: inline-block;
+          margin: 0 auto;
+          @include clearfix();
+          a {
+            position: relative;
+            float: left;
+            @include a;
+            color: rgba(153, 153, 153, 1);
+            margin: 0 10px;
+            &:first-child {
+              &:before {
+                display: none;
+              }
+            }
+            &:before {
+              content: '';
+              position: absolute;
+              left: -10px;
+              top: 3px;
+              display: inline-block;
+              width: 1px;
+              height: calc(100% - 6px);
+              background-color: rgba(221, 221, 221, 1);
+            }
+
+            @media screen and (min-width: 0px) and (max-width: #{350px - 1px}) {
+              margin: 0 5px;
+
+              &:before {
+                left: -5px;
+                top: 5px;
+                height: calc(100% - 5px * 2);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  @media screen and (min-width: $changeWidth) {
+    border-top: 1px solid rgba(204, 204, 204, 1);
+    margin-top: 20px;
+    padding: 25px 5px;
+    padding-bottom: 30px;
+    @include clearfix();
+    
+    > * {
+      float: left;
+
+      &:first-child {
+        width: 45%;
+        text-align: left;
+        color: rgba(85, 85, 85, 1);
+        font-size: 12px;
+      }
+      &:not(:first-child):not(:last-child) {
+        @include a;
+        width: 10%;
+        color: rgba(153, 153, 153, 1);
+        font-size: 13px;
+        cursor: pointer;
+        text-align: center;
+      }
+      &:last-child {
+        width: 45%;
+        text-align: right;
+        font-size: 12px;
+        > div {
+          display: inline-block;
+          @include clearfix();
+          a {
+            position: relative;
+            float: left;
+            @include a;
+            color: rgba(153, 153, 153, 1);
+            margin: 0 7px;
+            &:first-child {
+              &:before {
+                display: none;
+              }
+            }
+            &:before {
+              content: '';
+              position: absolute;
+              left: -7px;
+              top: 0;
+              display: inline-block;
+              width: 1px;
+              height: calc(100%);
+              background-color: rgba(221, 221, 221, 1);
+            }
+          }
+        }
       }
     }
   }
