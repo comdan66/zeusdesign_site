@@ -22,21 +22,31 @@ Step::start ();
 $file = array_shift ($argv);
 $argv = Step::params ($argv, array (array ('-b', '-bucket'), array ('-a', '-access'), array ('-s', '-secret'), array ('-u', '-upload'), array ('-m', '-minify')));
 if (!(isset ($argv['-b'][0]) && ($bucket = trim ($argv['-b'][0], '/')) && isset ($argv['-a'][0]) && ($access = $argv['-a'][0]) && isset ($argv['-s'][0]) && ($secret = $argv['-s'][0]))) {
-  echo str_repeat ('=', 80) . "\n";
-  echo ' ' . Step::color ('◎', 'R') . ' ' . Step::color ('錯誤囉！', 'r') . Step::color ('請確認參數是否正確，分別需要', 'p') . ' ' . Step::color ('-b', 'W') . '、' . Step::color ('-a', 'W') . '、' . Step::color ('-s', 'W') . Step::color (' 的參數！', 'p') . ' ' . Step::color ('◎', 'R');
-  echo "\n" . str_repeat ('=', 80) . "\n\n";
-  exit ();
+  // echo str_repeat ('=', 80) . "\n";
+  // echo ' ' . Step::color ('◎', 'R') . ' ' . Step::color ('錯誤囉！', 'r') . Step::color ('請確認參數是否正確，分別需要', 'p') . ' ' . Step::color ('-b', 'W') . '、' . Step::color ('-a', 'W') . '、' . Step::color ('-s', 'W') . Step::color (' 的參數！', 'p') . ' ' . Step::color ('◎', 'R');
+  // echo "\n" . str_repeat ('=', 80) . "\n\n";
+  // exit ();
+  $bucket = 'dev.zeus.ioa.tw';
+  $access = '123';
+  $secret = '123';
+  $argv['-u'][0] = 0;
+  $argv['-m'][0] = 0;
 }
 
 define ('BUCKET', $bucket);
 define ('ACCESS', $access);
-define ('SECRET', $secret);
+define ('SECRET', $secret); 
 
 define ('UPLOAD', isset ($argv['-u'][0]) && is_numeric ($tmp = $argv['-u'][0]) ? $tmp ? true : false : true);
 define ('MINIFY', isset ($argv['-m'][0]) && is_numeric ($tmp = $argv['-m'][0]) ? $tmp ? true : false : true);
 
+include_once PATH_CMD_LIBS . 'define_urls' . PHP;
+
+
 // 開始執行
 Step::init ();
+
+Step::writeIndexHtml ();
 
 // ---------------
 if (!UPLOAD) {
