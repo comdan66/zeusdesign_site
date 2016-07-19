@@ -42,7 +42,7 @@ class Step {
   }
   public static function showUrl () {
     echo "\n";
-    echo " " . self::color ('➜', 'R') . " " . self::color ('您的網址是', 'G') . "：" . self::color (PROTOCOL . BUCKET . '/' . NAME . '/', 'W') . "\n\n";
+    echo " " . self::color ('➜', 'R') . " " . self::color ('您的網址是', 'G') . "：" . self::color (PROTOCOL . BUCKET . '/', 'W') . "\n\n";
     echo str_repeat ('=', 80) . "\n";
   }
   public static function memoryUnit ($size) {
@@ -124,10 +124,10 @@ class Step {
   }
   public static function listS3Files () {
     try {
-      Step::newLine ('-', '列出 S3 上所有檔案', count ($list = S3::getBucket (BUCKET, NAME)));
+      Step::newLine ('-', '列出 S3 上所有檔案', count ($list = S3::getBucket (BUCKET)));
       Step::$s3Files = array_filter ($list, function ($file) {
         Step::progress ('列出 S3 上所有檔案');
-        return preg_match ('/^' . NAME . '\//', $file['name']);
+        return $file['name'];
       });
     } catch (Exception $e) { Step::error (array (' ' . $e->getMessage ())); }
 
@@ -138,7 +138,7 @@ class Step {
 
     $files = array_filter (Step::$localFiles, function ($file) {
       foreach (Step::$s3Files as $s3File)
-        if (($s3File['name'] == (NAME . DIRECTORY_SEPARATOR . $file['uri'])) && ($s3File['hash'] == $file['md5']))
+        if (($s3File['name'] == $file['uri']) && ($s3File['hash'] == $file['md5']))
           return false;
       Step::progress ('過濾需要上傳檔案');
       return $file;
@@ -153,7 +153,7 @@ class Step {
     if ($errors = array_filter (array_map (function ($file) {
         try {
           Step::progress ('上傳檔案');
-          return !S3::putFile ($file['path'], BUCKET, NAME . DIRECTORY_SEPARATOR . $file['uri']) ? ' 檔案：' . $file['path'] : '';
+          return !S3::putFile ($file['path'], BUCKET, $file['uri']) ? ' 檔案：' . $file['path'] : '';
         } catch (Exception $e) {
           return ' 檔案：' . $file['path'];
         }
@@ -164,7 +164,7 @@ class Step {
     Step::newLine ('-', '過濾需要刪除檔案');
 
     $files = array_filter (Step::$s3Files, function ($s3File) {
-      foreach (Step::$localFiles as $localFile) if ($s3File['name'] == (NAME . DIRECTORY_SEPARATOR . $localFile['uri'])) return false;
+      foreach (Step::$localFiles as $localFile) if ($s3File['name'] == $localFile['uri']) return false;
       Step::progress ('過濾需要刪除檔案');
       return true;
     });
