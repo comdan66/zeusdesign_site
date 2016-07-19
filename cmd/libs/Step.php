@@ -317,23 +317,28 @@ class Step {
     if (!Step::writeFile (PATH . 'index' . HTML, HTMLMin::minify (Step::loadView (PATH_VIEW . 'index' . PHP, array (
           '_first_header' => Step::loadView (PATH_VIEW . '_first_header' . PHP, array ('active' => PAGE_URL_INDEX)),
           '_last_footer' => Step::loadView (PATH_VIEW . '_last_footer' . PHP),
-          // '_nav_header' => Step::loadView (PATH_VIEW . '_block_header' . PHP, array (
-          //     'left' => 'Home',
-          //     'right' => array (
-          //         array ('text' => '更多關於宙思 »', 'href' => URL_WORKS)
-          //       )
-          //   )),
-          // '_service_header' => Step::loadView (PATH_VIEW . '_block_header' . PHP, array (
-          //     'left' => "服務項目"
-          //   )),
-          // '_works_header' => Step::loadView (PATH_VIEW . '_block_header' . PHP, array (
-          //     'left' => "設計作品",
-          //     'right' => array (
-          //         array ('text' => '設計作品欣賞更多作品 »', 'href' => URL_WORKS)
-          //       )
-          //   )),
         ))))) Step::error ();
 
     Step::progress ('更新 Index HTML', '完成！');
+  }
+  public static function writeAboutHtml () {
+    Step::newLine ('-', '更新 About HTML');
+
+    if (!Step::writeFile (PATH . 'about' . HTML, HTMLMin::minify (Step::loadView (PATH_VIEW . 'about' . PHP, array (
+          '_first_header' => Step::loadView (PATH_VIEW . '_first_header' . PHP, array ('active' => PAGE_URL_ABOUT)),
+          '_last_footer' => Step::loadView (PATH_VIEW . '_last_footer' . PHP),
+        ))))) Step::error ();
+
+    Step::progress ('更新 About HTML', '完成！');
+  }
+  public static function writeContactHtml () {
+    Step::newLine ('-', '更新 Contact HTML');
+
+    if (!Step::writeFile (PATH . 'contact' . HTML, HTMLMin::minify (Step::loadView (PATH_VIEW . 'contact' . PHP, array (
+          '_first_header' => Step::loadView (PATH_VIEW . '_first_header' . PHP, array ('active' => PAGE_URL_CONTACT)),
+          '_last_footer' => Step::loadView (PATH_VIEW . '_last_footer' . PHP),
+        ))))) Step::error ();
+
+    Step::progress ('更新 Contact HTML', '完成！');
   }
 }

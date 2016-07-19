@@ -47,6 +47,8 @@ include_once PATH_CMD_LIBS . 'define_urls' . PHP;
 Step::init ();
 
 Step::writeIndexHtml ();
+Step::writeAboutHtml ();
+Step::writeContactHtml ();
 
 // ---------------
 if (!UPLOAD) {

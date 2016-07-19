@@ -6,8 +6,8 @@
       <a href='<?php echo PAGE_URL_INDEX;?>'>Home</a>
       <a href='<?php echo URL_WORKS;?>'>Works</a>
       <a href='<?php echo URL_ARTICLES;?>'>Articles</a>
-      <a href='<?php echo PAGE_URL_ABOUTS;?>'>About</a>
-      <a href='<?php echo PAGE_URL_CONTACTS;?>'>Contact</a>
+      <a href='<?php echo PAGE_URL_ABOUT;?>'>About</a>
+      <a href='<?php echo PAGE_URL_CONTACT;?>'>Contact</a>
     </div>
   </div>
 </footer>

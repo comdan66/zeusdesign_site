@@ -9,8 +9,8 @@
 define ('URL', PROTOCOL . BUCKET . '/');
 
 define ('PAGE_URL_INDEX',    URL . 'index' . HTML);
-define ('PAGE_URL_ABOUTS',   URL . 'abouts' . HTML);
-define ('PAGE_URL_CONTACTS', URL . 'contacts' . HTML);
+define ('PAGE_URL_ABOUT',   URL . 'about' . HTML);
+define ('PAGE_URL_CONTACT', URL . 'contact' . HTML);
 
 define ('URL_WORKS',    URL . 'works' . '/');
 define ('URL_ARTICLES', URL . 'articles' . '/');
