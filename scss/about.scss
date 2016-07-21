@@ -13,37 +13,18 @@
     float: left;
     width: 100%;
   }
-  > header {
-    float: left;
 
-    margin: 20px 0;
-    padding: 15px 5px;
-
-    border-top: 1px solid rgba(153, 153, 153, 1);
-
-    @include clearfix();
-    
-
-    h1 {
-      float: left;
-      margin: 0;
-      font-weight: normal;
-      color: rgba(85, 85, 85, 1);
-      font-size: 13px;
-    }
-  }
-
-  aside {
+  #aside {
     a {
       @include a;
       width: 100%;
       font-size: 13px;
       color: rgba(153, 153, 153, 1);
       cursor: pointer;
-
     }
   }
-  article {
+
+  #service {
     figure {
       position: relative;
       display: inline-block;
@@ -64,7 +45,7 @@
         border-top: 0;
       }
     }
-    section {
+    .service {
       border-top: 1px solid rgba(221, 221, 221, 1);
       padding-top: 15px;
       padding-bottom: 20px;
@@ -82,22 +63,24 @@
       }
     }
   }
+}
 
+#about {
   @media screen and (min-width: 0px) and (max-width: #{$changeWidth - 1px}) {
-    aside, article {
+    #aside, #service {
       width: 100%;
     }
-    article {
+    #service {
       margin-top: 40px;
       margin-bottom: 40px;
     }
   }
   @media screen and (min-width: $changeWidth) {
     padding: 0 10px;
-    aside {
+    #aside {
       width: 180px;
     }
-    article {
+    #service {
       width: calc(100% - 180px);
     }
   }

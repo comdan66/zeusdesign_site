@@ -4,23 +4,19 @@
  */
 
 $(function () {
-  $('#works section > a').imgLiquid ({verticalAlign: 'center'});
-  var $figures = $('#banner figure').imgLiquid ({verticalAlign: 'center'});
+  window.vars.$bannerFigures = $('#banner figure');
 
-  $figures.find ('> div > a').click (function () {
-    var $f = $(this).parents ('figure');
-    if ($(this).is (':last-child')) {
-      var $n = $f.is (':last-child') ? $figures.first () : $f.next ();
-      $n.addClass ('s').siblings ().removeClass ('s');
-    } else {
-      var $p = $f.is (':first-child') ? $figures.last () : $f.prev ();
-      $p.addClass ('s').siblings ().removeClass ('s');
-    }
-  });
+  if (window.vars.$bannerFigures.length) {
+    window.vars.$bannerFigures.find ('> div > a').click (function () {
+      var $f = $(this).parents ('figure');
+      if($(this).is (':last-child')) {
+        var $n = $f.is (':last-child') ? window.vars.$bannerFigures.first () : $f.next ();
+        $n.addClass ('s').siblings ().removeClass ('s');
+      } else {
+        var $p = $f.is (':first-child') ? window.vars.$bannerFigures.last () : $f.prev ();
+        $p.addClass ('s').siblings ().removeClass ('s');
+      }}).last ().click ();
 
-  $figures.last ().find ('> div > a:last-child').click ();
-
-  setInterval (function () {
-    $figures.filter ('.s').find ('figcaption > a:last-child').click ();
-  }, 7000);
+    setInterval (function (){ window.vars.$bannerFigures.filter ('.s').find ('figcaption > a:last-child').click (); }, 7000);
+  }
 });

@@ -32,7 +32,7 @@ class Min {
     if (!Min::writeFile ($asset_path . ($name = md5 ($content) . '.' . $format), $content))
       return self::$list[$key] = $list;
 
-    return self::$list[$key] = array ('/asset/' . $name);
+    return self::$list[$key] = array ('asset/' . $name);
   }
   public static function writeFile ($path, $data, $mode = 'wb') {
     if (!$fp = @fopen ($path, $mode)) return false;

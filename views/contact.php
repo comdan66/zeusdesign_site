@@ -21,22 +21,20 @@
         <script src="<?php echo URL . $path;?>" language="javascript" type="text/javascript" ></script>
 <?php }?>
 
-    <script src="js/public.js" language="javascript" type="text/javascript" ></script>
-
   </head>
   <body lang="zh-tw">
     
     <div id='container'>
-      <?php echo $_first_header;?>
+      <?php echo $_header;?>
 
       <div id='contact'>
-        <header>
+        <header class='header'>
           <h1>聯絡我們</h1>
         </header>
-        
-        <div class='i'>123324</div>
 
-        <aside>
+        <div id='msg' class='i'>123324</div>
+
+        <aside id='contacts'>
           <p>有設計相關問題嗎?</p>
           <p>歡迎聯繫我們。</p>
           <br/>
@@ -56,12 +54,12 @@
           <p>10:00 ~ 18:00</p>
         </aside>
 
-        <section>
+        <section id='form'>
           <form method='post' action=''>
             <h2>聯絡我們</h2>
 
             <label for='name'>稱呼：</label>
-            <input type='text' id='name' name='name' class='required' maxLength='100' value='<?php echo isset ($posts['name']) ? $posts['name'] : '';?>' placeholder='請輸入您的稱呼..'<?php echo $_flash_message ? '' : ' autofocus';?> />
+            <input type='text' id='name' name='name' class='required' maxLength='100' value='<?php echo isset ($posts['name']) ? $posts['name'] : '';?>' placeholder='請輸入您的稱呼..'<?php echo isset ($_flash_message) && $_flash_message ? '' : ' autofocus';?> />
 
             <label for='email'>E-Mail：</label>
             <input type='text' id='email' name='email' class='required email' maxLength='200' value='<?php echo isset ($posts['email']) ? $posts['email'] : '';?>' placeholder='請輸入您的電子郵件信箱..' />
@@ -75,7 +73,7 @@
       </div>
 
 
-      <?php echo $_last_footer;?>
+      <?php echo $_footer;?>
     </div>
 
 

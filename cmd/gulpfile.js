@@ -12,7 +12,7 @@ gulp.task ('build_dev', shell.task ('php put.php'));
 gulp.task ('default', function () {
   livereload.listen ();
 
-  ['./root/view/*.php', './*.php', './libs/*.php', './root/css/**/*.css', './root/js/**/*.js'].forEach (function (t) {
+  ['./root/views/*.php', './*.php', './libs/*.php', './root/css/**/*.css', './root/js/**/*.js'].forEach (function (t) {
     gulp.watch (t).on ('change', function () {
       gulp.run ('build_dev');
     });

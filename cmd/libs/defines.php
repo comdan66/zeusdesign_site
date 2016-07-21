@@ -28,5 +28,12 @@ define ('OA_FB_UID', '100000100541088');
 define ('FB_APP_ID', '199589883770118');
 define ('FB_ADMIN_ID', OA_FB_UID);
 
-define ('PATH_VIEW', PATH . 'view' . DIRECTORY_SEPARATOR);
+define ('PATH_VIEWS', PATH . 'views' . DIRECTORY_SEPARATOR);
 define ('PATH_ASSET', PATH . 'asset' . DIRECTORY_SEPARATOR);
+
+define ('PATH_ARTICLES', PATH . 'articles' . DIRECTORY_SEPARATOR);
+define ('PATH_WORKS', PATH . 'works' . DIRECTORY_SEPARATOR);
+define ('PATH_TAGS', PATH . 'tags' . DIRECTORY_SEPARATOR);
+
+define ('PATH_ARTICLE', PATH . 'article' . DIRECTORY_SEPARATOR);
+define ('PATH_WORK', PATH . 'work' . DIRECTORY_SEPARATOR);

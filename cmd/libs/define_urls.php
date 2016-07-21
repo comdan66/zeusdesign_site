@@ -15,6 +15,8 @@ define ('PAGE_URL_CONTACT', URL . 'contact' . HTML);
 define ('URL_WORKS',    URL . 'works' . '/');
 define ('URL_ARTICLES', URL . 'articles' . '/');
 
+define ('URL_WORK',    URL . 'work' . '/');
+define ('URL_ARTICLE', URL . 'article' . '/');
 
 
 define ('URL_IMG', URL . 'img/');

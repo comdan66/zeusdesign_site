@@ -6,5 +6,11 @@ cmd/.sass-cache/*
 cmd/node_modules/*
 cmd/npm-debug.log
 
+/articles/*
+/article/*
+/tags/*
+/works/*
+/work/*
+
 /asset/*
 /*.html

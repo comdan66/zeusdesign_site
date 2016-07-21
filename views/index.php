@@ -22,21 +22,19 @@
         <script src="<?php echo URL . $path;?>" language="javascript" type="text/javascript" ></script>
 <?php }?>
 
-    <script src="js/public.js" language="javascript" type="text/javascript" ></script>
-
   </head>
   <body lang="zh-tw">
     
     <div id='container'>
-      <?php echo $_first_header;?>
+      <?php echo $_header;?>
       
       <article id='main'>
-        <header>
+        <header class='header'>
           <h2>Home</h2>
           <a href=''>更多關於宙思 »</a>
         </header>
 
-        <section>
+        <section id='info'>
           <span>web design</span>
           <span>graphic design</span>
           <span>photography</span>
@@ -45,9 +43,9 @@
           <p>我們擁有各領域的人才，希望能將您的需求，以最完整的服務與最精湛的設計呈現給您。</p>
         </section>
 
-        <section>
+        <section id='imgs'>
           <div id='banner'>
-            <figure>
+            <figure class='_i'>
               <img alt='' src='http://pic.zeusdesign.com.tw/upload/banners/cover/0/0/0/3/800w_479988062_569d12844df96.jpg' />
               <div>
                 <h3>平面設計</h3>
@@ -56,7 +54,7 @@
                 <a>←</a><a>→</a>
               </div>
             </figure>
-            <figure>
+            <figure class='_i'>
               <img alt='' src='http://pic.zeusdesign.com.tw/upload/banners/cover/0/0/0/3/800w_479988062_569d12844df96.jpg' />
               <div>
                 <h3>平面設計</h3>
@@ -65,7 +63,7 @@
                 <a>←</a><a>→</a>
               </div>
             </figure>
-            <figure>
+            <figure class='_i'>
               <img alt='' src='http://pic.zeusdesign.com.tw/upload/banners/cover/0/0/0/3/800w_479988062_569d12844df96.jpg' />
               <div>
                 <h3>平面設計</h3>
@@ -79,12 +77,12 @@
       </article>
 
 
-      <article id='service'>
-        <header>
+      <article id='services'>
+        <header class='header'>
           <h2>服務項目</h2>
         </header>
 
-        <section>
+        <section class='service'>
           <header>
             <h3>網頁設計</h3>
             <p>web design</p>
@@ -94,7 +92,7 @@
           <p>網站周邊製作：banner形象製作、EDM...等等。</p>
         </section>
 
-        <section>
+        <section class='service'>
           <header>
             <h3>平面設計</h3>
             <p>graphic design</p>
@@ -103,7 +101,7 @@
           <p>宙思亦有印刷服務，多年與固定印刷廠配合，能將設計作品以最好的方式，印出成品。</p>
         </section>
 
-        <section>
+        <section class='service'>
           <header>
             <h3>商業攝影</h3>
             <p>photography</p>
@@ -112,7 +110,7 @@
           <p>服務範圍：商品攝影、產品情境照拍攝、人像攝影、活動攝影及婚禮攝影。</p>
         </section>
         
-        <section>
+        <section class='service'>
           <header>
             <h3>設計專案</h3>
             <p>design project</p>
@@ -124,13 +122,13 @@
 
 
       <article id='works'>
-        <header>
+        <header class='header'>
           <h2>設計作品</h2>
           <a href=''>設計作品欣賞更多作品 »</a>
         </header>
 
-        <section>
-          <a href=''>
+        <section class='work'>
+          <a href='' class='_i'>
             <img alt='' src='http://pic.zeusdesign.com.tw/upload/promos/cover/0/0/0/3/500w_495365543_569d1273b64cc.jpg'>
           </a>
 
@@ -141,8 +139,8 @@
         </section>
 
 
-        <section>
-          <a href=''>
+        <section class='work'>
+          <a href='' class='_i'>
             <img alt='' src='http://pic.zeusdesign.com.tw/upload/promos/cover/0/0/0/3/500w_495365543_569d1273b64cc.jpg'>
           </a>
 
@@ -153,8 +151,8 @@
         </section>
 
 
-        <section>
-          <a href=''>
+        <section class='work'>
+          <a href='' class='_i'>
             <img alt='' src='http://pic.zeusdesign.com.tw/upload/promos/cover/0/0/0/3/500w_495365543_569d1273b64cc.jpg'>
           </a>
 
@@ -165,8 +163,8 @@
         </section>
 
 
-        <section>
-          <a href=''>
+        <section class='work'>
+          <a href='' class='_i'>
             <img alt='' src='http://pic.zeusdesign.com.tw/upload/promos/cover/0/0/0/3/500w_495365543_569d1273b64cc.jpg'>
           </a>
 
@@ -178,7 +176,7 @@
 
       </article>
 
-      <?php echo $_last_footer;?>
+      <?php echo $_footer;?>
     </div>
 
 

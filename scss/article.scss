@@ -1,0 +1,558 @@
+/**
+ * @author      OA Wu <comdan66@gmail.com>
+ * @copyright   Copyright (c) 2016 OA Wu Design
+ */
+
+@import "_oa";
+
+#article {
+  @include clearfix();
+  
+  > * {
+    display: inline-block;
+    float: left;
+    width: 100%;
+  }
+  > .article {
+    > header {
+      @include split-right(140px, 'h1', '> div');
+      padding: 0 5px;
+      border-bottom: 1px solid rgba(0, 0, 0, .1);
+      margin-bottom: 10px;
+
+      h1 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        font-size: 18px;
+
+        a {
+          @include a;
+          color: rgba(85, 85, 85, 1);
+          font-weight: bold;
+          padding: 0;
+        }
+      }
+      > div {
+        text-align: right;
+        height: 23px;
+        overflow: hidden;
+      }
+    }
+
+    > footer {
+      display: inline-block;
+      width: 100%;
+      margin: 0;
+      margin-top: 20px;
+      margin-bottom: 50px;
+      @media screen and (min-width: 0) and (max-width: #{$changeWidth - 1px}) {
+        margin-bottom: 20px;
+      }
+      padding: 0 5px;
+      border-top: 1px solid rgba(0, 0, 0, .1);
+      padding-top: 15px;
+      @include split-right(120px, 'div:first-child', 'div:last-child');
+      
+      div {
+        font-size: 13px;
+        span {
+          @media screen and (min-width: 0) and (max-width: #{500px - 1px}) {
+            display: none;
+          }
+        }
+        time {
+          text-align: right;
+        }
+        a {
+          @include a(1px, true);
+          padding: 0 3px;
+          border-bottom-color: rgba(42, 90, 149, 0.15);
+
+          @media screen and (min-width: 0) and (max-width: #{500px - 1px}) {
+            padding: 0;
+            padding-right: 3px;
+          }
+        }
+        time {
+          padding: 0 3px;
+          color: rgba(75, 75, 75, 1);
+          font-weight: bold;
+        }
+        &:last-child {
+          text-align: right;
+        }
+      }
+    }
+
+    #tags, #sources {
+      position: relative;
+      list-style-type: none;
+      display: block;
+    }
+    #tags {
+      padding: 0;
+      margin: 0;
+      margin-top: 20px;
+      @include clearfix();
+      + ul {
+        margin-top: 20px;
+      }
+      li {
+        float: left;
+        display: inline-block;
+        padding: 0;
+        font-size: 0;
+        margin: 2px 4px;
+
+        a {
+          @include a;
+          padding: 0 5px;
+          font-size: 10px;
+          color: rgba(130, 130, 130, 1);
+          border: 1px solid rgba(170, 170, 170, 1);
+          @include border-radius(2px);
+
+          &:hover {
+            background-color: rgba(170, 170, 170, 1);
+            border: 1px solid rgba(170, 170, 170, 1);
+            color: rgba(255, 255, 255, 1);
+          }
+        }
+      }
+    }
+    #sources {
+      padding-left: 5px;
+      margin-bottom: 10px;
+      padding-top: 30px;
+
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: inline-block;
+        width: 100%;
+        height: 1px;
+        border-top: 1px dashed rgba(220, 220, 220, 1);
+      }
+
+      li {
+        font-size: 0;
+
+        + li {
+          margin-top: 15px;
+        }
+        a {
+          @include a;
+
+          padding: 0;
+          font-size: 13px;
+          @include overflow-docx3();
+          max-width: 100%;
+        }
+        span {
+          display: inline-block;
+          font-size: 10px;
+          color: rgba(85, 85, 85, .6);
+          font-style: oblique;
+          @include overflow-docx3();
+          @media screen and (min-width: 0px) and (max-width: #{$changeWidth - 1px}) {
+            max-width: 100%;
+            width: 100%;
+          }
+          a {
+            @include a(1px, true);
+            color: rgba(85, 85, 85, .6);
+            font-size: 10px;
+            border-bottom-color: rgba(85, 85, 85, .2);
+          }
+
+          &:before {
+            content: '-';
+            margin-right: 5px;
+            margin-left: 5px;
+          }
+        }
+      }
+    }
+  }
+  > .list {
+    > div {
+      text-align: center;
+    }
+    > h1 {
+      margin-top: 0;
+      color: rgba(85, 85, 85, 1);
+
+      &:before {
+        content: '#';
+        margin-right: 3px;
+        color: rgba(85, 85, 85, .4);
+      }
+      a {
+        @include a;
+        color: rgba(85, 85, 85, 1);
+        font-weight: bold;
+
+      }
+    }
+    .article {
+      @include clearfix();
+      + .article { margin-top: 50px; }
+
+      > * {
+        display: inline-block;
+        float: left;
+      }
+      header {
+        width: 100%;
+        margin-bottom: 12px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid rgba(85, 85, 85, .1);
+        
+        h2 {
+          display: block;
+          width: 100%;
+          margin: 0;
+          font-size: 15px;
+          height: 30px;
+          line-height: 28px;
+          a {
+            @include a(0, false, rgba(85, 85, 85, 1), rgba(85, 85, 85, 1));
+            width: auto;
+            font-weight: bold;
+            @include overflow-docx3();
+            max-width: 100%;
+          }
+        }
+      }
+      > a {
+        position: relative;
+        overflow: hidden;
+        @include border-radius(2px);
+        @include box-shadow(0 0 1px rgba(0, 0, 0, .5));
+        @include transition(box-shadow .3s);
+
+        &:hover {
+          @include box-shadow(0 0 1px rgba(0, 0, 0, .5), 0 0 10px rgba(0, 0, 0, .1));
+        }
+        figure {
+          position: relative;
+          margin: 0;
+          display: inline-block;
+          width: 100%;
+          height: 100%;
+
+          img {
+            width: 100%;
+          }
+          figcaption {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            display: inline-block;
+            width: 100%;
+            @include opacity(0);
+          }
+        }
+      }
+
+      > section {
+        p {
+          display: block;
+          margin: 0;
+          word-wrap: break-word; 
+          color: rgba(85, 85, 85, .9);
+        }
+        a {
+          @include a;
+          font-size: 10px;
+          padding: 0;
+
+          &:after {
+            content: '»';
+            display: inline-block;
+            line-height: 15px;
+            margin-left: 3px;
+          }
+        }
+
+        time {
+          display: block;
+          width: 100%;
+          font-size: 12px;
+          padding-right: 5px;
+          margin: 0;
+          color: rgba(85, 85, 85, .75);
+        }
+      }
+
+
+      @media screen and (min-width: 0) and (max-width: #{600px - 1px}) {
+        header {
+          h2 {
+            padding-left: 5px;
+          }
+        }
+        > a {
+          margin: 0 5px;
+          width: calc(100% - 5px * 2);
+          height: 160px;
+          @media screen and (min-width: 0) and (max-width: #{$mediaMiniMobileWidth - 1px}) {
+            height: 130px;
+          }
+        }
+        > section {
+          width: 100%;
+          padding: 0 5px;
+          margin-top: 5px;
+
+          p {
+            padding: 0;
+          }
+          a {
+            float: right;
+            margin-top: 7px;
+          }
+          time {
+              text-align: left;
+              margin-top: 8px;
+          }
+        }
+      }
+      @media screen and (min-width: 600px) {
+        header {
+          h2 {
+            padding-left: 10px;
+          }
+        }
+        > a {
+          width: 135px;
+          height: 100px;
+          margin-top: 5px;
+          margin-left: 10px;
+        }
+        > section {
+          width: calc(100% - 135px - 10px);
+          padding: 0 0 0 25px;
+
+          p {
+            padding-right: 10px;
+          }
+          a {
+            float: left;
+            margin-top: 2px;
+          }
+          time {
+            text-align: right;
+            margin-top: 3px;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+#article_main {
+  float: right;
+}
+#article_aside {
+  aside {
+    display: inline-block;
+    width: 100%;
+
+    + aside {
+      margin-top: 30px;
+    }
+
+    &.f {
+      ul {
+        padding-left: 0;
+        @include clearfix();
+        
+        li {
+          float: left;
+          margin: 3px;
+          max-width: 100%;
+        }
+      }
+    }
+    h3 {
+      margin: 0;
+      padding: 0;
+      font-size: 13px;
+      text-transform: uppercase;
+    }
+    ul {
+      list-style-type: none;
+      padding-left: 8px;
+      margin: 5px;
+
+      li {
+        a {
+          @include a;
+          @include overflow-docx3();
+          max-width: 100%;
+          cursor: pointer;
+          color: rgba(117, 117, 117, .8);
+          font-size: 13px;
+          margin: 0;
+          padding: 0;
+
+          &.a {
+            color: rgba(100, 100, 100, 1);
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+}
+
+.article_format {
+  padding: 5px;
+  font-size: 15px;
+  p {
+    margin: 5px 0;
+    margin: 15.5px auto;
+    color: rgba(100, 100, 100, 1);
+    
+    a {
+      @include a(1px, true);
+      padding-bottom: 0;
+      border-bottom-color: rgba(42, 90, 149, 0.25);
+    }
+    img {
+      width: auto !important;
+      height: auto !important;
+
+      max-width: 100% !important;
+      max-height: 350px !important;
+      @media screen and (min-width: 0px) and (max-width: #{$changeWidth - 1px}) {
+        width: 100% !important;
+      }
+      cursor: pointer;
+      @include border-radius(2px);
+      margin-bottom: 15px;
+    }
+  }
+  figure {
+    margin: 0;
+    margin-bottom: 30px;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+
+    img {
+      width: 100%;
+    }
+    figcaption {
+      font-size: 18px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      display: inline-block;
+      width: 100%;
+      color: rgba(255, 255, 255, 1);
+      padding: 10px;
+      @include text-shadow(0 0 5px rgba(0, 0, 0, .200));
+      background-color: rgba(0, 0, 0, 0.5);
+      @include overflow-docx3();
+    }
+  }
+  pre {
+    line-height: 14px;
+    font-size: 13px;
+    border: 1px solid rgba(137, 137, 137, .2);
+    padding: 10px;
+    @include border-radius(2px);
+    word-break: break-all;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+  }
+  ul {
+    margin: 15.5px auto;
+    margin-bottom: 20px;
+    padding-left: 30px;
+
+    li {
+      color: rgba(100, 100, 100, 1);
+
+      + li {
+        margin-top: 5px;
+      }
+    }
+  }
+}
+@media screen and (min-width: 0) and (max-width: #{$changeWidth - 1px}) {
+  #article_aside {
+    margin-top: 50px;
+
+    aside {
+      &.f {
+        display: none;
+      }
+      ul {
+        padding-left: 0;
+        @include clearfix();
+
+        li {
+          float: left;
+          @media screen and (min-width: 0) and (max-width: #{$mediaMiniMobileWidth - 1px}) {
+            max-width: 100%;
+          }
+          @media screen and (min-width: $mediaMiniMobileWidth) and (max-width: #{$mediaMobileWidth - 1px}) {
+            margin: 3px 10px;
+            max-width: calc(100% / 2 - 10px * 2);
+          }
+          @media screen and (min-width: $mediaMobileWidth) and (max-width: #{$changeWidth - 1px}) {
+            margin: 3px 10px;
+            max-width: calc(100% / 3 - 10px * 2);
+          }
+        }
+      }
+    }
+    .pagination {
+      margin-top: 30px;
+      margin-bottom: 30px;
+    }
+  }
+
+  #article_main {
+    .pagination {
+      display: none;
+    }
+  }
+}
+@media screen and (min-width: $changeWidth) {
+  #article_aside {
+    width: 20%;
+    padding-top: 9px;
+    
+    .pagination {
+      display: none;
+    }
+  }
+  #article_main {
+    width: calc(100% - 20%);
+    padding-left: 65px;
+    .pagination {
+      margin-top: 80px;
+    }
+  }
+}
+
+
+

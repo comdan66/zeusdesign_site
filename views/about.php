@@ -21,33 +21,31 @@
         <script src="<?php echo URL . $path;?>" language="javascript" type="text/javascript" ></script>
 <?php }?>
 
-    <script src="js/public.js" language="javascript" type="text/javascript" ></script>
-
   </head>
   <body lang="zh-tw">
     
     <div id='container'>
-      <?php echo $_first_header;?>
+      <?php echo $_header;?>
       
 
       <div id='about'>
-        <header>
+        <header class='header'>
           <h1>關於宙思</h1>
         </header>
 
-        <aside>
+        <aside id='aside'>
           <a>關於宙思 ›</a>
           <a>關於設計 ›</a>
           <a>我們提供的服務 ›</a>
         </aside>
 
-        <article>
+        <article id='service'>
           <figure>
             <img src="http://www.zeusdesign.com.tw/resource/image/logo/banner-compressor.jpg">
             <figcaption></figcaption>
           </figure>
 
-          <section>
+          <section class='service'>
             <header>
               <h2>關於宙思</h2>
               <p>成立於2013。</p>
@@ -55,7 +53,7 @@
             <p>「宙思設計有限公司」是由各領域專業的設計師組合而成的團隊，從品牌創始之初到實體印刷製作物及網站製作，提供整體的服務與規劃，滿足客戶各方面的需求。</p>
           </section>
           
-          <section>
+          <section class='service'>
             <header>
               <h2>關於宙思</h2>
               <p>成立於2013。</p>
@@ -63,7 +61,7 @@
             <p>「宙思設計有限公司」是由各領域專業的設計師組合而成的團隊，從品牌創始之初到實體印刷製作物及網站製作，提供整體的服務與規劃，滿足客戶各方面的需求。</p>
           </section>
           
-          <section>
+          <section class='service'>
             <header>
               <h2>關於宙思</h2>
               <p>成立於2013。</p>
@@ -75,7 +73,7 @@
       </div>
 
 
-      <?php echo $_last_footer;?>
+      <?php echo $_footer;?>
     </div>
 
   </body>

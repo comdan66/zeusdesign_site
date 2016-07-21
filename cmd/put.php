@@ -49,6 +49,10 @@ Step::init ();
 Step::writeIndexHtml ();
 Step::writeAboutHtml ();
 Step::writeContactHtml ();
+Step::writeArticlesHtml ();
+Step::writeArticleHtml ();
+Step::writeWorksHtml ();
+Step::writeWorkHtml ();
 
 // ---------------
 if (!UPLOAD) {
@@ -64,6 +68,7 @@ Step::setUploadDirs (array (
     'js' => array ('js'),
     'css' => array ('css'),
     'font' => array ('eot', 'svg', 'ttf', 'woff'),
+    'asset' => array ('js', 'css'),
     'img' => array ('png', 'jpg', 'jpeg', 'gif', 'svg'),
     '' => array ('html', 'txt')
   ));

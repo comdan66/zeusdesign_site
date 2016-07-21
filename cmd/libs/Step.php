@@ -74,7 +74,7 @@ class Step {
     if ($str) Step::progress ($str, $c);
   }
   public static function init () {
-    $paths = array (PATH, PATH_ASSET);
+    $paths = array (PATH, PATH_ASSET, PATH_ARTICLES, PATH_WORKS, PATH_TAGS, PATH_ARTICLE, PATH_WORK);
     
     Step::newLine ('-', '初始化環境與變數', count ($paths));
 
@@ -314,9 +314,9 @@ class Step {
   public static function writeIndexHtml () {
     Step::newLine ('-', '更新 Index HTML');
 
-    if (!Step::writeFile (PATH . 'index' . HTML, HTMLMin::minify (Step::loadView (PATH_VIEW . 'index' . PHP, array (
-          '_first_header' => Step::loadView (PATH_VIEW . '_first_header' . PHP, array ('active' => PAGE_URL_INDEX)),
-          '_last_footer' => Step::loadView (PATH_VIEW . '_last_footer' . PHP),
+    if (!Step::writeFile (PATH . 'index' . HTML, HTMLMin::minify (Step::loadView (PATH_VIEWS . 'index' . PHP, array (
+          '_header' => Step::loadView (PATH_VIEWS . '_header' . PHP, array ('active' => PAGE_URL_INDEX)),
+          '_footer' => Step::loadView (PATH_VIEWS . '_footer' . PHP),
         ))))) Step::error ();
 
     Step::progress ('更新 Index HTML', '完成！');
@@ -324,9 +324,9 @@ class Step {
   public static function writeAboutHtml () {
     Step::newLine ('-', '更新 About HTML');
 
-    if (!Step::writeFile (PATH . 'about' . HTML, HTMLMin::minify (Step::loadView (PATH_VIEW . 'about' . PHP, array (
-          '_first_header' => Step::loadView (PATH_VIEW . '_first_header' . PHP, array ('active' => PAGE_URL_ABOUT)),
-          '_last_footer' => Step::loadView (PATH_VIEW . '_last_footer' . PHP),
+    if (!Step::writeFile (PATH . 'about' . HTML, HTMLMin::minify (Step::loadView (PATH_VIEWS . 'about' . PHP, array (
+          '_header' => Step::loadView (PATH_VIEWS . '_header' . PHP, array ('active' => PAGE_URL_ABOUT)),
+          '_footer' => Step::loadView (PATH_VIEWS . '_footer' . PHP),
         ))))) Step::error ();
 
     Step::progress ('更新 About HTML', '完成！');
@@ -334,11 +334,51 @@ class Step {
   public static function writeContactHtml () {
     Step::newLine ('-', '更新 Contact HTML');
 
-    if (!Step::writeFile (PATH . 'contact' . HTML, HTMLMin::minify (Step::loadView (PATH_VIEW . 'contact' . PHP, array (
-          '_first_header' => Step::loadView (PATH_VIEW . '_first_header' . PHP, array ('active' => PAGE_URL_CONTACT)),
-          '_last_footer' => Step::loadView (PATH_VIEW . '_last_footer' . PHP),
+    if (!Step::writeFile (PATH . 'contact' . HTML, HTMLMin::minify (Step::loadView (PATH_VIEWS . 'contact' . PHP, array (
+          '_header' => Step::loadView (PATH_VIEWS . '_header' . PHP, array ('active' => PAGE_URL_CONTACT)),
+          '_footer' => Step::loadView (PATH_VIEWS . '_footer' . PHP),
         ))))) Step::error ();
 
     Step::progress ('更新 Contact HTML', '完成！');
+  }
+  public static function writeArticlesHtml () {
+    Step::newLine ('-', '更新 Articles HTML');
+
+    if (!Step::writeFile (PATH_ARTICLES . 'index' . HTML, HTMLMin::minify (Step::loadView (PATH_VIEWS . 'articles' . PHP, array (
+          '_header' => Step::loadView (PATH_VIEWS . '_header' . PHP, array ('active' => URL_ARTICLES)),
+          '_footer' => Step::loadView (PATH_VIEWS . '_footer' . PHP),
+        ))))) Step::error ();
+
+    Step::progress ('更新 Articles HTML', '完成！');
+  }
+  public static function writeArticleHtml () {
+    Step::newLine ('-', '更新 Article HTML');
+
+    if (!Step::writeFile (PATH_ARTICLE . '1' . HTML, HTMLMin::minify (Step::loadView (PATH_VIEWS . 'article' . PHP, array (
+          '_header' => Step::loadView (PATH_VIEWS . '_header' . PHP, array ('active' => URL_ARTICLES)),
+          '_footer' => Step::loadView (PATH_VIEWS . '_footer' . PHP),
+        ))))) Step::error ();
+
+    Step::progress ('更新 Article HTML', '完成！');
+  }
+  public static function writeWorksHtml () {
+    Step::newLine ('-', '更新 Works HTML');
+
+    if (!Step::writeFile (PATH_WORKS . 'index' . HTML, HTMLMin::minify (Step::loadView (PATH_VIEWS . 'works' . PHP, array (
+          '_header' => Step::loadView (PATH_VIEWS . '_header' . PHP, array ('active' => URL_WORKS)),
+          '_footer' => Step::loadView (PATH_VIEWS . '_footer' . PHP),
+        ))))) Step::error ();
+
+    Step::progress ('更新 Works HTML', '完成！');
+  }
+  public static function writeWorkHtml () {
+    Step::newLine ('-', '更新 Work HTML');
+
+    if (!Step::writeFile (PATH_WORK . '1' . HTML, HTMLMin::minify (Step::loadView (PATH_VIEWS . 'work' . PHP, array (
+          '_header' => Step::loadView (PATH_VIEWS . '_header' . PHP, array ('active' => URL_WORKS)),
+          '_footer' => Step::loadView (PATH_VIEWS . '_footer' . PHP),
+        ))))) Step::error ();
+
+    Step::progress ('更新 Work HTML', '完成！');
   }
 }

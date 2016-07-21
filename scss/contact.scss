@@ -7,43 +7,14 @@
 
 #contact {
   @include clearfix();
-  
+
   > * {
     display: inline-block;
     float: left;
     width: 100%;
   }
-  > header {
-    float: left;
 
-    margin: 20px 0;
-    padding: 15px 5px;
-
-    border-top: 1px solid rgba(153, 153, 153, 1);
-
-    @include clearfix();
-    
-
-    h1 {
-      float: left;
-      margin: 0;
-      font-weight: normal;
-      color: rgba(85, 85, 85, 1);
-      font-size: 13px;
-    }
-  }
-  > div {
-    display: inline-block;
-    margin-bottom: 35px;
-    width: 100%;
-    &.i {
-      @include alert('info', false);
-    }
-    &.d {
-      @include alert('danger', false);
-    }
-  }
-  aside {
+  #contacts {
     font-size: 13px;
     p {
       width: 100%;
@@ -67,7 +38,7 @@
       }
     }
   }
-  section {
+  #form {
     @include clearfix();
 
     h2 {
@@ -133,11 +104,7 @@
         @include transition(all .1s);
 
         background: #efefef;
-        @include background-image(
-          linear-gradient(top, 
-                  rgba(246, 246, 246, 1) 0%,
-                  rgba(239, 239, 239, 1) 100%
-          ));
+        @include background-image(linear-gradient(top, rgba(246, 246, 246, 1) 0%, rgba(239, 239, 239, 1) 100%));
 
         &:hover {
           color: #333;
@@ -157,18 +124,32 @@
       }
     }
   }
+}
 
 
 
-  @media screen and (min-width: 0px) and (max-width: #{$changeWidth - 1px}) {
+#msg {
+  display: inline-block;
+  margin-bottom: 35px;
+  width: 100%;
+  &.i {
+    @include alert('info', false);
+  }
+  &.d {
+    @include alert('danger', false);
+  }
+}
+
+#contact {
+  @media screen and (min-width: 0) and (max-width: #{$changeWidth - 1px}) {
     margin-bottom: 20px;
 
-    aside {
+    #contacts {
       br {
         line-height: 20px;
       }
     }
-    section {
+    #form {
       margin-top: 30px;
       form {
         button {
@@ -179,13 +160,13 @@
   }
   @media screen and (min-width: $changeWidth) {
     padding: 0 10px;
-    aside {
+    #contacts {
       width: 280px;
       br {
         line-height: 40px;
       }
     }
-    section {
+    #form {
       width: calc(100% - 280px);
       padding-left: 30px;
 
