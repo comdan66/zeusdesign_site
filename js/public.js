@@ -18,6 +18,7 @@ jQuery.timeago.settings.strings={prefixAgo:null,prefixFromNow:"從現在開始",
 
 $(function () {
   $('._i').imgLiquid ({ verticalAlign:'center' });
+  $('time[datetime]').timeago ();
   
   window.vars = {};
   window.vars.$body = $('html > body');
@@ -87,9 +88,31 @@ $(function () {
       }, 100);
   };
 
+  window.func.addPv = function (k, id) {
+    $.ajax ({
+      url: 'https://admin.zeusdesign.com.tw/api/pv/' + k + '/' + id,
+      async: true, cache: false, dataType: 'json', type: 'GET',
+    }).done (function (result) {}).fail (function (result) { }).complete (function (result) { });
+  }
+
+  $('.article_format p>img, .work_format p>img').map (function (i) {
+    var src = $(this).attr ('src'),
+    url = $(this).parents ('.article_format, .work_format').attr ('data-url'),
+    $parent = $(this).parent (),
+    text = $parent.text ();
+    $('<figure />').append ($('<img />').attr ('src', src)).append ($('<figcaption />').text (text)).insertAfter ($parent);
+    return $(this); }).each (function (i) { $(this).parent ().remove (); });
+  $('.article_format > figure, .work_format > figure').each (function (i) {
+    $(this).attr ('href', $(this).parent ().data ('url') + '#&gid=1&pid=' + (i + 1) +'&id=0');
+  });
+  $('h1 a, #tags a').each (function () { $('a[href="' + $(this).attr ('href') + '"]').addClass ('a'); });
+
   window.func.initPhotoSwipeFromDOM ('.article_format', 'figure');
   window.func.initPhotoSwipeFromDOM ('.work_format', 'figure');
   
+  $('#article[data-k="article"][data-id], #work[data-k="work"][data-id]').each (function () {
+    window.func.addPv ($(this).data ('k'), $(this).data ('id'));
+  });
   // $('#container figure').imgLiquid ({verticalAlign: 'center'});
   // initPhotoSwipeFromDOM ('#container', 'figure');
 });

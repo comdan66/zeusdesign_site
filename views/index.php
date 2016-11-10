@@ -45,33 +45,19 @@
 
         <section id='imgs'>
           <div id='banner'>
-            <figure class='_i'>
-              <img alt='' src='http://pic.zeusdesign.com.tw/upload/banners/cover/0/0/0/3/800w_479988062_569d12844df96.jpg' />
-              <div>
-                <h3>平面設計</h3>
-                <figcaption>台灣紡拓會國外展主視覺設計</figcaption>
-                <p><a href=''>more</a></p>
-                <a>←</a><a>→</a>
-              </div>
-            </figure>
-            <figure class='_i'>
-              <img alt='' src='http://pic.zeusdesign.com.tw/upload/banners/cover/0/0/0/3/800w_479988062_569d12844df96.jpg' />
-              <div>
-                <h3>平面設計</h3>
-                <figcaption>台灣紡拓會國外展主視覺設計</figcaption>
-                <p><a href=''>more</a></p>
-                <a>←</a><a>→</a>
-              </div>
-            </figure>
-            <figure class='_i'>
-              <img alt='' src='http://pic.zeusdesign.com.tw/upload/banners/cover/0/0/0/3/800w_479988062_569d12844df96.jpg' />
-              <div>
-                <h3>平面設計</h3>
-                <figcaption>台灣紡拓會國外展主視覺設計</figcaption>
-                <p><a href=''>more</a></p>
-                <a>←</a><a>→</a>
-              </div>
-            </figure>
+        <?php if ($banners) {
+                foreach ($banners as $banner) { ?>
+                  <figure class='_i'>
+                    <img alt='<?php echo $banner['title'];?> - 宙思設計 ZEUS // Design Studio' src='<?php echo $banner['cover'];?>' />
+                    <div>
+                      <h3><?php echo $banner['title'];?></h3>
+                      <figcaption><?php echo $banner['content'];?></figcaption>
+                      <p><a href='<?php echo $banner['link'];?>'<?php echo $banner['target'] ? " target='_blank'" : '';?>>more</a></p>
+                      <a>←</a><a>→</a>
+                    </div>
+                  </figure>
+          <?php }
+              } ?>
           </div>
         </section>
       </article>
@@ -126,54 +112,20 @@
           <h2>設計作品</h2>
           <a href=''>設計作品欣賞更多作品 »</a>
         </header>
+  <?php if ($promos) {
+          foreach ($promos as $promo) { ?>
+            <section class='work'>
+              <a href='<?php echo $promo['link'];?>' class='_i'<?php echo $promo['target'] ? " target='_blank'" : '';?>>
+                <img alt='<?php echo $promo['title'];?> - 宙思設計 ZEUS // Design Studio' src='<?php echo $promo['cover'];?>'>
+              </a>
 
-        <section class='work'>
-          <a href='' class='_i'>
-            <img alt='' src='http://pic.zeusdesign.com.tw/upload/promos/cover/0/0/0/3/500w_495365543_569d1273b64cc.jpg'>
-          </a>
-
-          <header>
-            <h3><a href=''>網頁設計</a></h3>
-            <p>EDM, 活動網站, 官網</p>
-          </header>
-        </section>
-
-
-        <section class='work'>
-          <a href='' class='_i'>
-            <img alt='' src='http://pic.zeusdesign.com.tw/upload/promos/cover/0/0/0/3/500w_495365543_569d1273b64cc.jpg'>
-          </a>
-
-          <header>
-            <h3><a href=''>網頁設計</a></h3>
-            <p>EDM, 活動網站, 官網</p>
-          </header>
-        </section>
-
-
-        <section class='work'>
-          <a href='' class='_i'>
-            <img alt='' src='http://pic.zeusdesign.com.tw/upload/promos/cover/0/0/0/3/500w_495365543_569d1273b64cc.jpg'>
-          </a>
-
-          <header>
-            <h3><a href=''>網頁設計</a></h3>
-            <p>EDM, 活動網站, 官網</p>
-          </header>
-        </section>
-
-
-        <section class='work'>
-          <a href='' class='_i'>
-            <img alt='' src='http://pic.zeusdesign.com.tw/upload/promos/cover/0/0/0/3/500w_495365543_569d1273b64cc.jpg'>
-          </a>
-
-          <header>
-            <h3><a href=''>網頁設計</a></h3>
-            <p>EDM, 活動網站, 官網</p>
-          </header>
-        </section>
-
+              <header>
+                <h3><a href='<?php echo $promo['link'];?>'<?php echo $promo['target'] ? " target='_blank'" : '';?>><?php echo $promo['title'];?></a></h3>
+                <p><?php echo $promo['content'];?></p>
+              </header>
+            </section>
+    <?php }
+        } ?>
       </article>
 
       <?php echo $_footer;?>

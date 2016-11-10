@@ -16,6 +16,7 @@ define ('PATH_CMD_LIBS', PATH_CMD . 'libs' . DIRECTORY_SEPARATOR);
 include_once PATH_CMD_LIBS . 'defines' . PHP;
 include_once PATH_CMD_LIBS . 'Step' . PHP;
 include_once PATH_CMD_LIBS . 'Minify' . DIRECTORY_SEPARATOR . 'Min' . PHP;
+include_once PATH_CMD_LIBS . 'Pagination' . PHP;
 
 Step::start ();
 
@@ -26,11 +27,11 @@ if (!(isset ($argv['-b'][0]) && ($bucket = trim ($argv['-b'][0], '/')) && isset 
   // echo ' ' . Step::color ('◎', 'R') . ' ' . Step::color ('錯誤囉！', 'r') . Step::color ('請確認參數是否正確，分別需要', 'p') . ' ' . Step::color ('-b', 'W') . '、' . Step::color ('-a', 'W') . '、' . Step::color ('-s', 'W') . Step::color (' 的參數！', 'p') . ' ' . Step::color ('◎', 'R');
   // echo "\n" . str_repeat ('=', 80) . "\n\n";
   // exit ();
-  $bucket = 'dev.zeus.ioa.tw';
+  $bucket = 'dev.site.zeusdesign.com.tw';
   $access = '123';
   $secret = '123';
   $argv['-u'][0] = 0;
-  $argv['-m'][0] = 0;
+  $argv['-m'][0] = 1;
 }
 
 define ('BUCKET', $bucket);
@@ -50,9 +51,7 @@ Step::writeIndexHtml ();
 Step::writeAboutHtml ();
 Step::writeContactHtml ();
 Step::writeArticlesHtml ();
-Step::writeArticleHtml ();
 Step::writeWorksHtml ();
-Step::writeWorkHtml ();
 
 // ---------------
 if (!UPLOAD) {

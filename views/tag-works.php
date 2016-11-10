@@ -30,12 +30,11 @@
 
       <div id='work'>
         <header class='header'>
-          <h1>設計作品</h1>
-          <!-- <span>設計作品</span> -->
+          <span>設計作品</span>
         </header>
 
         <article id='work_main' class='list'>
-          <!-- <h1><a href=''>asd</a></h1> -->
+          <h1><a href='<?php echo $tag['url'] . 'index' . HTML;?>'><?php echo $tag['name'];?></a></h1>
     <?php if ($works) {
             foreach ($works as $work) { ?>
               <section class='work'>

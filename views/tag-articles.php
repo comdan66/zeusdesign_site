@@ -30,10 +30,11 @@
 
       <div id='article'>
         <header class='header'>
-          <h1>知識文章</h1>
+          <span>知識文章</span>
         </header>
 
         <div id='article_main' class='list'>
+          <h1><a href='<?php echo $tag['url'] . 'index' . HTML;?>'><?php echo $tag['name'];?></a></h1>
 
     <?php foreach ($articles as $article) { ?>
             <article class='article'>

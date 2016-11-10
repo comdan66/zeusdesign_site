@@ -214,7 +214,7 @@
           display: block;
           width: 100%;
           margin: 0;
-          font-size: 15px;
+          font-size: 20px;
           height: 30px;
           line-height: 28px;
           a {
@@ -305,7 +305,7 @@
         > section {
           width: 100%;
           padding: 0 5px;
-          margin-top: 5px;
+          margin-top: 8px;
 
           p {
             padding: 0;
@@ -338,6 +338,7 @@
 
           p {
             padding-right: 10px;
+            font-size: 14px;
           }
           a {
             float: left;
@@ -451,6 +452,8 @@
     position: relative;
     overflow: hidden;
     cursor: pointer;
+    min-width: 450px;
+
 
     img {
       width: 100%;

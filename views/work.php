@@ -28,104 +28,71 @@
     <div id='container'>
       <?php echo $_header;?>
 
-
-
-      <div id='work'>
+      <div id='work' data-k='work' data-id='<?php echo $work['id'];?>'>
         <header class='header'>
-          <div><a href=''>知識文章</a><a href=''>知識文章</a></div>
+          <div><a href='<?php echo URL_WORKS . 'index' . HTML;?>'>知識文章</a><a href='<?php echo $work['url'];?>'><?php echo $work['title'];?></a></div>
         </header>
 
         <article id='work_main' class='content'>
           <header>
-            <h1><a href=''>義大利品牌Look - 台灣總代理</a></h1>
-            <div class="fb-like" data-href="asd" data-send="false" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+            <h1><a href='<?php echo $work['url'];?>'><?php echo $work['title'];?></a></h1>
+            <div class="fb-like" data-href="<?php echo $work['url'];?>" data-send="false" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
           </header>
 
-          <section class='work_format'>
-            <p>話說.. 最近又看上了一款運動手環！</p>
-
-            <figure href=''>
-              <img src='http://pic.zeusdesign.com.tw/upload/ckeditor_pictures/name/0/0/0/1/400h_617152353_56ae0a58f3cb8.jpg'>
-              <figcaption data-description='asdasdads'>ad</figcaption>
-            </figure>
-
-            <figure href=''>
-              <img src='http://pic.zeusdesign.com.tw/upload/ckeditor_pictures/name/0/0/0/1/400h_617152353_56ae0a58f3cb8.jpg'>
-              <figcaption data-description='asdasdads'>ad</figcaption>
-            </figure>
+          <section class='work_format' data-url='<?php echo $work['url'];?>'>
+            <?php echo $work['content'];
+            if ($work['images']) {
+              foreach ($work['images'] as $image) { ?>
+                <figure href=''>
+                  <img src='<?php echo $image['w800'];?>'>
+                  <figcaption data-description=''><?php echo $work['title'];?></figcaption>
+                </figure>
+        <?php }
+            } ?>
           </section>
-          
+
           <footer>
-            <div><span>張貼者：</span><a href='' target='_blank'>asd</a>於<time datetime='12'>12</time>發佈。</div>
-            <div>瀏覽人數：1 人</div>
+            <div><span>張貼者：</span><a href='<?php echo $work['user']['url'];?>' target='_blank'><?php echo $work['user']['name'];?></a>於<time datetime='<?php echo $work['created_at'];?>'><?php echo $work['created_at'];?></time>發佈。</div>
+            <div>瀏覽人數：<?php echo $work['pv'];?> 人</div>
           </footer>
 
         </article>
         
         <article id='work_aside' class='memos'>
 
-          <section>
-            <h2>Client</h2>
-            <span>
-              嘉豪光學有限公司 
-            </span>
-          </section>
+    <?php if ($work['blocks']) {
+            foreach ($work['blocks'] as $block) { ?>
+              <section>
+                <h2><?php echo $block['title'];?></h2>
+          <?php if ($block['items']) {
+                  foreach ($block['items'] as $item) { ?>
+                    <span>
+                <?php if ($item['link']) { ?>
+                        <a href=''><?php echo $item['title'] ? $item['title'] : $item['link'];?></a>
+                        <i><?php echo $item['link'];?></i>
+                <?php } else {
+                        echo $item['title'];
+                      } ?>
+                    </span>
+            <?php }
+                } ?>
+              </section>
+      <?php }
+          } ?>
 
-          <section>
-            <h2>Details</h2>
-            <span>
-              前端畫面設計 
-            </span>
-            <span>
-              後台程式設計
-            </span>
-          </section>
-
-          <section>
-            <h2>Technology</h2>
-            <span>
-              HTML
-            </span>
-            <span>
-              CSS
-            </span>
-            <span>
-              jQuery
-            </span>
-            <span>
-              php
-            </span>
-            <span>
-              Photoshop
-            </span>
-            <span>
-              illustrator
-            </span>
-          </section>
-
-          <section>
-            <h2>Links</h2>
-            <span>
-              <a href=''>Live website</a>
-              <i>http://www.hogaoptical.com.tw/look</i>
-            </span>
-          </section>
-
-          <section class='t'>
-            <h2>標籤</h2>
-            <span><a href=''>wqeqweqwe</a></span>
-            <span><a href=''>wqeqweqwe</a></span>
-            <span><a href=''>wqeqweqwe</a></span>
-          </section>
+    <?php if ($work['tags']) { ?>
+            <section class='t'>
+              <h2>分類</h2>
+        <?php foreach ($work['tags'] as $tag) { ?>
+                <span><a href='<?php echo $tag['url'] . 'index' . HTML;?>'><?php echo $tag['name'];?></a></span>
+        <?php } ?>
+            </section>
+    <?php } ?>
 
         </article>
-
       </div>
-
 
       <?php echo $_footer;?>
     </div>
-
-
   </body>
 </html>

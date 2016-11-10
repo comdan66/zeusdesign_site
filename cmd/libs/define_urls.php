@@ -15,6 +15,11 @@ define ('PAGE_URL_CONTACT', URL . 'contact' . HTML);
 define ('URL_WORKS',    URL . 'works' . '/');
 define ('URL_ARTICLES', URL . 'articles' . '/');
 
+define ('URL_TAGS', URL . 'tags' . '/');
+
+define ('URL_TAG_ARTICLES', URL_TAGS . '%s' . '/' . 'articles' . '/');
+define ('URL_TAG_WORKS', URL_TAGS . '%s' . '/' . 'works' . '/');
+
 define ('URL_WORK',    URL . 'work' . '/');
 define ('URL_ARTICLE', URL . 'article' . '/');
 

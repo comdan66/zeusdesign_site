@@ -13,4 +13,5 @@ cmd/npm-debug.log
 /work/*
 
 /asset/*
+/api
 /*.html

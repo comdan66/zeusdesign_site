@@ -5,6 +5,22 @@
  * @copyright   Copyright (c) 2016 OA Wu Design
  */
 
+if (!function_exists ('oa_url')) {
+  function oa_url ($str) {
+    return preg_replace ('/[\/%]/u', ' ', $str);
+  }
+}
+if (!function_exists ('oa_url_encode')) {
+  function oa_url_encode ($str) {
+    return rawurlencode (oa_url ($str));
+  }
+}
+if (!function_exists ('remove_ckedit_tag')) {
+  function remove_ckedit_tag ($text) {
+    return preg_replace ("/\s+/u", "", preg_replace ("/&#?[a-z0-9]+;/iu", "", str_replace ('▼', '', str_replace ('▲', '', trim (strip_tags ($text))))));
+  }
+}
+
 class Step {
   public static $startTime;
   public static $nowSize;
@@ -313,10 +329,14 @@ class Step {
   }
   public static function writeIndexHtml () {
     Step::newLine ('-', '更新 Index HTML');
+    $banners = json_decode (Step::readFile (PATH_APIS . 'banners.json'), true);
+    $promos = json_decode (Step::readFile (PATH_APIS . 'promos.json'), true);
 
     if (!Step::writeFile (PATH . 'index' . HTML, HTMLMin::minify (Step::loadView (PATH_VIEWS . 'index' . PHP, array (
           '_header' => Step::loadView (PATH_VIEWS . '_header' . PHP, array ('active' => PAGE_URL_INDEX)),
           '_footer' => Step::loadView (PATH_VIEWS . '_footer' . PHP),
+          'banners' => $banners,
+          'promos' => $promos,
         ))))) Step::error ();
 
     Step::progress ('更新 Index HTML', '完成！');
@@ -341,44 +361,182 @@ class Step {
 
     Step::progress ('更新 Contact HTML', '完成！');
   }
+
+  public static function columnArray ($objects, $key) {
+    return array_map (function ($object) use ($key) {
+      return !is_array ($object) ? is_object ($object) ? $object->$key : $object : $object[$key];
+    }, $objects);
+  }
+
   public static function writeArticlesHtml () {
     Step::newLine ('-', '更新 Articles HTML');
 
-    if (!Step::writeFile (PATH_ARTICLES . 'index' . HTML, HTMLMin::minify (Step::loadView (PATH_VIEWS . 'articles' . PHP, array (
+    $articles = array_map (function ($article) {
+      $article['user']['url'] = 'https://www.facebook.com/' . $article['user']['fid'];
+
+      return array_merge ($article, array (
+        'path' => PATH_ARTICLE . $article['id'] . '-' . oa_url ($article['title'] . HTML),
+        'url' => URL_ARTICLE . $article['id'] . '-' . oa_url_encode ($article['title'] . HTML),
+        ));
+    }, json_decode (Step::readFile (PATH_APIS . 'articles.json'), true));
+
+    $tags = array ();
+    foreach (self::columnArray ($articles, 'tags') as $ts) foreach ($ts as $t) if (!in_array ($t['id'], self::columnArray ($tags, 'id'))) array_push ($tags, $t);
+    $tags = array_map (function ($tag) use ($articles) {
+      $as = array (); foreach ($articles as $article) if (($ids = self::columnArray ($article['tags'], 'id')) && in_array ($tag['id'], $ids)) array_push ($as, $article);
+      return array_merge ($tag, array (
+        'articles' => $as,
+        'path' => sprintf (PATH_TAG_ARTICLES, oa_url ($tag['name'])),
+        'url' => sprintf (URL_TAG_ARTICLES, oa_url_encode ($tag['name'])),
+        ));
+    }, $tags);
+
+    $articles = array_map (function ($article) use ($tags) {
+      $article['tags'] = array_filter (array_map (function ($tag) use ($tags) { foreach ($tags as $t) if ($t['id'] == $tag['id']) return $t; return array (); }, $article['tags']));
+      return $article;
+    }, $articles);
+
+    $news = array_values ($articles);
+    $hots = array_values ($articles);
+    usort ($hots, function ($a, $b) { return $a['pv'] < $b['pv']; });
+
+    $limit = 10;
+    $total = count ($articles);
+
+    for ($offset = 0; $offset < $total; $offset += $limit) {
+      $pagination = Pagination::initialize (array (
+        'total_rows' => $total, 'per_page' => $limit, 
+        'base_url' => URL_ARTICLES . '%s',
+        'offset' => $offset,
+      ))->create_links ();
+
+      if (!Step::writeFile (PATH_ARTICLES . (!$offset ? 'index' : $offset) . HTML, HTMLMin::minify (Step::loadView (PATH_VIEWS . 'articles' . PHP, array (
           '_header' => Step::loadView (PATH_VIEWS . '_header' . PHP, array ('active' => URL_ARTICLES)),
           '_footer' => Step::loadView (PATH_VIEWS . '_footer' . PHP),
+          'tags' => $tags,
+          'articles' => array_slice ($articles, $offset, $limit),
+          'hots' => $hots,
+          'news' => $news,
+          'pagination' => $pagination,
         ))))) Step::error ();
+    }
 
+    foreach ($tags as $tag) {
+      $total = count ($tag['articles']);
+      if (!file_exists ($tag['path'])) Step::mkdir777 ($tag['path']);
+
+      for ($offset = 0; $offset < $total; $offset += $limit) {
+        $pagination = Pagination::initialize (array (
+          'total_rows' => $total, 'per_page' => $limit, 
+          'base_url' => $tag['url'],
+          'offset' => $offset,
+        ))->create_links ();
+
+        if (!Step::writeFile ($tag['path'] . (!$offset ? 'index' : $offset) . HTML, HTMLMin::minify (Step::loadView (PATH_VIEWS . 'tag-articles' . PHP, array (
+            '_header' => Step::loadView (PATH_VIEWS . '_header' . PHP, array ('active' => URL_ARTICLES)),
+            '_footer' => Step::loadView (PATH_VIEWS . '_footer' . PHP),
+            'tag' => $tag,
+            'tags' => $tags,
+            'articles' => array_slice ($tag['articles'], $offset, $limit),
+            'hots' => $hots,
+            'news' => $news,
+            'pagination' => $pagination,
+          ))))) Step::error ();
+      }
+    }
+
+    foreach ($articles as $article) {
+      if (!Step::writeFile ($article['path'], HTMLMin::minify (Step::loadView (PATH_VIEWS . 'article' . PHP, array (
+          '_header' => Step::loadView (PATH_VIEWS . '_header' . PHP, array ('active' => URL_ARTICLES)),
+          '_footer' => Step::loadView (PATH_VIEWS . '_footer' . PHP),
+          'tags' => $tags,
+          'article' => $article,
+          'hots' => $hots,
+          'news' => $news,
+        ))))) Step::error ();
+    }
     Step::progress ('更新 Articles HTML', '完成！');
-  }
-  public static function writeArticleHtml () {
-    Step::newLine ('-', '更新 Article HTML');
-
-    if (!Step::writeFile (PATH_ARTICLE . '1' . HTML, HTMLMin::minify (Step::loadView (PATH_VIEWS . 'article' . PHP, array (
-          '_header' => Step::loadView (PATH_VIEWS . '_header' . PHP, array ('active' => URL_ARTICLES)),
-          '_footer' => Step::loadView (PATH_VIEWS . '_footer' . PHP),
-        ))))) Step::error ();
-
-    Step::progress ('更新 Article HTML', '完成！');
   }
   public static function writeWorksHtml () {
     Step::newLine ('-', '更新 Works HTML');
 
-    if (!Step::writeFile (PATH_WORKS . 'index' . HTML, HTMLMin::minify (Step::loadView (PATH_VIEWS . 'works' . PHP, array (
+    $works = array_map (function ($work) {
+      $work['user']['url'] = 'https://www.facebook.com/' . $work['user']['fid'];
+
+      return array_merge ($work, array (
+        'path' => PATH_WORK . $work['id'] . '-' . oa_url ($work['title'] . HTML),
+        'url' => URL_WORK . $work['id'] . '-' . oa_url_encode ($work['title'] . HTML),
+        ));
+    }, json_decode (Step::readFile (PATH_APIS . 'works.json'), true));
+
+    $tags = array ();
+    foreach (self::columnArray ($works, 'tags') as $ts) foreach ($ts as $t) if (!in_array ($t['id'], self::columnArray ($tags, 'id'))) array_push ($tags, $t);
+    $tags = array_map (function ($tag) use ($works) {
+      $ws = array (); foreach ($works as $work) if (($ids = self::columnArray ($work['tags'], 'id')) && in_array ($tag['id'], $ids)) array_push ($ws, $work);
+      return array_merge ($tag, array (
+        'works' => $ws,
+        'path' => sprintf (PATH_TAG_WORKS, oa_url ($tag['name'])),
+        'url' => sprintf (URL_TAG_WORKS, oa_url_encode ($tag['name'])),
+        ));
+    }, $tags);
+    $ntags = array ();
+    foreach ($tags as $tag) if (!$tag['par_id']) array_push ($ntags, array_merge ($tag, array ('subs' => array ())));
+    usort ($ntags, function ($a, $b) { return $a['sort'] > $b['sort']; });
+    $ntags = array_map (function ($ntag) use ($tags) { foreach ($tags as $tag) if ($tag['par_id'] == $ntag['id']) array_push ($ntag['subs'], $tag); usort ($ntag['subs'], function ($a, $b) { return $a['sort'] > $b['sort']; }); return $ntag; }, $ntags);
+
+    $works = array_map (function ($work) use ($tags) {
+      $work['tags'] = array_filter (array_map (function ($tag) use ($tags) { foreach ($tags as $t) if ($t['id'] == $tag['id']) return $t; return array (); }, $work['tags']));
+      return $work;
+    }, $works);
+
+    $limit = 9;
+    $total = count ($works);
+
+    for ($offset = 0; $offset < $total; $offset += $limit) {
+      $pagination = Pagination::initialize (array (
+        'total_rows' => $total, 'per_page' => $limit, 
+        'base_url' => URL_WORKS . '%s',
+        'offset' => $offset,
+      ))->create_links ();
+
+      if (!Step::writeFile (PATH_WORKS . (!$offset ? 'index' : $offset) . HTML, HTMLMin::minify (Step::loadView (PATH_VIEWS . 'works' . PHP, array (
           '_header' => Step::loadView (PATH_VIEWS . '_header' . PHP, array ('active' => URL_WORKS)),
           '_footer' => Step::loadView (PATH_VIEWS . '_footer' . PHP),
+          'tags' => $ntags,
+          'works' => array_slice ($works, $offset, $limit),
+          'pagination' => $pagination,
         ))))) Step::error ();
+    }
 
+    foreach ($tags as $tag) {
+      $total = count ($tag['works']);
+      if (!file_exists ($tag['path'])) Step::mkdir777 ($tag['path']);
+
+      for ($offset = 0; $offset < $total; $offset += $limit) {
+        $pagination = Pagination::initialize (array (
+          'total_rows' => $total, 'per_page' => $limit, 
+          'base_url' => $tag['url'],
+          'offset' => $offset,
+        ))->create_links ();
+
+        if (!Step::writeFile ($tag['path'] . (!$offset ? 'index' : $offset) . HTML, HTMLMin::minify (Step::loadView (PATH_VIEWS . 'tag-works' . PHP, array (
+            '_header' => Step::loadView (PATH_VIEWS . '_header' . PHP, array ('active' => URL_WORKS)),
+            '_footer' => Step::loadView (PATH_VIEWS . '_footer' . PHP),
+            'tag' => $tag,
+            'tags' => $ntags,
+            'works' => array_slice ($tag['works'], $offset, $limit),
+            'pagination' => $pagination,
+          ))))) Step::error ();
+      }
+    }
+
+    foreach ($works as $work) {
+      if (!Step::writeFile ($work['path'], HTMLMin::minify (Step::loadView (PATH_VIEWS . 'work' . PHP, array (
+          '_header' => Step::loadView (PATH_VIEWS . '_header' . PHP, array ('active' => URL_WORKS)),
+          '_footer' => Step::loadView (PATH_VIEWS . '_footer' . PHP),
+          'work' => $work,
+        ))))) Step::error ();
+    }
     Step::progress ('更新 Works HTML', '完成！');
-  }
-  public static function writeWorkHtml () {
-    Step::newLine ('-', '更新 Work HTML');
-
-    if (!Step::writeFile (PATH_WORK . '1' . HTML, HTMLMin::minify (Step::loadView (PATH_VIEWS . 'work' . PHP, array (
-          '_header' => Step::loadView (PATH_VIEWS . '_header' . PHP, array ('active' => URL_WORKS)),
-          '_footer' => Step::loadView (PATH_VIEWS . '_footer' . PHP),
-        ))))) Step::error ();
-
-    Step::progress ('更新 Work HTML', '完成！');
   }
 }

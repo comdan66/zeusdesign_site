@@ -27,89 +27,75 @@
     <div id='container'>
       <?php echo $_header;?>
 
-      <div id='article'>
+      <div id='article' data-k='article' data-id='<?php echo $article['id'];?>'>
         <header class='header'>
-          <div><a href=''>知識文章</a><a href=''>知識文章</a></div>
+          <div><a href='<?php echo URL_ARTICLES . 'index' . HTML;?>'>知識文章</a><a href='<?php echo $article['url'];?>'><?php echo $article['title'];?></a></div>
         </header>
 
         <article id='article_main' class='article'>
           <header>
-            <h1><a href=''>vívosmart HR 開箱文</a></h1>
-            <div class="fb-like" data-href="asd" data-send="false" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+            <h1><a href='<?php echo $article['url'];?>'><?php echo $article['title'];?></a></h1>
+            <div class="fb-like" data-href="<?php echo $article['url'];?>" data-send="false" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
           </header>
 
-          <section class='article_format'>
-            <p>話說.. 最近又看上了一款運動手環！</p>
-            <p>說到運動手環，去年買的 vívosmart 算是這台 vívosmart HR 的前身！</p>
-            <p>其實去年就打算買可以記錄心率的穿戴裝置..</p>
-            <p>話說.. 最近又看上了一款運動手環！</p>
-            <p>說到運動手環，去年買的 vívosmart 算是這台 vívosmart HR 的前身！</p>
-            <p>其實去年就打算買可以記錄心率的穿戴裝置..</p>
-            <p>話說.. 最近又看上了一款運動手環！</p>
-            <figure href=''>
-              <img src='http://pic.zeusdesign.com.tw/upload/ckeditor_pictures/name/0/0/0/1/400h_617152353_56ae0a58f3cb8.jpg'>
-              <figcaption data-description='asdasdads'>ad</figcaption>
-            </figure>
-
-            <p>說到運動手環，去年買的 vívosmart 算是這台 vívosmart HR 的前身！</p>
-            <p>其實去年就打算買可以記錄心率的穿戴裝置..</p>
+          <section class='article_format' data-url='<?php echo $article['url'];?>'>
+            <?php echo $article['content'];?>
           </section>
 
-          <ul id='tags'>
-            <li>
-              <a href=''>asdasd</a>
-            </li>
-            <li>
-              <a href=''>asdasd</a>
-            </li>
-          </ul>
-
-          <ul id='sources'>
-            <li>
-              <a href='' target='_blank'>asdasd</a><span><a href='' target='_blank'>adasd</a></span>
-            </li>
-            <li>
-              <a href='' target='_blank'>asdasd</a><span><a href='' target='_blank'>adasd</a></span>
-            </li>
-          </ul>
+    <?php if ($article['tags']) { ?>
+            <ul id='tags'>
+        <?php foreach ($article['tags'] as $tag) { ?>
+                <li><a href='<?php echo $tag['url'] . 'index' . HTML;?>'><?php echo $tag['name'];?></a></li>
+        <?php } ?>
+            </ul>
+    <?php }
+          if ($article['sources']) { ?>
+            <ul id='sources'>
+        <?php foreach ($article['sources'] as $source) { ?>
+                <li><a href='<?php echo $source['href'];?>' target='_blank'><?php echo $source['title'];?></a><span><a href='<?php echo $source['href'];?>' target='_blank'><?php echo $source['href'];?></a></span></li>
+        <?php } ?>
+            </ul>
+    <?php } ?>
 
           <footer>
-            <div><span>張貼者：</span><a href='' target='_blank'>asd</a>於<time datetime='12'>12</time>發佈。</div>
-            <div>瀏覽人數：1 人</div>
+            <div><span>張貼者：</span><a href='<?php echo $article['user']['url'];?>' target='_blank'><?php echo $article['user']['name'];?></a>於<time datetime='<?php echo $article['created_at'];?>'><?php echo $article['created_at'];?></time>發佈。</div>
+            <div>瀏覽人數：<?php echo $article['pv'];?> 人</div>
           </footer>
 
         </article>
 
         <div id='article_aside'>
-          <aside class='f'>
-            <h3>標籤分類</h3>
-            <ul>
-              <li><a href=''>adasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasd</a></li>
-              <li><a href=''>adasd</a></li>
-            </ul>
-          </aside>
-
-
-          <aside>
-            <h3>熱門文章</h3>
-            <ul>
-              <li><a href=''>adasd</a></li>
-              <li><a href=''>adasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasd</a></li>
-              <li><a href=''>adasd</a></li>
-            </ul>
-          </aside>
-
-
-          <aside>
-            <h3>最新文章</h3>
-            <ul>
-              <li><a href=''>adasd</a></li>
-              <li><a href=''>adasd</a></li>
-              <li><a href=''>adasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasdadasd</a></li>
-            </ul>
-          </aside>
+    <?php if ($tags) { ?>
+            <aside class='f'>
+              <h3>標籤分類</h3>
+              <ul>
+          <?php foreach ($tags as $tag) { ?>
+                  <li><a href='<?php echo $tag['url'] . 'index' . HTML;?>'><?php echo $tag['name'];?></a></li>
+          <?php } ?>
+              </ul>
+            </aside>
+    <?php }
+          if ($hots = array_slice ($hots, 0, 5)) { ?>
+            <aside>
+              <h3>熱門文章</h3>
+              <ul>
+          <?php foreach ($hots as $hot) { ?>
+                  <li><a href='<?php echo $hot['url'];?>'><?php echo $hot['title'];?></a></li>
+          <?php } ?>
+              </ul>
+            </aside>
+    <?php }
+          if ($news = array_slice ($news, 0, 5)) { ?>
+            <aside>
+              <h3>最新文章</h3>
+              <ul>
+          <?php foreach ($news as $new) { ?>
+                  <li><a href='<?php echo $new['url'];?>'><?php echo $new['title'];?></a></li>
+          <?php } ?>
+              </ul>
+            </aside>
+    <?php } ?>
         </div>
-
       </div>
 
       <?php echo $_footer;?>
