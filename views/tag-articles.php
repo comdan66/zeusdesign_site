@@ -7,7 +7,7 @@
 
     <title></title>
 
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700" rel="stylesheet" type="text/css" />
 <?php foreach (Min::css (
         'css/public' . CSS,
         'css/article' . CSS,
@@ -56,9 +56,9 @@
               </section>
 
             </article>
-    <?php } ?>
+    <?php }
 
-          <?php echo $pagination;?>
+          echo $pagination;?>
         </div>
         
         <div id='article_aside'>

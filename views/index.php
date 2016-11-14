@@ -7,7 +7,7 @@
 
     <title></title>
 
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700" rel="stylesheet" type="text/css" />
 <?php foreach (Min::css (
         'css/public' . CSS,
         'css/index' . CSS
@@ -48,7 +48,7 @@
         <?php if ($banners) {
                 foreach ($banners as $banner) { ?>
                   <figure class='_i'>
-                    <img alt='<?php echo $banner['title'];?> - 宙思設計 ZEUS // Design Studio' src='<?php echo $banner['cover'];?>' />
+                    <img alt='<?php echo $banner['title'];?> - 宙思設計 ZEUS // Design Studio' src='<?php echo $banner['cover']['800w'];?>' />
                     <div>
                       <h3><?php echo $banner['title'];?></h3>
                       <figcaption><?php echo $banner['content'];?></figcaption>
@@ -116,7 +116,7 @@
           foreach ($promos as $promo) { ?>
             <section class='work'>
               <a href='<?php echo $promo['link'];?>' class='_i'<?php echo $promo['target'] ? " target='_blank'" : '';?>>
-                <img alt='<?php echo $promo['title'];?> - 宙思設計 ZEUS // Design Studio' src='<?php echo $promo['cover'];?>'>
+                <img alt='<?php echo $promo['title'];?> - 宙思設計 ZEUS // Design Studio' src='<?php echo $promo['cover']['500w'];?>'>
               </a>
 
               <header>

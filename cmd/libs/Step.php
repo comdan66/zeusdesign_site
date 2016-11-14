@@ -30,6 +30,7 @@ class Step {
   public static $uploadDirs = array ();
   public static $s3Files = array ();
   public static $localFiles = array ();
+  public static $isCli = true;
   
   public static function progress ($str, $c = 0) {
     $isStr = !is_numeric ($c);
@@ -44,48 +45,62 @@ class Step {
     Step::$size = memory_get_usage () > Step::$size ? memory_get_usage () : Step::$size;
     $size = Step::memoryUnit (Step::$size - Step::$nowSize);
     $show = sprintf (' ' . self::color ('➜', 'W') . ' ' . self::color ($str . '(' . Step::$progress[$str]['i'] . '/' . Step::$progress[$str]['c'] . ')', 'g') . " - % 3d%% " . ($isStr ? '- ' . self::color ('完成！', 'C') : ''), Step::$progress[$str]['c'] ? ceil ((Step::$progress[$str]['i'] * 100) / Step::$progress[$str]['c']) : 100);
-    echo sprintf ("\r% -" . (91 + count ($matches['c']) + ($isStr ? 12 : 0)) . "s" .  self::color (sprintf ('% 7s', $size[0]), 'W') . ' ' . $size[1] . " " . ($isStr ? "\n" : ''), $show, 10);
+    if (Step::$isCli) echo sprintf ("\r% -" . (91 + count ($matches['c']) + ($isStr ? 12 : 0)) . "s" .  self::color (sprintf ('% 7s', $size[0]), 'W') . ' ' . $size[1] . " " . ($isStr ? "\n" : ''), $show, 10);
   }
   public static function start () {
     Step::$startTime = microtime (true);
-    echo "\n" . str_repeat ('=', 80) . "\n";
-    echo ' ' . self::color ('◎ 執行開始 ◎', 'P') . str_repeat (' ', 48) . '[' . self::color ('OA S3 Tools v1.0', 'y') . "]\n";
+    if (Step::$isCli) echo "\n" . str_repeat ('=', 80) . "\n";
+    if (Step::$isCli) echo ' ' . self::color ('◎ 執行開始 ◎', 'P') . str_repeat (' ', 48) . '[' . self::color ('OA S3 Tools v1.0', 'y') . "]\n";
   }
   public static function end () {
-    echo str_repeat ('=', 80) . "\n";
-    echo ' ' . self::color ('◎ 執行結束 ◎', 'P') . "\n";
-    echo str_repeat ('=', 80) . "\n";
+    if (Step::$isCli) echo str_repeat ('=', 80) . "\n";
+    if (Step::$isCli) echo ' ' . self::color ('◎ 執行結束 ◎', 'P') . "\n";
+    if (Step::$isCli) echo str_repeat ('=', 80) . "\n";
   }
   public static function showUrl () {
-    echo "\n";
-    echo " " . self::color ('➜', 'R') . " " . self::color ('您的網址是', 'G') . "：" . self::color (PROTOCOL . BUCKET . '/', 'W') . "\n\n";
-    echo str_repeat ('=', 80) . "\n";
+    if (Step::$isCli) echo "\n";
+    if (Step::$isCli) echo " " . self::color ('➜', 'R') . " " . self::color ('您的網址是', 'G') . "：" . self::color (PROTOCOL . BUCKET . '/', 'W') . "\n\n";
+    if (Step::$isCli) echo str_repeat ('=', 80) . "\n";
   }
   public static function memoryUnit ($size) {
     $units = array ('B','KB','MB','GB','TB','PB');
     return array (@round ($size / pow (1024, ($i = floor (log ($size, 1024)))), 2), $units[$i]);
   }
   public static function usage () {
-    echo str_repeat ('=', 80) . "\n";
+    if (Step::$isCli) echo str_repeat ('=', 80) . "\n";
     $size = Step::memoryUnit (memory_get_usage ());
-    echo ' ' . self::color ('➜', 'W') . ' ' . self::color ('使用記憶體：', 'R') . '' . self::color ($size[0], 'W') . ' ' . $size[1] . "\n";
-    echo str_repeat ('-', 80) . "\n";
+    if (Step::$isCli) echo ' ' . self::color ('➜', 'W') . ' ' . self::color ('使用記憶體：', 'R') . '' . self::color ($size[0], 'W') . ' ' . $size[1] . "\n";
+    if (Step::$isCli) echo str_repeat ('-', 80) . "\n";
 
-    echo ' ' . self::color ('➜', 'W') . ' ' . self::color ('執行時間：', 'R') . '' . self::color (round (microtime (true) - Step::$startTime, 4), 'W') . ' 秒' . "\n";
+    if (Step::$isCli) echo ' ' . self::color ('➜', 'W') . ' ' . self::color ('執行時間：', 'R') . '' . self::color (round (microtime (true) - Step::$startTime, 4), 'W') . ' 秒' . "\n";
   }
   public static function setUploadDirs ($args = array ()) {
     Step::$uploadDirs = $args;
   }
 
   public static function error ($errors = array ()) {
-    echo "\n" . str_repeat ('=', 80) . "\n";
-    echo " " . self::color ('➜', 'W') . ' ' . self::color ('有發生錯誤！', 'r') . "\n";
-    echo $errors ? str_repeat ('-', 80) . "\n" . implode ("\n" . str_repeat ('-', 80) . "\n", $errors) . "\n" : "";
-    echo str_repeat ('=', 80) . "\n";
+    if (Step::$isCli) echo "\n" . str_repeat ('=', 80) . "\n";
+    if (Step::$isCli) echo " " . self::color ('➜', 'W') . ' ' . self::color ('有發生錯誤！', 'r') . "\n";
+    if (Step::$isCli) echo $errors ? str_repeat ('-', 80) . "\n" . implode ("\n" . str_repeat ('-', 80) . "\n", $errors) . "\n" : "";
+    if (Step::$isCli) echo str_repeat ('=', 80) . "\n";
+    
+    if (!Step::$isCli) {
+      $message = 'Error';
+      $code = 405;
+
+      $server_protocol = (isset($_SERVER['SERVER_PROTOCOL'])) ? $_SERVER['SERVER_PROTOCOL'] : FALSE;
+      if (substr (php_sapi_name (), 0, 3) == 'cgi') header ('Status: ' . $code . ' ' . $message, true);
+      elseif (($server_protocol == 'HTTP/1.1') || ($server_protocol == 'HTTP/1.0')) header ($server_protocol . ' ' . $code . ' ' . $message, true, $code);
+      else header ('HTTP/1.1 ' . $code . ' ' . $message, true, $code);
+      header ('Content-Type: application/json');
+      echo json_encode (array (
+          'message' => $errors
+        ));
+    }
     exit ();
   }
   public static function newLine ($char, $str = '', $c = 0) {
-    echo str_repeat ($char, 80) . "\n";
+    if (Step::$isCli) echo str_repeat ($char, 80) . "\n";
     Step::$nowSize = Step::$size = memory_get_usage ();
     if ($str) Step::progress ($str, $c);
   }
@@ -306,6 +321,8 @@ class Step {
     flock($fp, LOCK_UN);
     fclose($fp);
 
+    chmod ($path, 0777);
+
     return true;
   }
   public static function loadView ($__o__p__ = '', $__o__d__ = array ()) {
@@ -328,6 +345,7 @@ class Step {
     return true;
   }
   public static function writeIndexHtml () {
+    
     Step::newLine ('-', '更新 Index HTML');
     $banners = json_decode (Step::readFile (PATH_APIS . 'banners.json'), true);
     $promos = json_decode (Step::readFile (PATH_APIS . 'promos.json'), true);
@@ -361,7 +379,6 @@ class Step {
 
     Step::progress ('更新 Contact HTML', '完成！');
   }
-
   public static function columnArray ($objects, $key) {
     return array_map (function ($object) use ($key) {
       return !is_array ($object) ? is_object ($object) ? $object->$key : $object : $object[$key];
@@ -372,7 +389,7 @@ class Step {
     Step::newLine ('-', '更新 Articles HTML');
 
     $articles = array_map (function ($article) {
-      $article['user']['url'] = 'https://www.facebook.com/' . $article['user']['fid'];
+      $article['user']['url'] = 'https://www.facebook.com/' . $article['user']['uid'];
 
       return array_merge ($article, array (
         'path' => PATH_ARTICLE . $article['id'] . '-' . oa_url ($article['title'] . HTML),
@@ -402,47 +419,65 @@ class Step {
 
     $limit = 10;
     $total = count ($articles);
-
-    for ($offset = 0; $offset < $total; $offset += $limit) {
-      $pagination = Pagination::initialize (array (
-        'total_rows' => $total, 'per_page' => $limit, 
-        'base_url' => URL_ARTICLES . '%s',
-        'offset' => $offset,
-      ))->create_links ();
-
-      if (!Step::writeFile (PATH_ARTICLES . (!$offset ? 'index' : $offset) . HTML, HTMLMin::minify (Step::loadView (PATH_VIEWS . 'articles' . PHP, array (
+    if ($total)
+      for ($offset = 0; $offset < $total; $offset += $limit) {
+        if (!Step::writeFile (PATH_ARTICLES . (!$offset ? 'index' : $offset) . HTML, HTMLMin::minify (Step::loadView (PATH_VIEWS . 'articles' . PHP, array (
+            '_header' => Step::loadView (PATH_VIEWS . '_header' . PHP, array ('active' => URL_ARTICLES)),
+            '_footer' => Step::loadView (PATH_VIEWS . '_footer' . PHP),
+            'tags' => $tags,
+            'articles' => array_slice ($articles, $offset, $limit),
+            'hots' => $hots,
+            'news' => $news,
+            'pagination' => Pagination::initialize (array (
+                'total_rows' => $total, 'per_page' => $limit, 
+                'base_url' => URL_ARTICLES . '%s',
+                'offset' => $offset,
+              ))->create_links (),
+          ))))) Step::error ();
+      }
+    else 
+      if (!Step::writeFile (PATH_ARTICLES . 'index' . HTML, HTMLMin::minify (Step::loadView (PATH_VIEWS . 'articles' . PHP, array (
           '_header' => Step::loadView (PATH_VIEWS . '_header' . PHP, array ('active' => URL_ARTICLES)),
           '_footer' => Step::loadView (PATH_VIEWS . '_footer' . PHP),
           'tags' => $tags,
-          'articles' => array_slice ($articles, $offset, $limit),
+          'articles' => [],
           'hots' => $hots,
           'news' => $news,
-          'pagination' => $pagination,
+          'pagination' => '',
         ))))) Step::error ();
-    }
 
     foreach ($tags as $tag) {
       $total = count ($tag['articles']);
       if (!file_exists ($tag['path'])) Step::mkdir777 ($tag['path']);
 
-      for ($offset = 0; $offset < $total; $offset += $limit) {
-        $pagination = Pagination::initialize (array (
-          'total_rows' => $total, 'per_page' => $limit, 
-          'base_url' => $tag['url'],
-          'offset' => $offset,
-        ))->create_links ();
-
-        if (!Step::writeFile ($tag['path'] . (!$offset ? 'index' : $offset) . HTML, HTMLMin::minify (Step::loadView (PATH_VIEWS . 'tag-articles' . PHP, array (
+      if ($total)
+        for ($offset = 0; $offset < $total; $offset += $limit) {
+          if (!Step::writeFile ($tag['path'] . (!$offset ? 'index' : $offset) . HTML, HTMLMin::minify (Step::loadView (PATH_VIEWS . 'tag-articles' . PHP, array (
+              '_header' => Step::loadView (PATH_VIEWS . '_header' . PHP, array ('active' => URL_ARTICLES)),
+              '_footer' => Step::loadView (PATH_VIEWS . '_footer' . PHP),
+              'tag' => $tag,
+              'tags' => $tags,
+              'articles' => array_slice ($tag['articles'], $offset, $limit),
+              'hots' => $hots,
+              'news' => $news,
+              'pagination' => Pagination::initialize (array (
+                  'total_rows' => $total, 'per_page' => $limit, 
+                  'base_url' => $tag['url'],
+                  'offset' => $offset,
+                ))->create_links (),
+            ))))) Step::error ();
+        }
+      else 
+        if (!Step::writeFile ($tag['path'] . 'index' . HTML, HTMLMin::minify (Step::loadView (PATH_VIEWS . 'tag-articles' . PHP, array (
             '_header' => Step::loadView (PATH_VIEWS . '_header' . PHP, array ('active' => URL_ARTICLES)),
             '_footer' => Step::loadView (PATH_VIEWS . '_footer' . PHP),
             'tag' => $tag,
             'tags' => $tags,
-            'articles' => array_slice ($tag['articles'], $offset, $limit),
+            'articles' => [],
             'hots' => $hots,
             'news' => $news,
-            'pagination' => $pagination,
+            'pagination' => '',
           ))))) Step::error ();
-      }
     }
 
     foreach ($articles as $article) {
@@ -461,7 +496,7 @@ class Step {
     Step::newLine ('-', '更新 Works HTML');
 
     $works = array_map (function ($work) {
-      $work['user']['url'] = 'https://www.facebook.com/' . $work['user']['fid'];
+      $work['user']['url'] = 'https://www.facebook.com/' . $work['user']['uid'];
 
       return array_merge ($work, array (
         'path' => PATH_WORK . $work['id'] . '-' . oa_url ($work['title'] . HTML),
@@ -492,42 +527,57 @@ class Step {
     $limit = 9;
     $total = count ($works);
 
-    for ($offset = 0; $offset < $total; $offset += $limit) {
-      $pagination = Pagination::initialize (array (
-        'total_rows' => $total, 'per_page' => $limit, 
-        'base_url' => URL_WORKS . '%s',
-        'offset' => $offset,
-      ))->create_links ();
-
-      if (!Step::writeFile (PATH_WORKS . (!$offset ? 'index' : $offset) . HTML, HTMLMin::minify (Step::loadView (PATH_VIEWS . 'works' . PHP, array (
+    if ($total)
+      for ($offset = 0; $offset < $total; $offset += $limit) {
+        if (!Step::writeFile (PATH_WORKS . (!$offset ? 'index' : $offset) . HTML, HTMLMin::minify (Step::loadView (PATH_VIEWS . 'works' . PHP, array (
+            '_header' => Step::loadView (PATH_VIEWS . '_header' . PHP, array ('active' => URL_WORKS)),
+            '_footer' => Step::loadView (PATH_VIEWS . '_footer' . PHP),
+            'tags' => $ntags,
+            'works' => array_slice ($works, $offset, $limit),
+            'pagination' => Pagination::initialize (array (
+              'total_rows' => $total, 'per_page' => $limit, 
+              'base_url' => URL_WORKS . '%s',
+              'offset' => $offset,
+            ))->create_links (),
+          ))))) Step::error ();
+      }
+    else 
+      if (!Step::writeFile (PATH_WORKS . 'index' . HTML, HTMLMin::minify (Step::loadView (PATH_VIEWS . 'works' . PHP, array (
           '_header' => Step::loadView (PATH_VIEWS . '_header' . PHP, array ('active' => URL_WORKS)),
           '_footer' => Step::loadView (PATH_VIEWS . '_footer' . PHP),
           'tags' => $ntags,
-          'works' => array_slice ($works, $offset, $limit),
-          'pagination' => $pagination,
+          'works' => [],
+          'pagination' => '',
         ))))) Step::error ();
-    }
 
     foreach ($tags as $tag) {
       $total = count ($tag['works']);
       if (!file_exists ($tag['path'])) Step::mkdir777 ($tag['path']);
 
-      for ($offset = 0; $offset < $total; $offset += $limit) {
-        $pagination = Pagination::initialize (array (
-          'total_rows' => $total, 'per_page' => $limit, 
-          'base_url' => $tag['url'],
-          'offset' => $offset,
-        ))->create_links ();
-
-        if (!Step::writeFile ($tag['path'] . (!$offset ? 'index' : $offset) . HTML, HTMLMin::minify (Step::loadView (PATH_VIEWS . 'tag-works' . PHP, array (
+      if ($total)
+        for ($offset = 0; $offset < $total; $offset += $limit) {
+          if (!Step::writeFile ($tag['path'] . (!$offset ? 'index' : $offset) . HTML, HTMLMin::minify (Step::loadView (PATH_VIEWS . 'tag-works' . PHP, array (
+              '_header' => Step::loadView (PATH_VIEWS . '_header' . PHP, array ('active' => URL_WORKS)),
+              '_footer' => Step::loadView (PATH_VIEWS . '_footer' . PHP),
+              'tag' => $tag,
+              'tags' => $ntags,
+              'works' => array_slice ($tag['works'], $offset, $limit),
+              'pagination' => Pagination::initialize (array (
+                  'total_rows' => $total, 'per_page' => $limit, 
+                  'base_url' => $tag['url'],
+                  'offset' => $offset,
+                ))->create_links (),
+            ))))) Step::error ();
+        }
+      else
+        if (!Step::writeFile ($tag['path'] . 'index' . HTML, HTMLMin::minify (Step::loadView (PATH_VIEWS . 'tag-works' . PHP, array (
             '_header' => Step::loadView (PATH_VIEWS . '_header' . PHP, array ('active' => URL_WORKS)),
             '_footer' => Step::loadView (PATH_VIEWS . '_footer' . PHP),
             'tag' => $tag,
             'tags' => $ntags,
-            'works' => array_slice ($tag['works'], $offset, $limit),
-            'pagination' => $pagination,
+            'works' => [],
+            'pagination' => '',
           ))))) Step::error ();
-      }
     }
 
     foreach ($works as $work) {
@@ -538,5 +588,125 @@ class Step {
         ))))) Step::error ();
     }
     Step::progress ('更新 Works HTML', '完成！');
+  }
+
+  public static function notCil () {
+    Step::$isCli = false;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // // public static function cleanIndexHtml () {
+  // //   Step::newLine ('-', '清除 Index HTML 檔案');
+  // //   if (file_exists (PATH . 'index' . HTML) && !@unlink (PATH . 'index' . HTML)) Step::error ();
+  // //   Step::progress ('清除 Index HTML 檔案', '完成！');
+  // // }
+  // // public static function cleanAboutHtml () {
+  // //   Step::newLine ('-', '清除 About HTML 檔案');
+  // //   if (file_exists (PATH . 'about' . HTML) && !@unlink (PATH . 'about' . HTML)) Step::error ();
+  // //   Step::progress ('清除 About HTML 檔案', '完成！');
+  // // }
+  // // public static function cleanContactHtml () {
+  // //   Step::newLine ('-', '清除 Contact HTML 檔案');
+  // //   if (file_exists (PATH . 'contact' . HTML) && !@unlink (PATH . 'contact' . HTML)) Step::error ();
+  // //   Step::progress ('清除 Contact HTML 檔案', '完成！');
+  // // }
+  // // public static function cleanTagsHtml () {
+  // //   $lasts = array ();
+  // //   Step::mergeArrayRecursive (Step::directoryMap (PATH_TAGS), $lasts, rtrim (PATH_TAGS, DIRECTORY_SEPARATOR));
+  // //   Step::newLine ('-', '清除 Tags Html 檔案', count ($lasts));
+
+  // //   if ($errors = array_filter (array_map (function ($last) {
+  // //       Step::progress ('清除 Tags Html 檔案');
+  // //       return !unlink ($last) ? ' 檔案：' . $last : '';
+  // //     }, $lasts))) Step::error ($errors);
+
+  // //   Step::progress ('清除 Tags Html 檔案', '完成！');
+  // // }
+  // public static function cleanArticlesHtml () {
+  //   Step::newLine ('-', '清除 Articles Html 檔案', count ($files = array_filter (array_map (function ($file) { return PATH_ARTICLES . $file; }, Step::directoryList (PATH_ARTICLES)), function ($file) { return in_array (pathinfo ($file, PATHINFO_EXTENSION), array ('html')); })));
+
+  //   if ($errors = array_filter (array_map (function ($file) {
+  //       Step::progress ('清除 Articles Html 檔案');
+  //       return !unlink ($file) ? ' 檔案：' . $file : '';
+  //     }, $files))) Step::error ($errors);
+
+  //   Step::progress ('清除 Articles Html 檔案', '完成！');
+
+  //   Step::newLine ('-', '清除 Article Html 檔案', count ($files = array_filter (array_map (function ($file) { return PATH_ARTICLE . $file; }, Step::directoryList (PATH_ARTICLE)), function ($file) { return in_array (pathinfo ($file, PATHINFO_EXTENSION), array ('html')); })));
+  //   if ($errors = array_filter (array_map (function ($file) {
+  //       Step::progress ('清除 Article Html 檔案');
+  //       return !unlink ($file) ? ' 檔案：' . $file : '';
+  //     }, $files))) Step::error ($errors);
+
+  //   Step::progress ('清除 Article Html 檔案', '完成！');
+  // }
+  // public static function cleanWorksHtml () {
+  //   Step::newLine ('-', '清除 Wroks Html 檔案', count ($files = array_filter (array_map (function ($file) { return PATH_WORKS . $file; }, Step::directoryList (PATH_WORKS)), function ($file) { return in_array (pathinfo ($file, PATHINFO_EXTENSION), array ('html')); })));
+
+  //   if ($errors = array_filter (array_map (function ($file) {
+  //       Step::progress ('清除 Wroks Html 檔案');
+  //       return !unlink ($file) ? ' 檔案：' . $file : '';
+  //     }, $files))) Step::error ($errors);
+
+  //   Step::progress ('清除 Wroks Html 檔案', '完成！');
+
+
+  //   Step::newLine ('-', '清除 Work Html 檔案', count ($files = array_filter (array_map (function ($file) { return PATH_WORK . $file; }, Step::directoryList (PATH_WORK)), function ($file) { return in_array (pathinfo ($file, PATHINFO_EXTENSION), array ('html')); })));
+  //   if ($errors = array_filter (array_map (function ($file) {
+  //       Step::progress ('清除 Work Html 檔案');
+  //       return !unlink ($file) ? ' 檔案：' . $file : '';
+  //     }, $files))) Step::error ($errors);
+
+  //   Step::progress ('清除 Work Html 檔案', '完成！');
+  // }
+
+  public static function cleanBuild () {
+    Step::newLine ('-', '清除 上一次 檔案', count ($paths = array (PATH_ASSET, PATH_ARTICLES, PATH_WORKS, PATH_TAGS, PATH_ARTICLE, PATH_WORK)));
+    foreach ($paths as $path) {
+      Step::directoryDelete ($path, false);
+      Step::progress ('清除 上一次 檔案');
+    }
+    Step::progress ('清除 上一次 檔案', '完成！');
+  }
+  public static function directoryDelete ($dir, $is_root = true) {
+    if (!file_exists ($dir)) return true;
+    
+    $dir = rtrim ($dir, DIRECTORY_SEPARATOR);
+    if (!$currentDir = @opendir ($dir))
+      return false;
+
+    while (false !== ($filename = @readdir ($currentDir)))
+      if (($filename != '.') && ($filename != '..'))
+        if (is_dir ($dir . DIRECTORY_SEPARATOR . $filename)) if (substr ($filename, 0, 1) != '.') Step::directoryDelete ($dir . DIRECTORY_SEPARATOR . $filename); else;
+        else unlink ($dir . DIRECTORY_SEPARATOR . $filename);
+
+    @closedir ($currentDir);
+
+    return $is_root ? @rmdir ($dir) : true;
   }
 }

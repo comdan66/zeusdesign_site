@@ -5,6 +5,7 @@ cmd/.sass-cache/*
 
 cmd/node_modules/*
 cmd/npm-debug.log
+cmd/config.php
 
 /articles/*
 /article/*

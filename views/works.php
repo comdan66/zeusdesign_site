@@ -7,7 +7,7 @@
 
     <title></title>
 
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700" rel="stylesheet" type="text/css" />
 <?php foreach (Min::css (
         'css/public' . CSS,
         'css/work' . CSS,
@@ -40,7 +40,7 @@
             foreach ($works as $work) { ?>
               <section class='work'>
                 <a href='<?php echo $work['url'];?>' class='_i'>
-                  <img alt='<?php echo $work['title'];?>' src='<?php echo $work['cover']['c450'];?>'>
+                  <img alt='<?php echo $work['title'];?>' src='<?php echo $work['cover']['c400'];?>'>
                 </a>
 
                 <header>
