@@ -16,8 +16,8 @@ if (!function_exists ('oa_url_encode')) {
   }
 }
 if (!function_exists ('remove_ckedit_tag')) {
-  function remove_ckedit_tag ($text) {
-    return preg_replace ("/\s+/u", "", preg_replace ("/&#?[a-z0-9]+;/iu", "", str_replace ('▼', '', str_replace ('▲', '', trim (strip_tags ($text))))));
+  function remove_ckedit_tag ($text, $space = true) {
+    return preg_replace ("/\s+/u", $space ? " " : "", preg_replace ("/&#?[a-z0-9]+;/iu", "", str_replace ('▼', '', str_replace ('▲', '', trim (strip_tags ($text))))));
   }
 }
 
@@ -593,97 +593,6 @@ class Step {
   public static function notCil () {
     Step::$isCli = false;
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // // public static function cleanIndexHtml () {
-  // //   Step::newLine ('-', '清除 Index HTML 檔案');
-  // //   if (file_exists (PATH . 'index' . HTML) && !@unlink (PATH . 'index' . HTML)) Step::error ();
-  // //   Step::progress ('清除 Index HTML 檔案', '完成！');
-  // // }
-  // // public static function cleanAboutHtml () {
-  // //   Step::newLine ('-', '清除 About HTML 檔案');
-  // //   if (file_exists (PATH . 'about' . HTML) && !@unlink (PATH . 'about' . HTML)) Step::error ();
-  // //   Step::progress ('清除 About HTML 檔案', '完成！');
-  // // }
-  // // public static function cleanContactHtml () {
-  // //   Step::newLine ('-', '清除 Contact HTML 檔案');
-  // //   if (file_exists (PATH . 'contact' . HTML) && !@unlink (PATH . 'contact' . HTML)) Step::error ();
-  // //   Step::progress ('清除 Contact HTML 檔案', '完成！');
-  // // }
-  // // public static function cleanTagsHtml () {
-  // //   $lasts = array ();
-  // //   Step::mergeArrayRecursive (Step::directoryMap (PATH_TAGS), $lasts, rtrim (PATH_TAGS, DIRECTORY_SEPARATOR));
-  // //   Step::newLine ('-', '清除 Tags Html 檔案', count ($lasts));
-
-  // //   if ($errors = array_filter (array_map (function ($last) {
-  // //       Step::progress ('清除 Tags Html 檔案');
-  // //       return !unlink ($last) ? ' 檔案：' . $last : '';
-  // //     }, $lasts))) Step::error ($errors);
-
-  // //   Step::progress ('清除 Tags Html 檔案', '完成！');
-  // // }
-  // public static function cleanArticlesHtml () {
-  //   Step::newLine ('-', '清除 Articles Html 檔案', count ($files = array_filter (array_map (function ($file) { return PATH_ARTICLES . $file; }, Step::directoryList (PATH_ARTICLES)), function ($file) { return in_array (pathinfo ($file, PATHINFO_EXTENSION), array ('html')); })));
-
-  //   if ($errors = array_filter (array_map (function ($file) {
-  //       Step::progress ('清除 Articles Html 檔案');
-  //       return !unlink ($file) ? ' 檔案：' . $file : '';
-  //     }, $files))) Step::error ($errors);
-
-  //   Step::progress ('清除 Articles Html 檔案', '完成！');
-
-  //   Step::newLine ('-', '清除 Article Html 檔案', count ($files = array_filter (array_map (function ($file) { return PATH_ARTICLE . $file; }, Step::directoryList (PATH_ARTICLE)), function ($file) { return in_array (pathinfo ($file, PATHINFO_EXTENSION), array ('html')); })));
-  //   if ($errors = array_filter (array_map (function ($file) {
-  //       Step::progress ('清除 Article Html 檔案');
-  //       return !unlink ($file) ? ' 檔案：' . $file : '';
-  //     }, $files))) Step::error ($errors);
-
-  //   Step::progress ('清除 Article Html 檔案', '完成！');
-  // }
-  // public static function cleanWorksHtml () {
-  //   Step::newLine ('-', '清除 Wroks Html 檔案', count ($files = array_filter (array_map (function ($file) { return PATH_WORKS . $file; }, Step::directoryList (PATH_WORKS)), function ($file) { return in_array (pathinfo ($file, PATHINFO_EXTENSION), array ('html')); })));
-
-  //   if ($errors = array_filter (array_map (function ($file) {
-  //       Step::progress ('清除 Wroks Html 檔案');
-  //       return !unlink ($file) ? ' 檔案：' . $file : '';
-  //     }, $files))) Step::error ($errors);
-
-  //   Step::progress ('清除 Wroks Html 檔案', '完成！');
-
-
-  //   Step::newLine ('-', '清除 Work Html 檔案', count ($files = array_filter (array_map (function ($file) { return PATH_WORK . $file; }, Step::directoryList (PATH_WORK)), function ($file) { return in_array (pathinfo ($file, PATHINFO_EXTENSION), array ('html')); })));
-  //   if ($errors = array_filter (array_map (function ($file) {
-  //       Step::progress ('清除 Work Html 檔案');
-  //       return !unlink ($file) ? ' 檔案：' . $file : '';
-  //     }, $files))) Step::error ($errors);
-
-  //   Step::progress ('清除 Work Html 檔案', '完成！');
-  // }
 
   public static function cleanBuild () {
     Step::newLine ('-', '清除 上一次 檔案', count ($paths = array (PATH_ASSET, PATH_ARTICLES, PATH_WORKS, PATH_TAGS, PATH_ARTICLE, PATH_WORK)));
