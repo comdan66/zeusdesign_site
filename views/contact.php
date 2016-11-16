@@ -90,7 +90,7 @@
           <h1>聯絡我們</h1>
         </header>
 
-        <div id='msg' class='i'>123324</div>
+        <div id='msg' class='i'></div>
 
         <aside id='contacts'>
           <p>有設計相關問題嗎?</p>
@@ -113,7 +113,7 @@
         </aside>
 
         <section id='form'>
-          <form method='post' action=''>
+          <form method='post' action='' id='contact_fm'>
             <h2>聯絡我們</h2>
 
             <label for='name'>稱呼：</label>
@@ -122,7 +122,7 @@
             <label for='email'>E-Mail：</label>
             <input type='text' id='email' name='email' class='required email' maxLength='200' value='<?php echo isset ($posts['email']) ? $posts['email'] : '';?>' placeholder='請輸入您的電子郵件信箱..' />
 
-            <label for='message'>留言：</label>
+            <label for='message'>留言內容：</label>
             <textarea id='message' name='message' class='required' class='autosize' placeholder='請輸入您的建議或意見..' rows='6'><?php echo isset ($posts['message']) ? $posts['message'] : '';?></textarea>
 
             <button type='submit'>送出</button>

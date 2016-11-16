@@ -101,7 +101,16 @@ $(function () {
     $.ajax ({
       url: 'https://admin.zeusdesign.com.tw/api/pv/' + k + '/' + id,
       async: true, cache: false, dataType: 'json', type: 'GET',
-    }).done (function (result) {}).fail (function (result) { }).complete (function (result) { });
+    }).complete (function (result) { });
+  }
+  window.func.submitContact = function (name, email, message, cb) {
+    $.ajax ({
+      url: 'https://admin.zeusdesign.com.tw/api/contacts/',
+      async: true, cache: false, dataType: 'json', type: 'POST',
+      data: {
+        name: name, email: email, message: message
+      }
+    }).complete (cb);
   }
 
   $('.article_format p>img, .work_format p>img').map (function (i) {
@@ -124,4 +133,32 @@ $(function () {
   });
   // $('#container figure').imgLiquid ({verticalAlign: 'center'});
   // initPhotoSwipeFromDOM ('#container', 'figure');
+
+
+  $('#contact_fm').submit (function () {
+    var $name = $('#name');
+    var $email = $('#email');
+    var $message = $('#message');
+
+    if ($name.val ().length <= 0) {
+      alert ('您沒填寫稱呼。');
+      return false;
+    }
+    if ($email.val ().length <= 0) {
+      alert ('您沒填寫 E-Mail。');
+      return false;
+    }
+    if ($message.val ().length <= 0) {
+      alert ('您沒填寫留言內容。');
+      return false;
+    }
+
+    window.func.submitContact ($name.val (), $email.val (), $message.val (), function () {
+      $('#msg').text ('感謝您的寶貴建議，我們會盡快的回覆您。');
+      $name.val ('');
+      $email.val ('');
+      $message.val ('');
+    });
+    return false;
+  });
 });
