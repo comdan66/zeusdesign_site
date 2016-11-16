@@ -31,7 +31,7 @@
     <meta property="article:modified_time" content="<?php echo date ('c', strtotime ($work['updated_at']));?>" />
     <meta property="article:published_time" content="<?php echo date ('c', strtotime ($work['created_at']));?>" />
 
-    <meta property="og:image" content="<?php echo $work['cover']['c1200'];?>" alt="<?php echo $article['title'] . ' - ' . TITLE;?>" />
+    <meta property="og:image" content="<?php echo $work['cover']['c1200'];?>" alt="<?php echo $work['title'] . ' - ' . TITLE;?>" />
     <meta property="og:image:type" tag="larger" content="<?php echo 'image/' . (($pi = pathinfo ($work['cover']['c1200'])) && $pi['extension'] ? $pi['extension'] : 'jpg');?>" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -149,5 +149,18 @@
 
       <?php echo $_footer;?>
     </div>
+
+    <div class='_scope' itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a itemprop="url" href='<?php echo URL;?>'><span itemprop="title"><?php echo TITLE;?></span></a>
+    </div>
+
+    <div class='_scope' itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a itemprop="url" href='<?php echo PATH_WORKS . 'index' . HTML;?>'><span itemprop="title">設計作品</span></a>
+    </div>
+
+    <div class='_scope' itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a itemprop="url" href='<?php echo $work['url'];?>'><span itemprop="title"><?php echo $work['title'];?></span></a>
+    </div>
+
   </body>
 </html>

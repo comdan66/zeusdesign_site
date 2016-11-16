@@ -156,6 +156,17 @@
       <?php echo $_footer;?>
     </div>
 
+    <div class='_scope' itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a itemprop="url" href='<?php echo URL;?>'><span itemprop="title"><?php echo TITLE;?></span></a>
+    </div>
+
+    <div class='_scope' itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a itemprop="url" href='<?php echo PATH_ARTICLES . 'index' . HTML;?>'><span itemprop="title">知識文章</span></a>
+    </div>
+
+    <div class='_scope' itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a itemprop="url" href='<?php echo $article['url'];?>'><span itemprop="title"><?php echo $article['title'];?></span></a>
+    </div>
 
   </body>
 </html>
