@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="tw">
+<html amp lang="tw">
   <head>
+    <meta charset="utf-8">
     <meta http-equiv="Content-Language" content="zh-tw" />
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 
     <title>知識文章 - <?php echo TITLE;?></title>
 <?php if (DEV) { ?>
@@ -73,6 +74,8 @@ echo json_encode (array (
       ), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);?>
     </script>
 
+    <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
   </head>
   <body lang="zh-tw">
     
@@ -146,7 +149,7 @@ echo json_encode (array (
       </div>
       <?php echo $_footer;?>
     </div>
-    
+
     <div class='_scope' itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
       <a itemprop="url" href='<?php echo URL;?>'><span itemprop="title"><?php echo TITLE;?></span></a>
     </div>

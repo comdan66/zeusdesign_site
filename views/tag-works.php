@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="tw">
+<html amp lang="tw">
   <head>
+    <meta charset="utf-8">
     <meta http-equiv="Content-Language" content="zh-tw" />
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 
-    <title><?php echo $tag['name'];?>設計作品 - <?php echo TITLE;?></title>
+    <title><?php echo $tag['name'];?>作品 - <?php echo TITLE;?></title>
 <?php if (DEV) { ?>
         <meta name="robots" content="noindex,nofollow" />
 <?php } else { ?>
@@ -16,7 +17,7 @@
 
     <meta property="og:site_name" content="<?php echo TITLE;?>" />
     <meta property="og:url" content="<?php echo $tag['url'] . 'index' . HTML;?>" />
-    <meta property="og:title" content="<?php echo $tag['name'];?>設計作品 - <?php echo TITLE;?>" />
+    <meta property="og:title" content="<?php echo $tag['name'];?>作品 - <?php echo TITLE;?>" />
     <meta property="og:description" content="<?php echo mb_strimwidth (preg_replace ("/\s+/u", "", DESCRIPTION), 0, 300, '…','UTF-8');?>" />
 
     <meta property="fb:admins" content="<?php echo FB_ADMIN_ID;?>" />
@@ -73,7 +74,8 @@ echo json_encode (array (
       ), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);?>
     </script>
 
-
+    <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
   </head>
   <body lang="zh-tw">
     
@@ -120,7 +122,7 @@ echo json_encode (array (
       </div>
       <?php echo $_footer;?>
     </div>
-    
+
     <div class='_scope' itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
       <a itemprop="url" href='<?php echo URL;?>'><span itemprop="title"><?php echo TITLE;?></span></a>
     </div>
@@ -130,7 +132,7 @@ echo json_encode (array (
     </div>
 
     <div class='_scope' itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-      <a itemprop="url" href='<?php echo $tag['url'] . 'index' . HTML;?>'><span itemprop="title"><?php echo $tag['name'];?>設計作品</span></a>
+      <a itemprop="url" href='<?php echo $tag['url'] . 'index' . HTML;?>'><span itemprop="title"><?php echo $tag['name'];?>作品</span></a>
     </div>
 
   </body>
