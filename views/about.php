@@ -123,12 +123,17 @@
             </header>
             <p>「宙思設計有限公司」是由各領域專業的設計師組合而成的團隊，從品牌創始之初到實體印刷製作物及網站製作，提供整體的服務與規劃，滿足客戶各方面的需求。</p>
           </section>
-
         </article>
       </div>
-
-
       <?php echo $_footer;?>
+    </div>
+    
+    <div class='_scope' itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a itemprop="url" href='<?php echo URL;?>'><span itemprop="title"><?php echo TITLE;?></span></a>
+    </div>
+    
+    <div class='_scope' itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a itemprop="url" href='<?php echo PAGE_URL_ABOUT;?>'><span itemprop="title">關於宙思</span></a>
     </div>
 
   </body>

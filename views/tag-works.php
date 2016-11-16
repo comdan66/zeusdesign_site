@@ -118,8 +118,20 @@ echo json_encode (array (
           } ?>
         </div>
       </div>
-
       <?php echo $_footer;?>
     </div>
+    
+    <div class='_scope' itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a itemprop="url" href='<?php echo URL;?>'><span itemprop="title"><?php echo TITLE;?></span></a>
+    </div>
+
+    <div class='_scope' itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a itemprop="url" href='<?php echo PATH_WORKS . 'index' . HTML;?>'><span itemprop="title">設計作品</span></a>
+    </div>
+
+    <div class='_scope' itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a itemprop="url" href='<?php echo $tag['url'] . 'index' . HTML;?>'><span itemprop="title"><?php echo $tag['name'];?>設計作品</span></a>
+    </div>
+
   </body>
 </html>

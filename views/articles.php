@@ -141,13 +141,19 @@ echo json_encode (array (
               </ul>
             </aside>
     <?php } ?>
-
           <?php echo $pagination;?>
         </div>
-
       </div>
-
       <?php echo $_footer;?>
     </div>
+    
+    <div class='_scope' itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a itemprop="url" href='<?php echo URL;?>'><span itemprop="title"><?php echo TITLE;?></span></a>
+    </div>
+
+    <div class='_scope' itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+      <a itemprop="url" href='<?php echo PATH_ARTICLES . 'index' . HTML;?>'><span itemprop="title">知識文章</span></a>
+    </div>
+
   </body>
 </html>
