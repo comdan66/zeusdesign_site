@@ -36,6 +36,10 @@
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
 
+    <link rel="chitorch icon" href="<?php echo FAVICON;?>">
+    <link rel="canonical" href="<?php echo $work['url'];?>" />
+    <link rel="alternate" href="<?php echo $work['url'];?>" hreflang="zh-Hant" />
+
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700" rel="stylesheet" type="text/css" />
 <?php foreach (Min::css (
         'css/public' . CSS,

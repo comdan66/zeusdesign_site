@@ -48,3 +48,4 @@ define ('DESCRIPTION', '宙思設計團隊擁有各領域的人才，我們服�
 define ('OG_IMG', PROTOCOL . BUCKET . '/img/og/v1.jpg');
 define ('OG_IMG_TYPE', 'image/' . (($pi = pathinfo (OG_IMG)) && $pi['extension'] ? $pi['extension'] : 'jpg'));
 
+define ('FAVICON', PROTOCOL . BUCKET . '/img/favicon/v1/favicon.ico');
