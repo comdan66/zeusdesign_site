@@ -45,7 +45,8 @@ define ('PATH_WORK', PATH . 'work' . DIRECTORY_SEPARATOR);
 define ('TITLE', 'ZEUS // Design Studio');
 define ('KEYWORDS', '宙思設計,ZEUS,網頁設計,品牌設計,平面設計,包裝設計,RWD網頁設計,APP設計,網頁外包');
 define ('DESCRIPTION', '宙思設計團隊擁有各領域的人才，我們服務廣泛，凡舉網頁、平面、包裝、印刷及攝影皆可製作，宙思希望能以最完整的服務與最精湛的設計達成您的需求！');
-define ('OG_IMG', PROTOCOL . BUCKET . '/img/og/v1.jpg');
+define ('OG_IMG', PROTOCOL . BUCKET . '/' . 'img/og/v1.jpg');
 define ('OG_IMG_TYPE', 'image/' . (($pi = pathinfo (OG_IMG)) && $pi['extension'] ? $pi['extension'] : 'jpg'));
 
-define ('FAVICON', PROTOCOL . BUCKET . '/img/favicon/v1/favicon.ico');
+define ('FAVICON', PROTOCOL . BUCKET . '/' . 'img/favicon/v1/favicon.ico');
+define ('AMP_IMG_600_60', PROTOCOL . BUCKET . '/' . 'img/logo/amp_logo_600x60.png');

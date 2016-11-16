@@ -55,6 +55,28 @@
         <script src="<?php echo URL . $path;?>" language="javascript" type="text/javascript" ></script>
 <?php }?>
 
+    <script type="application/ld+json">
+<?php echo json_encode (array (
+        '@context' => 'http://schema.org', '@type' => 'Article',
+        'mainEntityOfPage' => array (
+          '@type' => 'WebPage',
+          '@id' => $work['url']),
+        'headline' => $work['title'],
+        'image' => array ('@type' => 'ImageObject', 'url' => $work['cover']['c1200'], 'height' => 630, 'width' => 1200),
+        'datePublished' => date ('c', strtotime ($work['created_at'])),
+        'dateModified' => date ('c', strtotime ($work['updated_at'])),
+        'author' => array (
+            '@type' => 'Person', 'name' => $work['user']['name'], 'url' => URL,
+            'image' => array ('@type' => 'ImageObject', 'url' => 'https://graph.facebook.com/' . $work['user']['uid'] . '/picture?width=300&height=300', 'height' => 300, 'width' => 300)
+          ),
+        'publisher' => array (
+            '@type' => 'Organization', 'name' => TITLE,
+            'logo' => array ('@type' => 'ImageObject', 'url' => AMP_IMG_600_60, 'width' => 600, 'height' => 60)
+          ),
+        'description' => mb_strimwidth (remove_ckedit_tag ($work['content']), 0, 150, '…','UTF-8')
+      ), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);?>
+    </script>
+
   </head>
   <body lang="zh-tw">
     
