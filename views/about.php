@@ -54,6 +54,28 @@
         <script src="<?php echo URL . $path;?>" language="javascript" type="text/javascript" ></script>
 <?php }?>
 
+    <script type="application/ld+json">
+<?php echo json_encode (array (
+        '@context' => 'http://schema.org', '@type' => 'Article',
+        'mainEntityOfPage' => array (
+          '@type' => 'WebPage',
+          '@id' => PAGE_URL_ABOUT),
+        'headline' => '關於宙思',
+        'image' => array ('@type' => 'ImageObject', 'url' => OG_IMG, 'height' => 630, 'width' => 1200),
+        'datePublished' => date ('c', strtotime ('2016-11-20 02:05:20')),
+        'dateModified' => date ('c'),
+        'author' => array (
+            '@type' => 'Person', 'name' => TITLE, 'url' => URL,
+            'image' => array ('@type' => 'ImageObject', 'url' => 'https://graph.facebook.com/' . $article['user']['uid'] . '/picture?width=300&height=300', 'height' => 300, 'width' => 300)
+          ),
+        'publisher' => array (
+            '@type' => 'Organization', 'name' => TITLE,
+            'logo' => array ('@type' => 'ImageObject', 'url' => AMP_IMG_600_60, 'width' => 600, 'height' => 60)
+          ),
+        'description' => mb_strimwidth (DESCRIPTION, 0, 150, '…','UTF-8')
+      ), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);?>
+    </script>
+
   </head>
   <body lang="zh-tw">
     

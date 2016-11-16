@@ -31,7 +31,7 @@
     <meta property="article:modified_time" content="<?php echo date ('c', strtotime ($article['updated_at']));?>" />
     <meta property="article:published_time" content="<?php echo date ('c', strtotime ($article['created_at']));?>" />
 
-    <meta property="og:image" content="<?php echo $article['cover']['c1200'];?>" alt="<?php echo TITLE;?>" />
+    <meta property="og:image" content="<?php echo $article['cover']['c1200'];?>" alt="<?php echo $article['title'] . ' - ' . TITLE;?>" />
     <meta property="og:image:type" tag="larger" content="<?php echo 'image/' . (($pi = pathinfo ($article['cover']['c1200'])) && $pi['extension'] ? $pi['extension'] : 'jpg');?>" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
