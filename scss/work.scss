@@ -305,7 +305,12 @@
     position: relative;
     overflow: hidden;
     cursor: pointer;
-    min-width: 450px;
+    @media screen and (min-width: $changeWidth) {
+      min-width: 450px;
+    }
+    @media screen and (min-width: 0px) and (max-width: #{$changeWidth - 1px}) {
+      max-width: 100%;
+    } 
 
     img {
       width: 100%;
@@ -322,6 +327,10 @@
       @include text-shadow(0 0 5px rgba(0, 0, 0, .200));
       background-color: rgba(0, 0, 0, 0.5);
       @include overflow-docx3();
+      
+      &:empty {
+        display: none;
+      }
     }
   }
   pre {

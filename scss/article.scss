@@ -474,6 +474,10 @@
       @include text-shadow(0 0 5px rgba(0, 0, 0, .200));
       background-color: rgba(0, 0, 0, 0.5);
       @include overflow-docx3();
+
+      &:empty {
+        display: none;
+      }
     }
   }
   pre {
