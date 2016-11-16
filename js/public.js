@@ -119,7 +119,8 @@ $(function () {
     $parent = $(this).parent (),
     text = $parent.text ();
     $('<figure />').append ($('<img />').attr ('src', src)).append ($('<figcaption />').text (text)).insertAfter ($parent);
-    return $(this); }).each (function (i) { $(this).parent ().remove (); });
+    return $(this);
+  }).each (function (i) { $(this).parent ().remove (); });
   $('.article_format > figure, .work_format > figure').each (function (i) {
     $(this).attr ('href', $(this).parent ().data ('url') + '#&gid=1&pid=' + (i + 1) +'&id=0');
   });

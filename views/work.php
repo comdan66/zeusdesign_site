@@ -103,7 +103,7 @@
               foreach ($work['images'] as $image) { ?>
                 <figure href=''>
                   <img src='<?php echo $image['w800'];?>'>
-                  <figcaption data-description=''><?php echo $work['title'];?></figcaption>
+                  <figcaption data-description=''></figcaption>
                 </figure>
         <?php }
             } ?>
