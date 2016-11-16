@@ -135,7 +135,7 @@ $(function () {
   // initPhotoSwipeFromDOM ('#container', 'figure');
 
 
-  $('#contact_fm').submit (function () {
+  $('#submit_contact').click (function () {
     var $name = $('#name');
     var $email = $('#email');
     var $message = $('#message');
