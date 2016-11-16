@@ -9,6 +9,7 @@ cmd/config_upload.php
 cmd/config_build.php
 cmd/verify.php
 
+/sitmaps/*
 /articles/*
 /article/*
 /tags/*
