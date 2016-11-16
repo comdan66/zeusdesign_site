@@ -99,7 +99,7 @@
 
         <article id='service'>
           <figure>
-            <img src="http://www.zeusdesign.com.tw/resource/image/logo/banner-compressor.jpg">
+            <img src="/img/logo/banner.jpg">
             <figcaption></figcaption>
           </figure>
 
