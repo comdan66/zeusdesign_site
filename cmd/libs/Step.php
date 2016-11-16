@@ -428,9 +428,10 @@ class Step {
             'articles' => array_slice ($articles, $offset, $limit),
             'hots' => $hots,
             'news' => $news,
+            'offset' => $offset,
             'pagination' => Pagination::initialize (array (
                 'total_rows' => $total, 'per_page' => $limit, 
-                'base_url' => URL_ARTICLES . '%s',
+                'base_url' => URL_ARTICLES,
                 'offset' => $offset,
               ))->create_links (),
           ))))) Step::error ();
@@ -441,6 +442,7 @@ class Step {
           '_footer' => Step::loadView (PATH_VIEWS . '_footer' . PHP),
           'tags' => $tags,
           'articles' => [],
+          'offset' => 0,
           'hots' => $hots,
           'news' => $news,
           'pagination' => '',
@@ -460,6 +462,7 @@ class Step {
               'articles' => array_slice ($tag['articles'], $offset, $limit),
               'hots' => $hots,
               'news' => $news,
+              'offset' => $offset,
               'pagination' => Pagination::initialize (array (
                   'total_rows' => $total, 'per_page' => $limit, 
                   'base_url' => $tag['url'],
@@ -476,6 +479,7 @@ class Step {
             'articles' => [],
             'hots' => $hots,
             'news' => $news,
+            'offset' => 0,
             'pagination' => '',
           ))))) Step::error ();
     }
@@ -534,9 +538,10 @@ class Step {
             '_footer' => Step::loadView (PATH_VIEWS . '_footer' . PHP),
             'tags' => $ntags,
             'works' => array_slice ($works, $offset, $limit),
+            'offset' => $offset,
             'pagination' => Pagination::initialize (array (
               'total_rows' => $total, 'per_page' => $limit, 
-              'base_url' => URL_WORKS . '%s',
+              'base_url' => URL_WORKS,
               'offset' => $offset,
             ))->create_links (),
           ))))) Step::error ();
@@ -547,6 +552,7 @@ class Step {
           '_footer' => Step::loadView (PATH_VIEWS . '_footer' . PHP),
           'tags' => $ntags,
           'works' => [],
+          'offset' => 0,
           'pagination' => '',
         ))))) Step::error ();
 
@@ -562,6 +568,7 @@ class Step {
               'tag' => $tag,
               'tags' => $ntags,
               'works' => array_slice ($tag['works'], $offset, $limit),
+              'offset' => $offset,
               'pagination' => Pagination::initialize (array (
                   'total_rows' => $total, 'per_page' => $limit, 
                   'base_url' => $tag['url'],
@@ -576,6 +583,7 @@ class Step {
             'tag' => $tag,
             'tags' => $ntags,
             'works' => [],
+            'offset' => 0,
             'pagination' => '',
           ))))) Step::error ();
     }

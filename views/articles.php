@@ -55,6 +55,22 @@
         <script src="<?php echo URL . $path;?>" language="javascript" type="text/javascript" ></script>
 <?php }?>
 
+    <script type="application/ld+json">
+<?php $items = array ();
+        foreach ($articles as $i => $article)
+          array_push ($items, array (
+            '@type' => 'ListItem',
+            'position' => $offset + ($i + 1),
+            'item' => array ('@id' => $article['url'],
+              'url' => $article['url'],
+              'name' => $article['title'])));
+
+echo json_encode (array (
+        '@context' => 'http://schema.org', '@type' => 'BreadcrumbList',
+        'itemListElement' => $items
+      ), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);?>
+    </script>
+
   </head>
   <body lang="zh-tw">
     
