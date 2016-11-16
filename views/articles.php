@@ -63,7 +63,9 @@
             'position' => $offset + ($i + 1),
             'item' => array ('@id' => $article['url'],
               'url' => $article['url'],
-              'name' => $article['title'])));
+              'name' => $article['title'],
+              'description' => mb_strimwidth (remove_ckedit_tag ($article['content']), 0, 150, '…','UTF-8'),
+              'image' => array ('@type' => 'ImageObject', 'url' => $article['cover']['c1200'], 'height' => 630, 'width' => 1200))));
 
 echo json_encode (array (
         '@context' => 'http://schema.org', '@type' => 'BreadcrumbList',
