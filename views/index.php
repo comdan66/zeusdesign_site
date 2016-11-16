@@ -55,6 +55,21 @@
         <script src="<?php echo URL . $path;?>" language="javascript" type="text/javascript" ></script>
 <?php }?>
 
+    <script type="application/ld+json">
+<?php echo json_encode (array (
+      '@context' => 'http://schema.org',
+      '@type' => 'Organization',
+      'name' => TITLE,
+      'url' => URL,
+      'logo' => array ('@type' => 'ImageObject', 'url' => AMP_IMG_600_60, 'width' => 600, 'height' => 60),
+      'description' => mb_strimwidth (DESCRIPTION, 0, 150, '…','UTF-8'),
+      'sameAs' => array (
+          'https://www.zeusdesign.com.tw/',
+          'https://www.facebook.com/ZeusDesignStudio/',
+        )
+    ), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);?>
+    </script>
+
   </head>
   <body lang="zh-tw">
     
