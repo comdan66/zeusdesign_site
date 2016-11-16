@@ -19,6 +19,7 @@ include_once PATH_CMD_LIBS . 'defines' . PHP;
 include_once PATH_CMD_LIBS . 'Step' . PHP;
 include_once PATH_CMD_LIBS . 'Minify' . DIRECTORY_SEPARATOR . 'Min' . PHP;
 include_once PATH_CMD_LIBS . 'Pagination' . PHP;
+include_once PATH_CMD_LIBS . 'Sitemap' . PHP;
 include_once PATH_CMD_LIBS . 'define_urls' . PHP;
 
 Step::notCil ();
@@ -30,6 +31,7 @@ Step::writeAboutHtml ();
 Step::writeContactHtml ();
 Step::writeArticlesHtml ();
 Step::writeWorksHtml ();
+Step::writeSitemap ();
 
 header ('Content-Type: application/json');
 echo json_encode (array ('result' => 'success'));

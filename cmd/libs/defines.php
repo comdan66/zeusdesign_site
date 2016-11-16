@@ -28,6 +28,7 @@ define ('FB_ADMIN_ID', OA_FB_UID);
 
 define ('PATH_VIEWS', PATH . 'views' . DIRECTORY_SEPARATOR);
 define ('PATH_ASSET', PATH . 'asset' . DIRECTORY_SEPARATOR);
+define ('PATH_SITEMAP', PATH . 'sitemap' . DIRECTORY_SEPARATOR);
 
 define ('PATH_ARTICLES', PATH . 'articles' . DIRECTORY_SEPARATOR);
 define ('PATH_WORKS', PATH . 'works' . DIRECTORY_SEPARATOR);

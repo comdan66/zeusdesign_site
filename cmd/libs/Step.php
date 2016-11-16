@@ -30,6 +30,7 @@ class Step {
   public static $uploadDirs = array ();
   public static $s3Files = array ();
   public static $localFiles = array ();
+  public static $sitemapInfos = array ();
   public static $isCli = true;
   
   public static function progress ($str, $c = 0) {
@@ -105,7 +106,7 @@ class Step {
     if ($str) Step::progress ($str, $c);
   }
   public static function init () {
-    $paths = array (PATH, PATH_ASSET, PATH_ARTICLES, PATH_WORKS, PATH_TAGS, PATH_ARTICLE, PATH_WORK);
+    $paths = array (PATH, PATH_ASSET, PATH_SITEMAP, PATH_ARTICLES, PATH_WORKS, PATH_TAGS, PATH_ARTICLE, PATH_WORK);
     
     Step::newLine ('-', '初始化環境與變數', count ($paths));
 
@@ -338,6 +339,10 @@ class Step {
     return $buffer;
   }
   
+
+  public static function notCil () {
+    Step::$isCli = false;
+  }
   public static function mkdir777 ($path) {
     $oldmask = umask (0);
     @mkdir ($path, 0777, true);
@@ -356,6 +361,13 @@ class Step {
           'banners' => $banners,
           'promos' => $promos,
         ))))) Step::error ();
+  
+    array_push (Step::$sitemapInfos, array (
+      'uri' => '/' . 'index' . HTML,
+      'priority' => '0.5',
+      'changefreq' => 'daily',
+      'lastmod' => date ('c'),
+    ));
 
     Step::progress ('更新 Index HTML', '完成！');
   }
@@ -367,6 +379,13 @@ class Step {
           '_footer' => Step::loadView (PATH_VIEWS . '_footer' . PHP),
         ))))) Step::error ();
 
+    array_push (Step::$sitemapInfos, array (
+      'uri' => '/' . 'about' . HTML,
+      'priority' => '0.4',
+      'changefreq' => 'weekly',
+      'lastmod' => date ('c'),
+    ));
+
     Step::progress ('更新 About HTML', '完成！');
   }
   public static function writeContactHtml () {
@@ -376,6 +395,13 @@ class Step {
           '_header' => Step::loadView (PATH_VIEWS . '_header' . PHP, array ('active' => PAGE_URL_CONTACT)),
           '_footer' => Step::loadView (PATH_VIEWS . '_footer' . PHP),
         ))))) Step::error ();
+
+    array_push (Step::$sitemapInfos, array (
+      'uri' => '/' . 'contact' . HTML,
+      'priority' => '0.3',
+      'changefreq' => 'weekly',
+      'lastmod' => date ('c'),
+    ));
 
     Step::progress ('更新 Contact HTML', '完成！');
   }
@@ -419,7 +445,7 @@ class Step {
 
     $limit = 10;
     $total = count ($articles);
-    if ($total)
+    if ($total) {
       for ($offset = 0; $offset < $total; $offset += $limit) {
         if (!Step::writeFile (PATH_ARTICLES . (!$offset ? 'index' : $offset) . HTML, HTMLMin::minify (Step::loadView (PATH_VIEWS . 'articles' . PHP, array (
             '_header' => Step::loadView (PATH_VIEWS . '_header' . PHP, array ('active' => URL_ARTICLES)),
@@ -435,8 +461,15 @@ class Step {
                 'offset' => $offset,
               ))->create_links (),
           ))))) Step::error ();
+
+        array_push (Step::$sitemapInfos, array (
+          'uri' => '/articles/' . (!$offset ? 'index' : $offset) . HTML,
+          'priority' => '0.5',
+          'changefreq' => 'daily',
+          'lastmod' => date ('c'),
+        ));
       }
-    else 
+    } else {
       if (!Step::writeFile (PATH_ARTICLES . 'index' . HTML, HTMLMin::minify (Step::loadView (PATH_VIEWS . 'articles' . PHP, array (
           '_header' => Step::loadView (PATH_VIEWS . '_header' . PHP, array ('active' => URL_ARTICLES)),
           '_footer' => Step::loadView (PATH_VIEWS . '_footer' . PHP),
@@ -448,11 +481,18 @@ class Step {
           'pagination' => '',
         ))))) Step::error ();
 
+      array_push (Step::$sitemapInfos, array (
+        'uri' => '/articles/index' . HTML,
+        'priority' => '0.5',
+        'changefreq' => 'daily',
+        'lastmod' => date ('c'),
+      ));
+    }
     foreach ($tags as $tag) {
       $total = count ($tag['articles']);
       if (!file_exists ($tag['path'])) Step::mkdir777 ($tag['path']);
 
-      if ($total)
+      if ($total) {
         for ($offset = 0; $offset < $total; $offset += $limit) {
           if (!Step::writeFile ($tag['path'] . (!$offset ? 'index' : $offset) . HTML, HTMLMin::minify (Step::loadView (PATH_VIEWS . 'tag-articles' . PHP, array (
               '_header' => Step::loadView (PATH_VIEWS . '_header' . PHP, array ('active' => URL_ARTICLES)),
@@ -469,8 +509,15 @@ class Step {
                   'offset' => $offset,
                 ))->create_links (),
             ))))) Step::error ();
+
+          array_push (Step::$sitemapInfos, array (
+            'uri' => '/tags/' . oa_url_encode ($tag['name']) . '/articles/' . (!$offset ? 'index' : $offset) . HTML,
+            'priority' => '0.5',
+            'changefreq' => 'daily',
+            'lastmod' => date ('c'),
+          ));
         }
-      else 
+      } else {
         if (!Step::writeFile ($tag['path'] . 'index' . HTML, HTMLMin::minify (Step::loadView (PATH_VIEWS . 'tag-articles' . PHP, array (
             '_header' => Step::loadView (PATH_VIEWS . '_header' . PHP, array ('active' => URL_ARTICLES)),
             '_footer' => Step::loadView (PATH_VIEWS . '_footer' . PHP),
@@ -482,6 +529,14 @@ class Step {
             'offset' => 0,
             'pagination' => '',
           ))))) Step::error ();
+
+        array_push (Step::$sitemapInfos, array (
+          'uri' => '/tags/' . oa_url_encode ($tag['name']) . '/articles/index' . HTML,
+          'priority' => '0.5',
+          'changefreq' => 'daily',
+          'lastmod' => date ('c'),
+        ));
+      }
     }
 
     foreach ($articles as $article) {
@@ -493,6 +548,13 @@ class Step {
           'hots' => $hots,
           'news' => $news,
         ))))) Step::error ();
+
+      array_push (Step::$sitemapInfos, array (
+        'uri' => '/article/' . $article['id'] . '-' . oa_url_encode ($article['title']) . HTML,
+        'priority' => '0.7',
+        'changefreq' => 'daily',
+        'lastmod' => date ('c'),
+      ));
     }
     Step::progress ('更新 Articles HTML', '完成！');
   }
@@ -531,7 +593,7 @@ class Step {
     $limit = 9;
     $total = count ($works);
 
-    if ($total)
+    if ($total) {
       for ($offset = 0; $offset < $total; $offset += $limit) {
         if (!Step::writeFile (PATH_WORKS . (!$offset ? 'index' : $offset) . HTML, HTMLMin::minify (Step::loadView (PATH_VIEWS . 'works' . PHP, array (
             '_header' => Step::loadView (PATH_VIEWS . '_header' . PHP, array ('active' => URL_WORKS)),
@@ -545,8 +607,15 @@ class Step {
               'offset' => $offset,
             ))->create_links (),
           ))))) Step::error ();
+
+        array_push (Step::$sitemapInfos, array (
+          'uri' => '/works/' . (!$offset ? 'index' : $offset) . HTML,
+          'priority' => '0.5',
+          'changefreq' => 'daily',
+          'lastmod' => date ('c'),
+        ));
       }
-    else 
+    } else {
       if (!Step::writeFile (PATH_WORKS . 'index' . HTML, HTMLMin::minify (Step::loadView (PATH_VIEWS . 'works' . PHP, array (
           '_header' => Step::loadView (PATH_VIEWS . '_header' . PHP, array ('active' => URL_WORKS)),
           '_footer' => Step::loadView (PATH_VIEWS . '_footer' . PHP),
@@ -556,11 +625,19 @@ class Step {
           'pagination' => '',
         ))))) Step::error ();
 
+      array_push (Step::$sitemapInfos, array (
+        'uri' => '/works/index' . HTML,
+        'priority' => '0.5',
+        'changefreq' => 'daily',
+        'lastmod' => date ('c'),
+      ));
+    }
+
     foreach ($tags as $tag) {
       $total = count ($tag['works']);
       if (!file_exists ($tag['path'])) Step::mkdir777 ($tag['path']);
 
-      if ($total)
+      if ($total) {
         for ($offset = 0; $offset < $total; $offset += $limit) {
           if (!Step::writeFile ($tag['path'] . (!$offset ? 'index' : $offset) . HTML, HTMLMin::minify (Step::loadView (PATH_VIEWS . 'tag-works' . PHP, array (
               '_header' => Step::loadView (PATH_VIEWS . '_header' . PHP, array ('active' => URL_WORKS)),
@@ -575,8 +652,15 @@ class Step {
                   'offset' => $offset,
                 ))->create_links (),
             ))))) Step::error ();
+
+          array_push (Step::$sitemapInfos, array (
+            'uri' => '/tags/' . oa_url_encode ($tag['name']) . '/works/' . (!$offset ? 'index' : $offset) . HTML,
+            'priority' => '0.5',
+            'changefreq' => 'daily',
+            'lastmod' => date ('c'),
+          ));
         }
-      else
+      } else {
         if (!Step::writeFile ($tag['path'] . 'index' . HTML, HTMLMin::minify (Step::loadView (PATH_VIEWS . 'tag-works' . PHP, array (
             '_header' => Step::loadView (PATH_VIEWS . '_header' . PHP, array ('active' => URL_WORKS)),
             '_footer' => Step::loadView (PATH_VIEWS . '_footer' . PHP),
@@ -586,6 +670,14 @@ class Step {
             'offset' => 0,
             'pagination' => '',
           ))))) Step::error ();
+
+        array_push (Step::$sitemapInfos, array (
+          'uri' => '/tags/' . oa_url_encode ($tag['name']) . '/works/index' . HTML,
+          'priority' => '0.5',
+          'changefreq' => 'daily',
+          'lastmod' => date ('c'),
+        ));
+      }
     }
 
     foreach ($works as $work) {
@@ -594,16 +686,35 @@ class Step {
           '_footer' => Step::loadView (PATH_VIEWS . '_footer' . PHP),
           'work' => $work,
         ))))) Step::error ();
+
+      array_push (Step::$sitemapInfos, array (
+        'uri' => '/work/' . $work['id'] . '-' . oa_url_encode ($work['title']) . HTML,
+        'priority' => '0.7',
+        'changefreq' => 'daily',
+        'lastmod' => date ('c'),
+      ));
     }
     Step::progress ('更新 Works HTML', '完成！');
   }
 
-  public static function notCil () {
-    Step::$isCli = false;
-  }
+  public static function writeSitemap () {
 
+    Step::newLine ('-', '更新 Sitemap', count (Step::$sitemapInfos));
+
+    $sitmap = new Sitemap ($domain = rtrim (URL, '/'));
+    $sitmap->setPath (PATH_SITEMAP);
+    $sitmap->setDomain ($domain);
+
+    foreach (Step::$sitemapInfos as $sitemapInfo) {
+      $sitmap->addItem ($sitemapInfo['uri'], $sitemapInfo['priority'], $sitemapInfo['changefreq'], $sitemapInfo['lastmod']);
+      Step::progress ('更新 Sitemap');
+    }
+
+    $sitmap->createSitemapIndex ($domain . '/sitemap/', date ('c'));
+    Step::progress ('更新 Sitemap', '完成！');
+  }
   public static function cleanBuild () {
-    Step::newLine ('-', '清除 上一次 檔案', count ($paths = array (PATH_ASSET, PATH_ARTICLES, PATH_WORKS, PATH_TAGS, PATH_ARTICLE, PATH_WORK)));
+    Step::newLine ('-', '清除 上一次 檔案', count ($paths = array (PATH_ASSET, PATH_SITEMAP, PATH_ARTICLES, PATH_WORKS, PATH_TAGS, PATH_ARTICLE, PATH_WORK)));
     foreach ($paths as $path) {
       Step::directoryDelete ($path, false);
       Step::progress ('清除 上一次 檔案');
