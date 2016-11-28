@@ -49,5 +49,5 @@ define ('DESCRIPTION', '宙思設計團隊擁有各領域的人才，我們服�
 define ('OG_IMG', PROTOCOL . BUCKET . '/' . 'img/og/v1.jpg');
 define ('OG_IMG_TYPE', 'image/' . (($pi = pathinfo (OG_IMG)) && $pi['extension'] ? $pi['extension'] : 'jpg'));
 
-define ('FAVICON', PROTOCOL . BUCKET . '/' . 'img/favicon/v2/favicon.ico');
+define ('FAVICON', PROTOCOL . BUCKET . '/' . 'img/favicon/v3/');
 define ('AMP_IMG_600_60', PROTOCOL . BUCKET . '/' . 'img/logo/amp_logo_600x60.png');
