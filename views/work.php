@@ -103,7 +103,7 @@
 
       <div id='work' data-k='work' data-id='<?php echo $work['id'];?>'>
         <header class='header'>
-          <div><a href='<?php echo URL_WORKS . 'index' . HTML;?>'>知識文章</a><a href='<?php echo $work['url'];?>'><?php echo $work['title'];?></a></div>
+          <div><a href='<?php echo URL_WORKS . 'index' . HTML;?>'>設計作品</a><a href='<?php echo $work['url'];?>'><?php echo $work['title'];?></a></div>
         </header>
 
         <article id='work_main' class='content'>
