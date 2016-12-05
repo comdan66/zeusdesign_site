@@ -111,7 +111,7 @@ echo json_encode (array (
                 </a>
 
                 <header>
-                  <h3><a href='<?php echo $work['url'];?>'><?php echo $work['title'];?></a></h3>
+                  <h3><?php echo !$work['is_enabled'] ? '<span>尚未公開</span>' : '';?><a href='<?php echo $work['url'];?>'><?php echo $work['title'];?></a></h3>
                   <p><?php echo mb_strimwidth (remove_ckedit_tag ($work['content']), 0, 100, '…','UTF-8');?></p>
                 </header>
               </section>

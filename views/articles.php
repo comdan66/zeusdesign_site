@@ -107,7 +107,7 @@ echo json_encode (array (
     <?php foreach ($articles as $article) { ?>
             <article class='article'>
               <header>
-                <h2><a href='<?php echo $article['url'];?>'><?php echo $article['title'];?></a></h2>
+                <h2><?php echo !$article['is_enabled'] ? '<span>尚未公開</span>' : '';?><a href='<?php echo $article['url'];?>'><?php echo $article['title'];?></a></h2>
               </header>
 
               <a href='<?php echo $article['url'];?>'>

@@ -458,6 +458,13 @@ html {
           color: rgba(42, 90, 149, 1);
         }
       }
+      span {
+        background-color: rgba(195, 58, 47, 1.00);
+        color: rgba(255, 255, 255, 1.00);
+        padding: 0 3px;
+        margin-right: 3px;
+        @include border-radius(3px);
+      }
     }
   }
   @media screen and (min-width: 0) and (max-width: #{500px - 1px}) {
@@ -483,4 +490,8 @@ html {
       margin-left: 30px;
     }
   }
+}
+
+#dev {
+  @include alert('danger', false);
 }

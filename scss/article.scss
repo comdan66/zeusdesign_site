@@ -224,6 +224,13 @@
             @include overflow-docx3();
             max-width: 100%;
           }
+          span {
+            background-color: rgba(195, 58, 47, 1.00);
+            color: rgba(255, 255, 255, 1.00);
+            padding: 0 3px;
+            margin-right: 3px;
+            @include border-radius(3px);
+          }
         }
       }
       > a {

@@ -111,6 +111,10 @@
             <h1><a href='<?php echo $work['url'];?>'><?php echo $work['title'];?></a></h1>
             <div class="fb-like" data-href="<?php echo $work['url'];?>" data-send="false" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
           </header>
+  
+    <?php if (!$work['is_enabled']) { ?>
+            <div id='dev'>注意！此頁面尚未公開！</div>
+    <?php }?>
 
           <section class='work_format' data-url='<?php echo $work['url'];?>'>
             <?php echo $work['content'];

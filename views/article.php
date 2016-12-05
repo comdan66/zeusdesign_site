@@ -110,6 +110,10 @@
             <h1><a href='<?php echo $article['url'];?>'><?php echo $article['title'];?></a></h1>
             <div class="fb-like" data-href="<?php echo $article['url'];?>" data-send="false" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
           </header>
+  
+    <?php if (!$article['is_enabled']) { ?>
+            <div id='dev'>注意！此頁面尚未公開！</div>
+    <?php }?>
 
           <section class='article_format' data-url='<?php echo $article['url'];?>'>
             <?php echo $article['content'];?>
