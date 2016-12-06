@@ -48,6 +48,7 @@ Step::setUploadDirs (array (
     'work' => array ('html'),
     'works' => array ('html'),
     'sitemap' => array ('xml'),
+    'files' => array ('pdf'),
   ));
 
 // ---------------
