@@ -41,7 +41,7 @@ Step::setUploadDirs (array (
     'font' => array ('eot', 'svg', 'ttf', 'woff'),
     'asset' => array ('js', 'css'),
     'img' => array ('png', 'jpg', 'jpeg', 'gif', 'svg', 'ico'),
-    '' => array ('html', 'txt'),
+    '' => array ('html', 'txt', 'pdf'),
     'article' => array ('html'),
     'articles' => array ('html'),
     'tags' => array ('html'),
