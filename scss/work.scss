@@ -278,9 +278,17 @@
     margin: 5px 0;
     margin: 15.5px auto;
     color: rgba(100, 100, 100, 1);
-    
+    line-height: 30px;
+
+    code {
+      border: 1px solid rgba(137, 137, 137, .2);
+      background-color: rgba(246, 246, 246, 1.00);
+      padding: 1px 6px;
+      @include border-radius(2px);
+    }
     a {
       @include a(1px, true);
+      display: inline;
       padding-bottom: 0;
       border-bottom-color: rgba(42, 90, 149, 0.25);
     }
