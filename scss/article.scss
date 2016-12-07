@@ -435,6 +435,7 @@
     line-height: 30px;
     code {
       border: 1px solid rgba(137, 137, 137, .2);
+      background-color: rgba(231, 231, 231, 1.00);
       padding: 1px 6px;
       @include border-radius(2px);
     }
