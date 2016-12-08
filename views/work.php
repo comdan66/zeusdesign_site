@@ -17,8 +17,8 @@
 
     <meta property="og:site_name" content="<?php echo TITLE;?>" />
     <meta property="og:url" content="<?php echo $work['url'];?>" />
-    <meta property="og:title" content="<?php echo $work['title'];?> - <?php echo TITLE;?>" />
-    <meta property="og:description" content="<?php echo mb_strimwidth (remove_ckedit_tag ($work['content'], false), 0, 200, '…','UTF-8');?>" />
+    <meta property="og:title" content="<?php echo $work['title'];?> - ZEUS" />
+    <meta property="og:description" content="<?php echo mb_strimwidth (remove_ckedit_tag ($work['content'], false), 0, 300, '…','UTF-8');?>" />
 
     <meta property="fb:admins" content="<?php echo FB_ADMIN_ID;?>" />
     <meta property="fb:app_id" content="<?php echo FB_APP_ID;?>" />
