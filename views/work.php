@@ -145,7 +145,8 @@
                   foreach ($block['items'] as $item) { ?>
                     <span>
                 <?php if ($item['link']) { ?>
-                        <a href='<?php echo $item['link'];?>'><?php echo $item['title'] ? $item['title'] : $item['link'];?></a>
+
+                        <a href='<?php echo $item['link'];?>' target='_blank'><?php echo $item['title'] ? $item['title'] : $item['link'];?></a>
                         <i><?php echo $item['link'];?></i>
                 <?php } else {
                         echo $item['title'];
