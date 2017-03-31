@@ -69,7 +69,7 @@ class Pagination {
       }
 
       if  ($this->prev_link !== false && $this->cur_page != 1) {
-          $i = (($i = $uri_page_number - $this->per_page) == 0) ? '' : $i;
+          $i = (($i = $uri_page_number - $this->per_page) == 0) ? 'index' : $i;
           $output .= $this->prev_tag_open.'<a href="' . rtrim ($this->base_url, '/') . '/' . $i . $this->suffix . '">' . $this->prev_link . '</a>' . $this->prev_tag_close;
       }
 
