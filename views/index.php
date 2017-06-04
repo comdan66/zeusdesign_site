@@ -97,7 +97,7 @@
       <article id='main'>
         <header class='header'>
           <h2>Home</h2>
-          <a href=''>更多關於宙思 »</a>
+          <a href='<?php echo PAGE_URL_ABOUT;?>'>更多關於宙思 »</a>
         </header>
 
         <section id='info'>
@@ -176,7 +176,7 @@
       <article id='works'>
         <header class='header'>
           <h2>設計作品</h2>
-          <a href=''>設計作品欣賞更多作品 »</a>
+          <a href='<?php echo URL_WORKS . 'index' . HTML;?>'>設計作品欣賞更多作品 »</a>
         </header>
   <?php if ($promos) {
           foreach ($promos as $promo) { ?>
