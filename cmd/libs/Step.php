@@ -572,6 +572,7 @@ class Step {
 
     $tags = array ();
     foreach (self::columnArray ($works, 'tags') as $ts) foreach ($ts as $t) if (!in_array ($t['id'], self::columnArray ($tags, 'id'))) array_push ($tags, $t);
+    
     $tags = array_map (function ($tag) use ($works) {
       $ws = array (); foreach ($works as $work) if (($ids = self::columnArray ($work['tags'], 'id')) && in_array ($tag['id'], $ids)) array_push ($ws, $work);
       return array_merge ($tag, array (
@@ -580,9 +581,10 @@ class Step {
         'url' => sprintf (URL_TAG_WORKS, oa_url_encode ($tag['name'])),
         ));
     }, $tags);
+
     $ntags = array ();
     foreach ($tags as $tag) if (!$tag['par_id']) array_push ($ntags, array_merge ($tag, array ('subs' => array ())));
-    usort ($ntags, function ($a, $b) { return $a['sort'] > $b['sort']; });
+    usort ($ntags, function ($a, $b) { return $a['sort'] < $b['sort']; });
     $ntags = array_map (function ($ntag) use ($tags) { foreach ($tags as $tag) if ($tag['par_id'] == $ntag['id']) array_push ($ntag['subs'], $tag); usort ($ntag['subs'], function ($a, $b) { return $a['sort'] > $b['sort']; }); return $ntag; }, $ntags);
 
     $works = array_map (function ($work) use ($tags) {
