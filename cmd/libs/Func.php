@@ -83,3 +83,46 @@ if (!function_exists ('params')) {
     return $return;
   }
 }
+
+if (!function_exists ('mkdir777')) {
+  function mkdir777 ($path) {
+    $oldmask = umask (0);
+    @mkdir ($path, 0777, true);
+    umask ($oldmask);
+    return true;
+  }
+}
+
+if (!function_exists ('deleteDir')) {
+  function deleteDir ($dir, $is_root = true) {
+    if (!file_exists ($dir)) return true;
+    
+    $dir = rtrim ($dir, DIRECTORY_SEPARATOR);
+    if (!$currentDir = @opendir ($dir))
+      return false;
+
+    while (false !== ($filename = @readdir ($currentDir)))
+      if (($filename != '.') && ($filename != '..'))
+        if (is_dir ($dir . DIRECTORY_SEPARATOR . $filename)) if (substr ($filename, 0, 1) != '.') Step::directoryDelete ($dir . DIRECTORY_SEPARATOR . $filename); else;
+        else unlink ($dir . DIRECTORY_SEPARATOR . $filename);
+
+    @closedir ($currentDir);
+
+    return $is_root ? @rmdir ($dir) : true;
+  }
+}
+
+if (!function_exists ('loadView')) {
+  function loadView ($__o__p__ = '', $__o__d__ = array ()) {
+    if (!$__o__p__) return '';
+
+    extract ($__o__d__);
+    ob_start ();
+    if (((bool)@ini_get ('short_open_tag') === FALSE) && (false == TRUE)) echo eval ('?>' . preg_replace ("/;*\s*\?>/u", "; ?>", str_replace ('<?=', '<?php echo ', file_get_contents ($__o__p__))));
+    else include $__o__p__;
+    $buffer = ob_get_contents ();
+    @ob_end_clean ();
+
+    return $buffer;
+  }
+}

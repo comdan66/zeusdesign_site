@@ -63,22 +63,15 @@ try {
   if (!CLI) {
     header ('Content-Type: application/json', 'true');
     echo json_encode (array ('status' => true, 'message' => nl2br(str_replace(' ', '&nbsp;', $tool->getLog ()->get ()))));
+    exit();
   }
 } catch (Exception $e) {
   if (CLI) {
     echo $e->getMessage ();
     exit ();
   } else {
-    $code = 405;
-    $server_protocol = (isset($_SERVER['SERVER_PROTOCOL'])) ? $_SERVER['SERVER_PROTOCOL'] : FALSE;
-
-    if (substr (php_sapi_name (), 0, 3) == 'cgi') header ('Status: ' . $code . ' Method Not Allowed', true);
-    else if (($server_protocol == 'HTTP/1.1') || ($server_protocol == 'HTTP/1.0')) header ($server_protocol . ' ' . $code . ' Method Not Allowed', true, $code);
-    else header ('HTTP/1.1 ' . $code . ' Method Not Allowed', true, $code);
-
     header ('Content-Type: application/json', 'true');
-    echo json_encode (array ('status' => false, 'message' => $e->getMessage ()));
-
-    exit ();
+    echo json_encode (array ('status' => true, 'message' => $e->getMessage ()));
+    exit();
   }
 }
