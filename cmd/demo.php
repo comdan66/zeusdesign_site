@@ -5,8 +5,9 @@
  * @copyright   Copyright (c) 2017 OA Wu Design
  * @license     http://creativecommons.org/licenses/by-nc/2.0/tw/
  */
-include 'libs' . DIRECTORY_SEPARATOR . 'Define.php';
-include 'libs' . DIRECTORY_SEPARATOR . 'Logger' . PHP;
+
+include_once 'libs' . DIRECTORY_SEPARATOR . 'Define.php';
+include_once 'libs' . DIRECTORY_SEPARATOR . 'Logger' . PHP;
 system ('clear');
 
 $log = new Logger ();
@@ -141,4 +142,5 @@ $option = array (
     'usname' => $usname,
     'minify' => $minify,
   );
-@include '_oa' . PHP;
+
+include_once '_oa' . PHP;
