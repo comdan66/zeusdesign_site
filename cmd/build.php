@@ -40,21 +40,22 @@ $build->aboutHtml ('產生 About 檔案');
 $build->contactHtml ('產生 Contact 檔案');
 $build->articlesHtml ('產生 Article 檔案');
 $build->worksHtml ('產生 Work 檔案');
+$build->sitemap ('產生 Sitemap 檔案');
 
 
-header ('Content-Type: application/json', 'true');
-echo json_encode (array ('status' => true, 'message' => ''));
-exit();
+if (DEV) {
+  header ('Content-Type: application/json', 'true');
+  echo json_encode (array ('status' => true, 'message' => 'Build 成功！'));
+  exit();
+}
 
-// $build->sitemap ();
+$option = array (
+    'bucket' => $bucket,
+    'access' => $access,
+    'secret' => $secret,
+    'protocol' => $potoco,
+    'usname' => false,
+    'minify' => !DEV,
+  );
 
-// $option = array (
-//     'bucket' => $bucket,
-//     'access' => $access,
-//     'secret' => $secret,
-//     'protocol' => 'https',
-//     'usname' => false,
-//     'minify' => !DEV,
-//   );
-
-// include_once '_oa' . PHP;
+include_once '_oa' . PHP;

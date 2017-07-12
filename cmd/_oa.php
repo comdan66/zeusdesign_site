@@ -11,11 +11,19 @@
 // 3. 是否包含子層
 // 4. 是否包含隱藏檔
 $_dirs = array (
-  ''     => [['html', 'txt'], false, false],
-  'js'   => [['js'], true, false],
-  'css'  => [['css'], true, false],
-  'font' => [['eot', 'svg', 'ttf', 'woff'], true, false],
-  'img'  => [['png', 'jpg', 'jpeg', 'gif', 'svg'], true, false],
+  ''     => array (array ('html', 'txt', 'pdf'), false, false),
+  'js'   => array (array ('js'), true, false),
+  'css'  => array (array ('css'), true, false),
+  'font' => array (array ('eot', 'svg', 'ttf', 'woff'), true, false),
+  'asset' => array (array ('js', 'css'), true, false),
+  'img'  => array (array ('png', 'jpg', 'jpeg', 'gif', 'svg', 'ico', 'json', 'xml'), true, false),
+  'article' => array (array ('html'), true, false),
+  'articles' => array (array ('html'), true, false),
+  'tags' => array (array ('html'), true, false),
+  'work' => array (array ('html'), true, false),
+  'works' => array (array ('html'), true, false),
+  'sitemap' => array (array ('xml'), true, false),
+  'files' => array (array ('pdf'), true, false),
 );
 
 include_once 'libs' . DIRECTORY_SEPARATOR . 'OAS3Tool' . PHP;

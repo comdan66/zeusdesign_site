@@ -232,6 +232,11 @@ if (!function_exists ('urlFormatArticle')) {
     return urlFormat ($id . '-' . $title . HTML);
   }
 }
+if (!function_exists ('urlFormatWork')) {
+  function urlFormatWork ($id, $title) {
+    return urlFormat ($id . '-' . $title . HTML);
+  }
+}
 if (!function_exists ('urlArticle')) {
   function urlArticle ($id, $title) {
     return URL_ARTICLE . rawurlencode (urlFormatArticle ($id, $title));
@@ -240,6 +245,16 @@ if (!function_exists ('urlArticle')) {
 if (!function_exists ('pathArticle')) {
   function pathArticle ($id, $title) {
     return PATH_ARTICLE . urlFormatArticle ($id, $title);
+  }
+}
+if (!function_exists ('urlWrok')) {
+  function urlWrok ($id, $title) {
+    return URL_WORK . rawurlencode (urlFormatWork ($id, $title));
+  }
+}
+if (!function_exists ('pathWrok')) {
+  function pathWrok ($id, $title) {
+    return PATH_WORK . urlFormatWork ($id, $title);
   }
 }
 
