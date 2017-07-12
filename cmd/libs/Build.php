@@ -7,16 +7,6 @@
  */
 
 class Build {
-  private $potoco = '';
-  private $bucket = '';
-  private $url = '';
-  private $title = '';
-  private $keywords = array ();
-  private $description = '';
-  private $og = array ();
-
-  private $paths = array ();
-  private $urls = array ();
   private $sitemapInfos = array ();
 
   public function __construct () { }
@@ -318,7 +308,7 @@ class Build {
       array_push ($this->sitemapInfos, array ('uri' => '/' . str_replace (URL, '', $article['url']), 'priority' => '0.7', 'changefreq' => 'daily', 'lastmod' => date ('c'),));
     }
   }
-  public function worksHtml () {
+  public function worksHtml ($title) {
     
   }
   public function sitemap () {

@@ -39,13 +39,13 @@ $build->indexHtml ('產生 Index 檔案');
 $build->aboutHtml ('產生 About 檔案');
 $build->contactHtml ('產生 Contact 檔案');
 $build->articlesHtml ('產生 Article 檔案');
+$build->worksHtml ('產生 Work 檔案');
 
 
 header ('Content-Type: application/json', 'true');
 echo json_encode (array ('status' => true, 'message' => ''));
 exit();
 
-// $build->worksHtml ();
 // $build->sitemap ();
 
 // $option = array (
