@@ -70,7 +70,7 @@ try {
 
   if (!CLI) {
     header ('Content-Type: application/json', 'true');
-    echo json_encode (array ('status' => true, 'message' => nl2br(str_replace(' ', '&nbsp;', $tool->getLog ()->get ()))));
+    echo json_encode (array ('status' => true, 'message' => nl2br (str_replace (' ', '&nbsp;', str_replace ("\r", '', $tool->getLog ()->get ())))));
     exit();
   }
 } catch (Exception $e) {

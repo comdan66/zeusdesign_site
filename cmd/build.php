@@ -42,7 +42,6 @@ $build->articlesHtml ('產生 Article 檔案');
 $build->worksHtml ('產生 Work 檔案');
 $build->sitemap ('產生 Sitemap 檔案');
 
-
 if (DEV) {
   header ('Content-Type: application/json', 'true');
   echo json_encode (array ('status' => true, 'message' => 'Build 成功！'));
