@@ -98,7 +98,6 @@ class OAS3Tool {
 
     $row->setTitle ('本機內' . (($t = count ($this->lfs)) ? '有 ' . number_format ($t) . ' 個' : '沒有') . '檔案等待上傳')
         ->end ();
-
     return $this;
   }
   public function initS3 ($title) {
@@ -122,7 +121,7 @@ class OAS3Tool {
     $row = RowLogger::start ($this, $title, $this->lfs);
     $this->ufs = $row->run (null, function ($t) use ($s3fs) {
       foreach ($s3fs as $s3f)
-        if (($s3f['name'] == ($t['uri'])) && ($s3f['hash'] == $t['md5']))
+        if (($s3f['name'] == $t['uri']) && ($s3f['hash'] == $t['md5']))
           return false;
       return true;
     });
@@ -137,6 +136,7 @@ class OAS3Tool {
     if (RowLogger::startAndRunAndEnd ($this, $title, $this->ufs, function ($t) use ($bucket) {
       return !S3::putFile ($t['path'], $bucket, $t['uri']) ? ' 檔案「' . $t['path'] . '」上傳失敗！' : '';
     })) throw new Exception ('執行「' . $title . '」時，發生錯誤！');
+
     return $this;
   }
   public function filterS3Files ($title) {
@@ -145,7 +145,7 @@ class OAS3Tool {
     $row = RowLogger::start ($this, $title, $this->s3fs);
     $this->dfs = $row->run (null, function ($t) use ($lfs) {
       foreach ($lfs as $lf)
-        if (($t['name'] == ($lf['uri'])) && ($t['hash'] == $lf['md5']))
+        if ($t['name'] == $lf['uri'])
           return false;
       return true;
     });
