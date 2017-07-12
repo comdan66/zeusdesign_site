@@ -7,11 +7,11 @@
  */
 
 include_once 'libs' . DIRECTORY_SEPARATOR . 'Define.php';
-
+$startT = microtime (true);
 
 if (!(isset ($_POST['bucket']) && ($_POST['bucket'] = trim ($_POST['bucket'])) && isset ($_POST['access']) && ($_POST['access'] = trim ($_POST['access'])) && isset ($_POST['secret']) && ($_POST['secret'] = trim ($_POST['secret'])) && isset ($_POST['upload']) && in_array ($_POST['upload'], array ('1', '2')))) {
   header ('Content-Type: application/json', 'true');
-  echo json_encode (array ('status' => true, 'message' => '參數錯誤！'));
+  echo json_encode (array ('status' => false, 'message' => '參數錯誤！'));
   exit();
 }
 
@@ -58,3 +58,9 @@ $option = array (
   );
 
 include_once '_oa' . PHP;
+
+if (!CLI) {
+  header ('Content-Type: application/json', 'true');
+  echo json_encode (array ('status' => true, 'message' => '花費 ' . round (microtime (true) - $startT, 4) . ' 秒'));
+  exit();
+}

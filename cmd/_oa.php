@@ -67,19 +67,13 @@ try {
   $tool->logAppend (str_repeat ('=', CLI_LEN), "\n", array (' ◎ 執行結束 ◎', 'P'), str_repeat (' ', 53), sprintf ('%20s', '[ ' . color (round (microtime (true) - $tool->getStartT (), 4), 'Y') . ' ' . color ('秒', 'y') . ' ]'), "\n", str_repeat ('=', CLI_LEN), "\n");
   $tool->url ();
 
-
-  if (!CLI) {
-    header ('Content-Type: application/json', 'true');
-    echo json_encode (array ('status' => true, 'message' => nl2br (str_replace (' ', '&nbsp;', str_replace ("\r", '', $tool->getLog ()->get ())))));
-    exit();
-  }
 } catch (Exception $e) {
   if (CLI) {
     echo $e->getMessage ();
     exit ();
   } else {
     header ('Content-Type: application/json', 'true');
-    echo json_encode (array ('status' => true, 'message' => $e->getMessage ()));
+    echo json_encode (array ('status' => false, 'message' => $e->getMessage ()));
     exit();
   }
 }
