@@ -205,14 +205,14 @@ if (!function_exists ('removeHtmlTag')) {
 if (!function_exists ('css')) {
   function css () {
     return array_map (function ($path) {
-      return "<link href='" . $path . "' rel='stylesheet' type='text/css'>";
+      return '<link href="' . $path . '" rel="stylesheet" type="text/css">';
     }, Minify::css (func_get_args ()));
   }
 }
 if (!function_exists ('js')) {
   function js () {
     return array_map (function ($path) {
-      return "<script src='" . $path . "' language='javascript' type='text/javascript' ></script>";  
+      return '<script src="' . $path . '" language="javascript" type="text/javascript" ></script>';  
     }, Minify::js (func_get_args ()));
   }
 }
