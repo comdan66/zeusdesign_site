@@ -122,7 +122,7 @@ class Build {
       $article['url'] = urlArticle ($article['id'], $article['title']);
       $article['path'] = pathArticle ($article['id'], $article['title']);
       $article['jsonLd'] = array ('mainEntityOfPage' => array ('@type' => 'WebPage', '@id' => $article['url']), 'headline' => $article['title'], 'image' => array ('@type' => 'ImageObject', 'url' => $article['cover']['c1200'], 'height' => 630, 'width' => 1200), 'datePublished' => date ('c', strtotime ($article['created_at'])), 'dateModified' => date ('c', strtotime ($article['updated_at'])), 'author' => array ('@type' => 'Person', 'name' => $article['user']['name'], 'url' => $article['user']['url'], 'image' => array ('@type' => 'ImageObject', 'url' => $article['user']['avatar'])), 'publisher' => array ('@type' => 'Organization', 'name' => TITLE, 'logo' => array ('@type' => 'ImageObject', 'url' => URL_IMG_LOGO_AMP, 'width' => 600, 'height' => 60)), 'description' => mb_strimwidth (removeHtmlTag ($article['content']), 0, 150, '…','UTF-8'));
-      return DEV || $article->status ? $article : null;
+      return DEV || $article['status'] ? $article : null;
     }, json_decode (myReadFile (PATH_APIS . 'articles.json'), true)));
 
     $tags = array ();
@@ -325,7 +325,7 @@ class Build {
       $work['url'] = urlWrok ($work['id'], $work['title']);
       $work['path'] = pathWrok ($work['id'], $work['title']);
       $work['jsonLd'] = array ('mainEntityOfPage' => array ('@type' => 'WebPage', '@id' => $work['url']), 'headline' => $work['title'], 'image' => array ('@type' => 'ImageObject', 'url' => $work['cover']['c1200'], 'height' => 630, 'width' => 1200), 'datePublished' => date ('c', strtotime ($work['created_at'])), 'dateModified' => date ('c', strtotime ($work['updated_at'])), 'author' => array ('@type' => 'Person', 'name' => $work['user']['name'], 'url' => $work['user']['url'], 'image' => array ('@type' => 'ImageObject', 'url' => $work['user']['avatar'])), 'publisher' => array ('@type' => 'Organization', 'name' => TITLE, 'logo' => array ('@type' => 'ImageObject', 'url' => URL_IMG_LOGO_AMP, 'width' => 600, 'height' => 60)), 'description' => mb_strimwidth (removeHtmlTag ($work['content']), 0, 150, '…','UTF-8'));
-      return DEV || $work->status ? $work : null;
+      return DEV || $work['status'] ? $work : null;
     }, json_decode (myReadFile (PATH_APIS . 'works.json'), true)));
 
     $tags = array ();
