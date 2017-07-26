@@ -176,7 +176,7 @@ if (!function_exists ('meta')) {
 if (!function_exists ('myLink')) {
   function myLink () {
     return array_map (function ($attributes) {
-      return '<link ' . implode (' ', array_map (function ($attribute, $value) { return $attribute . '="' . $value . '"'; }, array_keys ($attributes), $attributes)) . '>';
+      return '<link ' . implode (' ', array_map (function ($attribute, $value) { return $attribute . '="' . $value . '"'; }, array_keys ($attributes), $attributes)) . ' />';
     }, array_merge (array (
         array ('rel' => 'apple-touch-icon', 'sizes' => '57x57', 'href' => URL_IMG_FAVICON . 'apple-icon-57x57.png'),
         array ('rel' => 'apple-touch-icon', 'sizes' => '60x60', 'href' => URL_IMG_FAVICON . 'apple-icon-60x60.png'),
