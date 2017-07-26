@@ -140,7 +140,7 @@ if (!function_exists ('typeOfImg')) {
 }
 if (!function_exists ('meta')) {
   function meta () {
-    return array_unique (array_map (function ($attributes) {
+    return array_map (function ($attributes) {
       return '<meta ' . implode (' ', array_map (function ($attribute, $value) { return $attribute . '="' . $value . '"'; }, array_keys ($attributes), $attributes)) . ' />';
     }, array_merge (array (
         array ('charset' => 'utf-8'),
@@ -170,12 +170,12 @@ if (!function_exists ('meta')) {
         array ('name' => 'msapplication-TileColor', 'content' => '#3db990'),
         array ('name' => 'msapplication-TileImage', 'content' => URL_IMG_FAVICON . 'ms-icon-144x144.png'),
         array ('name' => 'theme-color', 'content' => '#3db990')
-      ), func_get_args ())));
+      ), func_get_args ()));
   }
 }
 if (!function_exists ('myLink')) {
   function myLink () {
-    return array_unique (array_map (function ($attributes) {
+    return array_map (function ($attributes) {
       return '<link ' . implode (' ', array_map (function ($attribute, $value) { return $attribute . '="' . $value . '"'; }, array_keys ($attributes), $attributes)) . ' />';
     }, array_merge (array (
         array ('rel' => 'apple-touch-icon', 'sizes' => '57x57', 'href' => URL_IMG_FAVICON . 'apple-icon-57x57.png'),
@@ -193,7 +193,7 @@ if (!function_exists ('myLink')) {
         array ('rel' => 'icon', 'type' => 'image/png', 'sizes' => '16x16', 'href' => URL_IMG_FAVICON . 'favicon-16x16.png'),
         array ('rel' => 'manifest', 'href' => URL_IMG_FAVICON . 'manifest.json'),
         array ('href' => 'https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700', 'rel' => 'stylesheet', 'type' => 'text/css')
-      ), func_get_args ())));
+      ), func_get_args ()));
   }
 }
 if (!function_exists ('removeHtmlTag')) {
