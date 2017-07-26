@@ -118,10 +118,12 @@ class Build {
     array_push ($this->sitemapInfos, array ('uri' => '/' . str_replace (URL, '', PAGE_URL_CONTACT), 'priority' => '0.3', 'changefreq' => 'weekly', 'lastmod' => date ('c'),));
   }
   public function articlesHtml ($title) {
-    $articles = array_map (function ($article) {
+    $articles = array_filter (array_map (function ($article) {
       $article['url'] = urlArticle ($article['id'], $article['title']);
       $article['path'] = pathArticle ($article['id'], $article['title']);
-      $article['jsonLd'] = array ('mainEntityOfPage' => array ('@type' => 'WebPage', '@id' => $article['url']), 'headline' => $article['title'], 'image' => array ('@type' => 'ImageObject', 'url' => $article['cover']['c1200'], 'height' => 630, 'width' => 1200), 'datePublished' => date ('c', strtotime ($article['created_at'])), 'dateModified' => date ('c', strtotime ($article['updated_at'])), 'author' => array ('@type' => 'Person', 'name' => $article['user']['name'], 'url' => $article['user']['url'], 'image' => array ('@type' => 'ImageObject', 'url' => $article['user']['avatar'])), 'publisher' => array ('@type' => 'Organization', 'name' => TITLE, 'logo' => array ('@type' => 'ImageObject', 'url' => URL_IMG_LOGO_AMP, 'width' => 600, 'height' => 60)), 'description' => mb_strimwidth (removeHtmlTag ($article['content']), 0, 150, '…','UTF-8')); return $article; }, json_decode (myReadFile (PATH_APIS . 'articles.json'), true));
+      $article['jsonLd'] = array ('mainEntityOfPage' => array ('@type' => 'WebPage', '@id' => $article['url']), 'headline' => $article['title'], 'image' => array ('@type' => 'ImageObject', 'url' => $article['cover']['c1200'], 'height' => 630, 'width' => 1200), 'datePublished' => date ('c', strtotime ($article['created_at'])), 'dateModified' => date ('c', strtotime ($article['updated_at'])), 'author' => array ('@type' => 'Person', 'name' => $article['user']['name'], 'url' => $article['user']['url'], 'image' => array ('@type' => 'ImageObject', 'url' => $article['user']['avatar'])), 'publisher' => array ('@type' => 'Organization', 'name' => TITLE, 'logo' => array ('@type' => 'ImageObject', 'url' => URL_IMG_LOGO_AMP, 'width' => 600, 'height' => 60)), 'description' => mb_strimwidth (removeHtmlTag ($article['content']), 0, 150, '…','UTF-8'));
+      return DEV || $article->status ? $article : null;
+    }, json_decode (myReadFile (PATH_APIS . 'articles.json'), true)));
 
     $tags = array ();
     foreach (columnArray ($articles, 'tags') as $ts)
@@ -319,10 +321,12 @@ class Build {
       $tag['path'] = sprintf (PATH_TAG_WORKS, urlFormat ($tag['name']));
       $tag['subs'] = array_map (function ($tag) { $tag['url'] = sprintf (URL_TAG_WORKS, rawurlencode (urlFormat ($tag['name']))); $tag['path'] = sprintf (PATH_TAG_WORKS, urlFormat ($tag['name'])); return $tag; }, $tag['subs']); return $tag; }, json_decode (myReadFile (PATH_APIS . 'work_tags.json'), true));
 
-    $works = array_map (function ($work) {
+    $works = array_filter (array_map (function ($work) {
       $work['url'] = urlWrok ($work['id'], $work['title']);
       $work['path'] = pathWrok ($work['id'], $work['title']);
-      $work['jsonLd'] = array ('mainEntityOfPage' => array ('@type' => 'WebPage', '@id' => $work['url']), 'headline' => $work['title'], 'image' => array ('@type' => 'ImageObject', 'url' => $work['cover']['c1200'], 'height' => 630, 'width' => 1200), 'datePublished' => date ('c', strtotime ($work['created_at'])), 'dateModified' => date ('c', strtotime ($work['updated_at'])), 'author' => array ('@type' => 'Person', 'name' => $work['user']['name'], 'url' => $work['user']['url'], 'image' => array ('@type' => 'ImageObject', 'url' => $work['user']['avatar'])), 'publisher' => array ('@type' => 'Organization', 'name' => TITLE, 'logo' => array ('@type' => 'ImageObject', 'url' => URL_IMG_LOGO_AMP, 'width' => 600, 'height' => 60)), 'description' => mb_strimwidth (removeHtmlTag ($work['content']), 0, 150, '…','UTF-8')); return $work; }, json_decode (myReadFile (PATH_APIS . 'works.json'), true));
+      $work['jsonLd'] = array ('mainEntityOfPage' => array ('@type' => 'WebPage', '@id' => $work['url']), 'headline' => $work['title'], 'image' => array ('@type' => 'ImageObject', 'url' => $work['cover']['c1200'], 'height' => 630, 'width' => 1200), 'datePublished' => date ('c', strtotime ($work['created_at'])), 'dateModified' => date ('c', strtotime ($work['updated_at'])), 'author' => array ('@type' => 'Person', 'name' => $work['user']['name'], 'url' => $work['user']['url'], 'image' => array ('@type' => 'ImageObject', 'url' => $work['user']['avatar'])), 'publisher' => array ('@type' => 'Organization', 'name' => TITLE, 'logo' => array ('@type' => 'ImageObject', 'url' => URL_IMG_LOGO_AMP, 'width' => 600, 'height' => 60)), 'description' => mb_strimwidth (removeHtmlTag ($work['content']), 0, 150, '…','UTF-8'));
+      return DEV || $work->status ? $work : null;
+    }, json_decode (myReadFile (PATH_APIS . 'works.json'), true)));
 
     $tags = array ();
     foreach ($ntags as $nt) {
