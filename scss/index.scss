@@ -1,6 +1,7 @@
 /**
  * @author      OA Wu <comdan66@gmail.com>
- * @copyright   Copyright (c) 2016 OA Wu Design
+ * @copyright   Copyright (c) 2017 OA Wu Design
+ * @license     http://creativecommons.org/licenses/by-nc/2.0/tw/
  */
 
 @import "_oa";
@@ -82,10 +83,10 @@
       @include border-top-left-radius(2px);
       @include border-bottom-left-radius(2px);
       @include box-shadow(0 0 10px rgba(39, 40, 34, .1));
-      @media screen and (min-width: 0) and (max-width: #{450px - 1px}) {
+      @include range-width(0, 450px) {
         width: 250px;
       }
-      @media screen and (min-width: 450px) and (max-width: #{850px - 1px}) {
+      @include range-width(450px, 850px) {
         width: 300px;
       }
       h3 {

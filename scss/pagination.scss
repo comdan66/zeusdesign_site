@@ -1,6 +1,7 @@
 /**
  * @author      OA Wu <comdan66@gmail.com>
- * @copyright   Copyright (c) 2016 OA Wu Design
+ * @copyright   Copyright (c) 2017 OA Wu Design
+ * @license     http://creativecommons.org/licenses/by-nc/2.0/tw/
  */
 
 @import "_oa";
@@ -62,7 +63,7 @@
 }
 
 .pagination {
-  @media screen and (min-width: 0) and (max-width: #{$changeWidth - 1px}) {
+  @include range-width(0, $changeWidth) {
     position: relative;
     padding-top: 30px;
 
@@ -127,7 +128,7 @@
       }
     } 
   }
-  @media screen and (min-width: $changeWidth) and (max-width: #{590px - 1px}) {
+  @include range-width($changeWidth, 590px) {
     li {
       &.f, &.l {
         display: none;

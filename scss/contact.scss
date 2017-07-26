@@ -1,6 +1,7 @@
 /**
  * @author      OA Wu <comdan66@gmail.com>
- * @copyright   Copyright (c) 2016 OA Wu Design
+ * @copyright   Copyright (c) 2017 OA Wu Design
+ * @license     http://creativecommons.org/licenses/by-nc/2.0/tw/
  */
 
 @import "_oa";
@@ -146,7 +147,7 @@
 }
 
 #contact {
-  @media screen and (min-width: 0) and (max-width: #{$changeWidth - 1px}) {
+  @include range-width(0, $changeWidth) {
     margin-bottom: 20px;
 
     #contacts {
@@ -163,7 +164,7 @@
       }
     }
   }
-  @media screen and (min-width: $changeWidth) {
+  @include range-width($changeWidth) {
     padding: 0 10px;
     #contacts {
       width: 280px;

@@ -1,5 +1,5 @@
 <footer id='footer'>
-  <div>© copyright 2016 ZEUS Design CO., Ltd.</div>
+  <div>copyright © 2013 - <?php echo date ('Y');?> ZEUS Design CO., Ltd.</div>
   <a>↑</a>
   <div>
     <div>

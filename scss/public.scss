@@ -1,29 +1,10 @@
 /**
  * @author      OA Wu <comdan66@gmail.com>
- * @copyright   Copyright (c) 2016 OA Wu Design
+ * @copyright   Copyright (c) 2017 OA Wu Design
+ * @license     http://creativecommons.org/licenses/by-nc/2.0/tw/
  */
 
 @import "_oa";
-
-@include font-face("icomoon", font-files("icomoon/icomoon.eot", "icomoon/icomoon.woff", "icomoon/icomoon.ttf", "icomoon/icomoon.svg"));
-[class^="icon-"], [class*=" icon-"] {
-  font-family: 'icomoon', "微軟正黑體","Open sans", "Helvetica Neue", "HelveticaNeue", Helvetica, Arial, sans-serif;
-  speak: none;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
-
-  @include font-smoothing(antialiased);
-}
-
-.icon-menu:before { content: "\e120"; }
-.icon-thin-down:before { content: "\e900"; }
-.icon-thin-left:before { content: "\e902"; }
-.icon-thin-right:before { content: "\e903"; }
-.icon-thin-up:before { content: "\e904"; }
-
 
 * {
   &, &:after, &:before {
@@ -74,10 +55,10 @@ html {
       width: 260px - 5px;
     }
 
-    @media screen and (min-width: 0) and (max-width: #{$mediaMiniMobileWidth - 1px}) {
+    @include range-width(0, $mediaMiniMobileWidth) {
       padding: 10px;
     }
-    @media screen and (min-width: $mediaMiniMobileWidth) and (max-width: #{$changeWidth - 1px}) {
+    @include range-width($mediaMiniMobileWidth, $changeWidth) {
       padding: 15px;
       padding-top: 20px;
 
@@ -88,7 +69,7 @@ html {
         left: calc(5% - 10px);
       }
     }
-    @media screen and (min-width: $changeWidth) and (max-width: #{$mainWidth + 100px - 1px}) {
+    @include range-width($changeWidth, $mainWidth + 100px) {
       padding: 20px;
       padding-top: 65px;
     }
@@ -109,7 +90,7 @@ html {
 #header {
   @include clearfix();
   padding-bottom: 40px;
-  @media screen and (min-width: 0) and (max-width: #{$changeWidth - 1px}) {
+  @include range-width(0, $changeWidth) {
     padding-bottom: 10px;
   }
   a {
@@ -117,12 +98,12 @@ html {
     @include a;
     padding: 0;
     margin: 0;
-    @media screen and (min-width: 0) and (max-width: #{$changeWidth - 1px}) {
+    @include range-width(0, $changeWidth) {
       margin-top: 10px;
     }
   }
   div {
-    @media screen and (min-width: $changeWidth) {
+    @include range-width($changeWidth) {
       padding-top: 20px;
     }
     float: right;
@@ -147,14 +128,14 @@ html {
         background-color: rgba(221, 221, 221, 1);
         cursor: default;
       }
-      @media screen and (min-width: $changeWidth) and (max-width: #{850px - 1px}) {
+      @include range-width($changeWidth, 850px) {
         margin: 0 20px;
         &:before {
           left: -20px;
         }
       }
     }
-    @media screen and (min-width: 0) and (max-width: #{$changeWidth - 1px}) {
+    @include range-width(0, $changeWidth) {
       float: left;
       width: 100%;
       margin-top: 30px;
@@ -178,7 +159,7 @@ html {
         }
       }
     }
-    @media screen and (min-width: 0) and (max-width: #{350px - 1px}) {
+    @include range-width(0, 350px) {
       a {
         width: calc(100% / 3 - 8px * 2);
         margin: 0 8px;
@@ -200,7 +181,7 @@ html {
 }
 
 #footer {
-  @media screen and (min-width: 0) and (max-width: #{$changeWidth - 1px}) {
+  @include range-width(0, $changeWidth) {
     $n: 2;
     $h: 25px;
     $s: 10px;
@@ -273,7 +254,7 @@ html {
               background-color: rgba(221, 221, 221, 1);
             }
 
-            @media screen and (min-width: 0) and (max-width: #{350px - 1px}) {
+            @include range-width(0, 350px) {
               margin: 0 5px;
 
               &:before {
@@ -287,7 +268,7 @@ html {
       }
     }
   }
-  @media screen and (min-width: $changeWidth) {
+  @include range-width($changeWidth) {
     border-top: 1px solid rgba(204, 204, 204, 1);
     margin-top: 20px;
     padding: 25px 5px;
@@ -467,14 +448,14 @@ html {
       }
     }
   }
-  @media screen and (min-width: 0) and (max-width: #{500px - 1px}) {
+  @include range-width(0, 500px) {
     width: 100%;
 
     + .work {
       margin-top: 30px;
     }
   }
-  @media screen and (min-width: 500px) and (max-width: #{900px - 1px}) {
+  @include range-width(500px, 900px) {
     width: calc((100% - 30px) / 2);
     
     &:nth-child(2n + 1) {
@@ -484,7 +465,7 @@ html {
       margin-top: 40px;
     }
   }
-  @media screen and (min-width: 900px) {
+  @include range-width(900px) {
     width: calc((100% - 30px * 3) / 4);
     + .work {
       margin-left: 30px;

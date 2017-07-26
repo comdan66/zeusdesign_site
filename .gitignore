@@ -5,9 +5,6 @@ cmd/.sass-cache/*
 
 cmd/node_modules/*
 cmd/npm-debug.log
-cmd/config_upload.php
-cmd/config_build.php
-cmd/verify.php
 
 /sitemap/*
 /articles/*
@@ -15,7 +12,6 @@ cmd/verify.php
 /tags/*
 /works/*
 /work/*
-
 /asset/*
 /api
 /*.html

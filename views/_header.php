@@ -1,6 +1,6 @@
 <header id='header'>
   <a href='<?php echo PAGE_URL_INDEX;?>'>
-    <img src='<?php echo URL_IMG_LOGO . 'header.png';?>' alt=''>
+    <img src='<?php echo URL_IMG_LOGO . 'header.png';?>' alt='<?php echo MAIN_TITLE;?>'>
   </a>
 
   <div>
