@@ -10,28 +10,28 @@
   </head>
   <body lang="zh-tw">
     
-    <div id='container'>
+    <div id="container">
       <?php echo $_header;?>
       
 
-      <div id='about'>
-        <header class='header'>
+      <div id="about">
+        <header class="header">
           <h1>關於宙思</h1>
         </header>
 
-        <aside id='aside'>
+        <aside id="aside">
           <a>關於宙思 ›</a>
           <a>關於設計 ›</a>
           <a>我們提供的服務 ›</a>
         </aside>
 
-        <article id='service'>
+        <article id="service">
           <figure>
             <img src="/img/logo/banner.jpg">
             <figcaption></figcaption>
           </figure>
 
-          <section class='service'>
+          <section class="service">
             <header>
               <h2>關於宙思</h2>
               <p>成立於2013。</p>
@@ -58,7 +58,7 @@
 <?php
     if (isset ($scopes) && $scopes) {
       foreach ($scopes as $scope) { ?>
-        <div class='_scope' itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a itemprop="url" href='<?php echo $scope['url'];?>'><span itemprop="title"><?php echo $scope['title'];?></span></a></div>
+        <div class="_scope" itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a itemprop="url" href="<?php echo $scope['url'];?>"><span itemprop="title"><?php echo $scope['title'];?></span></a></div>
 <?php }
     } ?>
 
