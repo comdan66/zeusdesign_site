@@ -159,11 +159,11 @@ if (!function_exists ('meta')) {
 
         array ('property' => 'article:author', 'content' => FB_URL),
         array ('property' => 'article:publisher', 'content' => FB_URL),
-        array ('property' => 'article:modified_time', 'content' => date ('c')),
-        array ('property' => 'article:published_time', 'content' => date ('c')),
+        // array ('property' => 'article:modified_time', 'content' => date ('c')),
+        // array ('property' => 'article:published_time', 'content' => date ('c')),
 
-        array ('property' => 'og:image', 'content' => MAIN_OG_URL, 'alt' => MAIN_TITLE, 'tag' => 'larger'),
-        array ('property' => 'og:image:type', 'content' => typeOfImg (MAIN_OG_URL), 'tag' => 'larger'),
+        // array ('property' => 'og:image', 'content' => MAIN_OG_URL, 'alt' => MAIN_TITLE, 'tag' => 'larger'),
+        // array ('property' => 'og:image:type', 'content' => typeOfImg (MAIN_OG_URL), 'tag' => 'larger'),
         array ('property' => 'og:image:width', 'content' => 1200, 'tag' => 'larger'),
         array ('property' => 'og:image:height', 'content' => 630, 'tag' => 'larger'),
 
