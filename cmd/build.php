@@ -31,7 +31,7 @@ include_once PATH_CMD_LIBS . 'Minify' . PHP;
 include_once PATH_CMD_LIBS . 'Pagination' . PHP;
 include_once PATH_CMD_LIBS . 'Sitemap' . PHP;
 
-$build = new Build ($potoco, $bucket);
+$build = new Build ();
 
 $build->clean ('清除上次的紀錄');
 $build->init ('初始化目錄');
