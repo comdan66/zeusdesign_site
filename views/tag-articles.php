@@ -29,7 +29,7 @@
 
               <a href="<?php echo $article['url'];?>">
                 <figure class="_i">
-                  <img alt="<?php echo $article['title'];?>" src="<?php echo $article['cover']['c450'];?>">
+                  <img alt="<?php echo $article['title'];?>" src="<?php echo $article['cover']['c450'];?>" />
                   <figcaption><?php echo $article['title'];?></figcaption>
                 </figure>
               </a>

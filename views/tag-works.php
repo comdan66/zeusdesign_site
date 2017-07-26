@@ -24,7 +24,7 @@
             foreach ($works as $work) { ?>
               <section class="work">
                 <a href="<?php echo $work['url'];?>" class="_i">
-                  <img alt="<?php echo $work['title'];?>" src="<?php echo $work['cover']['w300'];?>">
+                  <img alt="<?php echo $work['title'];?>" src="<?php echo $work['cover']['w300'];?>" />
                 </a>
 
                 <header>

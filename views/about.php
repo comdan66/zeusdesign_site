@@ -27,7 +27,7 @@
 
         <article id="service">
           <figure>
-            <img src="/img/logo/banner.jpg">
+            <img src="/img/logo/banner.jpg" />
             <figcaption></figcaption>
           </figure>
 

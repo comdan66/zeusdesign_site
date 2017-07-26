@@ -33,7 +33,7 @@
             if ($work['images']) {
               foreach ($work['images'] as $image) { ?>
                 <figure href="<?php echo $work['url'];?>">
-                  <img src="<?php echo $image['w800'];?>">
+                  <img src="<?php echo $image['w800'];?>" />
                   <figcaption></figcaption>
                 </figure>
         <?php }
