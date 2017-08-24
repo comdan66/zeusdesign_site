@@ -269,7 +269,7 @@ class Build {
               'news' => $news,
               'hots' => $hots,
               'articles' => $as,
-              'pagination' => Pagination::initialize (array ('offset' => $offset, 'base_url' => URL_ARTICLES, 'total_rows' => $total, 'per_page' => $limit))->create_links (),
+              'pagination' => Pagination::initialize (array ('offset' => $offset, 'base_url' => $tag['url'], 'total_rows' => $total, 'per_page' => $limit))->create_links (),
             ))))) return $this->error ($title . '失敗！');
 
           array_push ($this->sitemapInfos, array ('uri' => '/' . str_replace (URL, '', $tag['url'] . $html), 'priority' => '0.5', 'changefreq' => 'daily', 'lastmod' => date ('c'),));
@@ -475,7 +475,7 @@ class Build {
               'tag' => $tag,
               'tags' => $ntags,
               'works' => $ws,
-              'pagination' => Pagination::initialize (array ('offset' => $offset, 'base_url' => URL_WORKS, 'total_rows' => $total, 'per_page' => $limit))->create_links (),
+              'pagination' => Pagination::initialize (array ('offset' => $offset, 'base_url' => $tag['url'], 'total_rows' => $total, 'per_page' => $limit))->create_links (),
             ))))) return $this->error ($title . '失敗！');
 
           array_push ($this->sitemapInfos, array ('uri' => '/' . str_replace (URL, '', $tag['url'] . $html), 'priority' => '0.5', 'changefreq' => 'daily', 'lastmod' => date ('c'),));
